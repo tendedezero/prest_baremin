@@ -1,0 +1,75 @@
+#parallax_baner {
+min-height: 200px;
+background: #f6f6f6;
+background-position: top center;
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: cover;
+text-align: center;
+color: #fff;
+padding: 60px 20px;
+margin: 0 -15px 20px;
+}
+
+.no_bg #parallax_baner {
+margin: 0 0 20px;
+}
+
+#parallax_baner .parallax_desc {
+display: block;
+}
+
+#parallax_baner .parallax_desc h1 {
+margin: 0 0 10px;
+font-weight: 400;
+font-size: 34px;
+}
+
+#parallax_baner .parallax_desc h2 {
+margin: 0 0 10px;
+font-weight: 400;
+font-size: 34px;
+}
+
+#parallax_baner .parallax_desc h3 {
+margin: 0 0 10px;
+font-weight: 400;
+font-size: 28px;
+}
+
+#parallax_baner .parallax_desc h4 {
+margin: 0 0 10px;
+font-weight: 400;
+font-size: 24px;
+}
+
+#parallax_baner .parallax_desc h5 {
+margin: 0 0 10px;
+font-weight: 400;
+font-size: 18px;
+}
+
+#parallax_baner .parallax_desc h6 {
+margin: 0 0 10px;
+font-weight: 400;
+font-size: 16px;
+}
+
+#parallax_baner .parallax_desc p {
+margin: 0 auto 10px;
+font-weight: 400;
+max-width: 800px;
+}
+
+#parallax_baner a.parallax_button {
+display: inline-block;
+color: #fff;
+padding: 4px 4px;
+text-transform: uppercase;
+font-size: 14px;
+font-weight: bold;
+}
+
+#parallax_baner a.parallax_button:hover {
+text-decoration: underline;
+}

@@ -1,0 +1,221 @@
+/*
+ * Custom code goes here.
+ * A template should always ship with an empty custom.css
+ */
+
+
+#header div#_desktop_cart .blockcart .header {
+float: right;
+font-weight: bold;
+color: #fff;
+background: initial!important;
+}
+.ets_mm_megamenu {
+    margin-top:0;
+}
+
+.ndc_mobile_icons{
+    padding: 5px;
+    padding-right: 0px;
+    float: left;
+    width: 10%;}
+
+.ndc_mobile_menu{
+    float: right;
+}
+#header div#_desktop_cart.header {
+    z-index: 25;
+background: initial;
+}
+#_desktop_cart > div.header {
+background: initial;
+}
+
+@media (max-width: 767px)  {
+    .ybc-menu-button-toggle_icon {
+
+        margin-right: 0px;
+    }
+    .ybc-menu-toggle {
+    padding-top: 15px;
+    padding-right: 0px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    }
+    .ets_mm_megamenu.hook-custom {
+    width: 35%;
+    float: left;
+        padding-right: 0px;
+        margin-right:0px;
+    }
+    .header-top{display: none;}
+    div#rwd_menu.ndc {
+
+        background: #f6f6f6!important;
+        color:#000000;
+        border-color: transparent!important;
+    }
+    div#rwd_menu div.container {
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+    div#rwd_menu a.cart_link {
+        color:#000000!important;
+    }
+
+    div#rwd_menu.ndc > .rwd_menu_item {
+        border-color: transparent!important;
+        width:20%!important;
+    }
+    div#rwd_menu.ndc, div#rwd_menu.ndc .rwd_menu_item, div#rwd_menu.ndc .rwd_menu_item:first-child{
+        border-color: transparent!important;
+    }
+
+    .vat-switcher {
+   display: inline-block;
+    margin-left: 25px;
+    text-align: right;
+    float: left!important;
+}
+
+  }
+ .vat-switcher a {
+    font-size:10px!important;
+  }
+
+nav.header-nav .user-info a {display:none}
+
+@media (min-width: 700px)   {
+
+}
+@media (min-width: 800px) and (max-width: 1199px)  {
+ .changestatus.ets_mm_megamenu.hook-custom {
+     margin-top: 0; 
+    position: relative;
+ }
+ 
+}
+
+@media (min-width: 576px) {
+ 
+
+
+ .container {
+     width: auto; 
+  }
+ .mm_extra_item div#search_widget
+ {
+  display:none;
+  }
+  div.top-search > div#search_widget form button[type=submit] {
+    cursor: pointer;
+    position: absolute;
+    padding-left: 10px;
+    color: #fff;
+    border: none;
+     top: auto; 
+    right: auto;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+  }
+   div.top-search > div#search_widget {
+      position: relative;
+    float: left;
+    width: 33.3%;
+    padding: 30px 15px;
+    }
+   div.top-search > div#search_widget form input[type=text]  {
+        width: 90%;
+   }
+}
+
+
+
+@media (max-width: 767px) {
+ .block, .block-reassurance-item, a.nav-link.comment_tab, div.top-search > div#search_widget {
+    display: none!important;
+  } 
+ .mm_extra_item > div#search_widget {
+  display:block;
+  width:100%;
+ }
+
+    div#_mobile_search_widget > div#search_widget { display:block;}
+    .ets_mm_megamenu.hook-custom {
+        margin-top:0px;
+    }
+.mm_extra_item > div#search_widget form button[type=submit] {
+    bottom: auto;
+    -webkit-transform: translateY(-50%);
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ffffff;
+ }
+    .mm_extra_item > div#search_widget form input[type=text]  {
+     height: 40px;
+     float: left;
+     width:100%;
+     font-size: small;
+     width: 200px;
+   }
+}
+
+.vat-switcher {
+ display: inline-block;
+ margin-top: 2px;
+ text-align: right;
+ float: right;
+}
+.vat-switcher a {
+   font-size: 13px;
+    font-weight: 600;
+    line-height: 34px;
+    text-decoration: none;
+	color: #fff;
+}
+@media (max-width: 767px) {
+
+div#search_widget.search_widget {display:none;}
+
+img.logo {float:left!important}
+
+.vat-switcher{float:right!important;}
+
+}
+div.ndc_menu {          
+ margin-top:0px;
+}
+
+.toggle {
+    display: inline-block;
+    background-color: #000000;
+    box-shadow: 0px 0px 12px 0px rgba(255, 255, 255, 0.5);
+    border-radius: 11px;
+    width: 40px;
+    height: 20px;
+    vertical-align: text-top;
+    position: relative;
+}
+.toggle:after {
+    content: "";
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 11px;
+    background-color: #fff;
+    position: absolute;
+    top: 4px;
+    left: 5px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.5);
+}
+.toggle--off:after {
+    right: 5px;
+    left: inherit;
+}
+#con_menu {
+float:right;
+}
+
+    
+

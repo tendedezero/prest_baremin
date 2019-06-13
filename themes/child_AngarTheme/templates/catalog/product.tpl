@@ -1,3 +1,29 @@
+{**
+ * 2007-2017 PrestaShop
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
+ * versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to http://www.prestashop.com for more information.
+ *
+ * @author    PrestaShop SA <contact@prestashop.com>
+ * @copyright 2007-2017 PrestaShop SA
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
+ * International Registered Trademark & Property of PrestaShop SA
+ *}
+
+{* AngarThemes *}
 
 {extends file=$layout}
 
@@ -12,10 +38,12 @@
     <meta property="og:site_name" content="{$shop.name}">
     <meta property="og:description" content="{$page.meta.description}">
     <meta property="og:image" content="{$product.cover.large.url}">
-    <meta property="product:pretax_price:amount" content="{$product.price_tax_exc}">
-    <meta property="product:pretax_price:currency" content="{$currency.iso_code}">
-    <meta property="product:price:amount" content="{$product.price_amount}">
-    <meta property="product:price:currency" content="{$currency.iso_code}">
+    {if $product.show_price}
+        <meta property="product:pretax_price:amount" content="{$product.price_tax_exc}">
+        <meta property="product:pretax_price:currency" content="{$currency.iso_code}">
+        <meta property="product:price:amount" content="{$product.price_amount}">
+        <meta property="product:price:currency" content="{$currency.iso_code}">
+    {/if}
     {if isset($product.weight) && ($product.weight != 0)}
         <meta property="product:weight:value" content="{$product.weight}">
         <meta property="product:weight:units" content="{$product.weight_unit}">
@@ -29,9 +57,11 @@
 
         {* AngarThemes *}
         <div class="row product_container">
-  <div class="col-md-12">
-            <h1 class="product_name" itemprop="name">{block name='page_title'}{$product.name}{/block}</h1>
-        </div>
+            <div class="col-md-12"> {block name='page_header_container'}
+                    {block name='page_header'}
+                        <h1 class="product_name" itemprop="name">{block name='page_title'}{$product.name}{/block}</h1>
+                    {/block}
+                {/block}</div>
 
             <div class="col-md-6 product_left">
                 {block name='page_content_container'}
@@ -69,27 +99,19 @@
                 {/block}
             </div>
             <div class="col-md-6 product_right">
-                {block name='page_header_container'}
-                    {block name='page_header'}
-                        
-                    {/block}
-                {/block}
 
-                <div class="col-md-6">
 
                 {block name='product_reference_top'}
                     {include file='catalog/_partials/product-reference-top.tpl'}
                 {/block}
 
+                {* AngarThemes *}
                 {if isset($product_manufacturer->id)}
                     <div id="product_manufacturer" itemprop="brand" itemscope itemtype="http://schema.org/Brand">
                         <label class="label">{l s='Brand' d='Shop.Theme.Catalog'} </label>
-                        <a class="editable" itemprop="name" href="{$product_brand_url}">{$product_manufacturer->name}</a>
+                        <a class="editable" itemprop="url" href="{$product_brand_url}" title="{$product_manufacturer->name}"><span itemprop="name">{$product_manufacturer->name}</span></a>
                     </div>
                 {/if}
-		</div>
-
- 
 
                 {* AngarThemes *}
                 {hook h='displayCommentsExtra'}
@@ -106,10 +128,11 @@
                             {include file="catalog/_partials/product-customization.tpl" customizations=$product.customizations}
                         {/block}
                     {/if}
-
+                    <form action="{$urls.pages.cart}" method="post" id="add-to-cart-or-refresh">
                     <div class="product-actions">
+
                         {block name='product_buy'}
-                            <form action="{$urls.pages.cart}" method="post" id="add-to-cart-or-refresh">
+
                                 <input type="hidden" name="token" value="{$static_token}">
                                 <input type="hidden" name="id_product" value="{$product.id}" id="product_page_product_id">
                                 <input type="hidden" name="id_customization" value="{$product.id_customization}" id="product_customization_id">
@@ -135,7 +158,7 @@
                                     {include file='catalog/_partials/product-discounts.tpl'}
                                 {/block}
 
-                               {block name='product_prices'}
+                                {block name='product_prices'}
                                     {include file='catalog/_partials/product-prices.tpl'}
                                 {/block}
 
@@ -150,18 +173,20 @@
                                 {block name='product_refresh'}
                                     <input class="product-refresh ps-hidden-by-js" name="refresh" type="submit" value="{l s='Refresh' d='Shop.Theme.Actions'}">
                                 {/block}
-                            </form>
+
                         {/block}
 
                     </div>
-
+                    </form>
                     {block name='hook_display_reassurance'}
                         {hook h='displayReassurance'}
                     {/block}
 
-        </div>
-      </div>
-    </div>
+                </div>
+            </div>
+
+
+
 
 
 
@@ -263,7 +288,7 @@
                 {hook h='displayProductTabContent'}
 
             </div>
-            </div>
+        </div>
         {/block}
 
 
@@ -314,6 +339,6 @@
                 {/block}
             </footer>
         {/block}
-       </section>
+    </section>
 
 {/block}

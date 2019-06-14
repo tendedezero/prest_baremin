@@ -2,13 +2,67 @@
  * Custom code goes here.
  * A template should always ship with an empty custom.css
  */
-
+a.stalwart.button {
+    border: 3px solid;
+    border-radius: 50em;
+    border-color: #212121;
+    color: #212121;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 250px;
+}
+a.stalwart.button:hover {
+    color: #fff;
+    background-color: #242121;
+    border: 3px solid;
+    border-color: #ffcc00;
+    transition: 0.4s;
+}
 
 #header div#_desktop_cart .blockcart .header {
 float: right;
 font-weight: bold;
 color: #fff;
 background: initial!important;
+}
+.alphabet li:last-child {
+    border-right: none;
+}
+
+.alphabet li {
+    float: left;
+    margin: 0;
+    padding: 0;
+    font-size: 30px;
+    -moz-box-sizing: border-box;
+    color: black;
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 3.84%;
+}
+.zoom {
+    padding: 50px;
+    transition: transform .2s;
+    /* Animation */
+    margin: 0 auto;
+    width: 300px;
+    height: 200px;
+}
+.zoom:hover {
+    transform: scale(1.1);
+}
+
+#brandtop{
+    padding-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 .ets_mm_megamenu {
     margin-top:0;

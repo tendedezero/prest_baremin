@@ -10,7 +10,7 @@
               <div id="search-icon" class="ndc_mobile_icons"><i class="material-icons search">&#xE8B6;</i></div>
               <div id="user-icon" class="ndc_mobile_icons"><i class="material-icons logged">&#xE7FF;</i></div>
               <div id="_mobile_cart" class="ndc_mobile_icons"></div>
-              <div id="ndc-mobile_logo" class="ndc_mobile_menu"><img src="img/logo-menu-mobile.png"/></div>
+              <div id="ndc-mobile_logo" class="ndc_mobile_menu"><img src="/img/logo-menu-mobile.png"/></div>
 
           </div>
           <div class="clearfix"></div>

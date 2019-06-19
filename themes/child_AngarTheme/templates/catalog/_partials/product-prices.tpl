@@ -20,7 +20,7 @@
         <meta itemprop="priceCurrency" content="{$currency.iso_code}">
 
         <div class="current-price sale-price inc-vat">
-            <span class="price" itemprop="price"  content="{$product.price_amount}" {if (Context::getContext()->cookie->__get('VATMODE') == 'false')}style="display:none"{/if}>{$product.price}</span><span class="tax_display">VAT Included</span>
+            <span class="price" itemprop="price"  content="{$product.price_amount}" {if $smarty.cookies.VATMODE == 'false'} style="display:none"{/if}>{$product.price}</span><span class="tax_display">VAT Included</span>
         </div>
 
           {if $product.has_discount}
@@ -32,7 +32,7 @@
               </span>
             {/if}
           {/if}
-            <div class="current-price sale-price ex-vat" {if (Context::getContext()->cookie->__get('VATMODE') == 'true')}style="display: none;"{/if}>
+            <div class="current-price sale-price ex-vat" {if $smarty.cookies.VATMODE == 'true'}style="display: none;"{/if}>
                 <span class="price" >{Tools::displayPrice($product.price_tax_exc)}</span><span class="tax_display">VAT Excluded</span>
             </div>
         </div>

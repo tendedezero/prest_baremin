@@ -38,12 +38,12 @@ class NDCVatDisplay extends Module implements WidgetInterface
         Shop::setContext(Shop::CONTEXT_ALL);
 
     return parent::install() &&
-        $this->registerHook('displayProductPriceBlock') && Configuration::updateValue('VATDISPLAYMODE', 'true');
+        $this->registerHook('displayNav2');
 }
 
 public function uninstall()
 {
-    if (!parent::uninstall() || !Configuration::deleteByName('VATDISPLAYMODE'))
+    if (!parent::uninstall())
         return false;
     return true;
 }
@@ -130,42 +130,16 @@ public function uninstall()
 }
 
 
-public function fnSetIt()
-{  if(isset($this->context->cookie->VATMODE) && $this->context->cookie->VATMODE=='true') {
-    $this->context->cookie->VATMODE='false';
-    }
-    else
-    {
-        $this->context->cookie->VATMODE='true';
-    }
-print_r('hello');
-     print_r($vat_mode);
-     print_r($vat_nextmode);
-
-   return true;
-}
-
-
 
 public function getWidgetVariables($hookName, array $configuration)
     {
 
-    if(!isset($this->context->cookie->VATMODE)){
-
-	    ($this->context->cookie->VATMODE='true') ;
-    }
-    if(isset($this->context->cookie->VATMODE) && $this->context->cookie->VATMODE=='true') {
-	    $vat_nextmode= 'false';
-	    $vat_mode='toggle--on';
-    }
-    if(isset($this->context->cookie->VATMODE) && $this->context->cookie->VATMODE=='false') {
-	    $vat_nextmode= 'true';
-	    $vat_mode='toggle--off';
-     }
+    $link = $this->context->link;
+   $vatmode=$this->vatmode;
 
      return array(
-        'vatmode' => $vat_mode,
-        'nextmode' => $vat_nextmode,
+        'vlink' => $link,
+        'vatmode' => $vatmode,
     );
  }
 

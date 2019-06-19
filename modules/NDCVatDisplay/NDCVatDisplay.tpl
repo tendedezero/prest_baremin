@@ -23,9 +23,9 @@
 *  International Registered Trademark & Property of PrestaShop SA
 *}
 
-
 <div class='vat-switcher'>
+
  <a id="Inc_VAT_toggle" href="#" class="inc ">INC VAT</a>
-  <a href="#" class="toggle {$vatmode}" id='NDCToggle' onclick="setVATPref();"></a>
+  <a href="#" class="toggle {if $smarty.cookies.VATMODE == 'false'} toggle--off {/if}" id='NDCToggle' onclick="setVATPref();"></a>
  <a id="Ex_VAT_toggle" href="#" class="ex">EX VAT</a>
 </div>

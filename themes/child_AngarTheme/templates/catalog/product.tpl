@@ -101,17 +101,18 @@
             <div class="col-md-6 product_right">
 
 
-            {block name='product_reference_top'}
-                {include file='catalog/_partials/product-reference-top.tpl'}
-            {/block}
+                {block name='product_reference_top'}
+                    {include file='catalog/_partials/product-reference-top.tpl'}
+                {/block}
 
-            {* AngarThemes *}
-            {if isset($product_manufacturer->id)}
-                <div id="product_manufacturer" itemprop="brand" itemscope itemtype="http://schema.org/Brand">
-                    <label class="label">{l s='Brand' d='Shop.Theme.Catalog'} </label>
-                    <a class="editable" itemprop="url" href="{$product_brand_url}" title="{$product_manufacturer->name}"><span itemprop="name">{$product_manufacturer->name}</span></a>
-                </div>
-            {/if}
+                {* AngarThemes *}
+                {if isset($product_manufacturer->id)}
+                    <div id="product_manufacturer" itemprop="brand" itemscope itemtype="http://schema.org/Brand">
+                        <label class="label">{l s='Brand' d='Shop.Theme.Catalog'} </label>
+                        <a class="editable" itemprop="url" href="{$product_brand_url}" title="{$product_manufacturer->name}"><span itemprop="name">{$product_manufacturer->name}</span></a>
+                    </div>
+                {/if}
+
                 {* AngarThemes *}
                 {hook h='displayCommentsExtra'}
 

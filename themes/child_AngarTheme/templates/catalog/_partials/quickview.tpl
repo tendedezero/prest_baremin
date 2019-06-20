@@ -77,12 +77,14 @@
 
                             </div>
                         </form>
+                        <button class="btn btn-primary viewmore" data-button-action="add-to-cart" type="submit">View Details</button>
                         {/block}
                     </div>
+                    {hook h='displayProductAdditionalInfo' product=$product}
                 </div>
             </div>
             <div class="modal-footer">
-                {hook h='displayProductAdditionalInfo' product=$product}
+                
             </div>
         </div>
     </div>

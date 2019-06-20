@@ -134,6 +134,10 @@ public function uninstall()
 public function getWidgetVariables($hookName, array $configuration)
     {
 
+        if(!empty(smarty.cookies.VATMODE)){
+
+            }
+
     $link = $this->context->link;
    $vatmode=$this->vatmode;
 

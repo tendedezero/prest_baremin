@@ -271,5 +271,16 @@ div.ndc_menu {
 float:right;
 }
 
-    
 
+.btn-primary.viewmore  {
+    background: #ffffff;
+    color: #000000;
+    border-color: #fd1010;
+    float: right;
+    margin-right: 10px;
+}
+.quickview .social-sharing {
+     padding: 10px; 
+    border: 0;
+    width: auto;
+}

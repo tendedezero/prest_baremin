@@ -27,14 +27,14 @@ function setVATPref() {
         $("#NDCToggle").removeClass( "toggle--off" );
         $(".inc-vat").show();
         $(".ex-vat").hide();
-        setCookie("VATMODE", "true", 365);
+	setCookie("VATMODE", "true", 365);
     }
     else
     {
         $("#NDCToggle").addClass("toggle--off");
         $(".inc-vat").hide();
         $(".ex-vat").show();
-        setCookie("VATMODE", "false", 365);
+setCookie("VATMODE", "false", 365);
     }
 }
 
@@ -52,23 +52,6 @@ $(document).ready(function(){
         $('section#products').removeClass('product_show_list');
     });
 
-    $( "#NDCToggle" ).click(function() {
-        if ($("#NDCToggle").hasClass("toggle--off")) {
-            $("#NDCToggle").removeClass( "toggle--off" );
-            $(".inc-vat").show();
-            $(".ex-vat").hide();
-            setCookie("VATMODE", "true", 365);
-        }
-        else
-        {
-            $("#NDCToggle").addClass("toggle--off");
-            $(".inc-vat").hide();
-            $(".ex-vat").show();
-            setCookie("VATMODE", "false", 365);
-        }
-    });
-
- 
 });
 
 

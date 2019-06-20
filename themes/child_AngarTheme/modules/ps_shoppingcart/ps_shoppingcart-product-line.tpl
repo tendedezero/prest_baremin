@@ -45,8 +45,9 @@
 	</a>
 	<span class="product-quantity">{$product.quantity}x</span>
 	<span class="product-name"><a href="{$product.url}" data-id_customization="{$product.id_customization|intval}">{$product.name}</a></span>
-	<span class="product-price inc-vat">{$product.price} Inc Vat</span>
-	<span class="product-price ex-vat">{Tools::displayPrice(Product::getPriceStatic($product.id_product,false))}  Exc Vat</span>
+
+    <span class="product-price inc-vat" {if $smarty.cookies.VATMODE == 'false'}style="display:none;"{/if}>{$product.price} Inc Vat</span>
+	<span class="product-price ex-vat"{if $smarty.cookies.VATMODE == 'true'}style="display:none;"{/if}>{Tools::displayPrice(Product::getPriceStatic($product.id_product,false))}  Exc Vat</span>
 
 	
 </div>

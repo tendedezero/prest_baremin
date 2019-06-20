@@ -38,6 +38,22 @@ setCookie("VATMODE", "false", 365);
     }
 }
 
+function getCookie(cname) {
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+
 /* PRODUCT-LIST LIST */
 $(document).ready(function(){
     $('.show_list').click(function(){
@@ -50,7 +66,13 @@ $(document).ready(function(){
         document.cookie = "show_list=; expires=Thu, 30 Jan 1970 12:00:00 UTC; path=/";
         document.cookie = "show_grid=true; expires=Thu, 30 Jan 2100 12:00:00 UTC; path=/";
         $('section#products').removeClass('product_show_list');
-    });
+    });	
+	if (!document.cookie.indexOf("VATMODE=") >= 0) {
+  		 $(".inc-vat").show();
+        	$(".ex-vat").hide();
+		setCookie("VATMODE", "true", 365);
+
+  	} 
 
 });
 

@@ -19,8 +19,8 @@
         <link itemprop="availability" href="https://schema.org/InStock"/>
         <meta itemprop="priceCurrency" content="{$currency.iso_code}">
 
-        <div class="current-price sale-price inc-vat">
-            <span class="price" itemprop="price"  content="{$product.price_amount}" {if $smarty.cookies.VATMODE == 'false'} style="display:none"{/if}>{$product.price}</span><span class="tax_display">VAT Included</span>
+        <div class="current-price sale-price inc-vat" {if $smarty.cookies.VATMODE == 'false'} style="display:none"{/if}>
+            <span class="price" itemprop="price"  content="{$product.price_amount}">{$product.price}</span><span class="tax_display">VAT Included</span>
         </div>
 
           {if $product.has_discount}

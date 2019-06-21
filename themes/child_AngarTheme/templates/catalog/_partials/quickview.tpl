@@ -77,10 +77,13 @@
 
                             </div>
                         </form>
-                        <button class="btn btn-primary viewmore" data-button-action="add-to-cart" type="submit">View Details</button>
+
                         {/block}
                     </div>
                     {hook h='displayProductAdditionalInfo' product=$product}
+                    <a class="button lnk_view btn quickview" href="{$product.link|escape:'html':'UTF-8'}" title="{l s='More' d='Shop.Theme.Mytheme'}">
+                        <span>{l s='More' d='Shop.Theme.Mytheme'}</span>
+                    </a>
                 </div>
             </div>
             <div class="modal-footer">

@@ -38,6 +38,22 @@ background: initial!important;
 div.user-info > div > a {
     font-weight: 900;
 }
+
+.btn.quickview:hover {
+    background: #f7f7f7;
+}
+.btn.quickview{
+    font-weight: 400;
+    line-height: 14px;
+    text-decoration: none;
+    text-align: center;
+    color: #000;
+    background: #fff;
+    border: 1px solid #D6D4D4;
+    padding: 8px 12px;
+    margin: 0 3px 4px;
+    float: right;
+}
 div#_desktop_user_info div.user-info {
     position: relative;
     bottom: 5px;
@@ -296,4 +312,5 @@ float:right;
      padding: 10px; 
     border: 0;
     width: auto;
+    float: left;
 }

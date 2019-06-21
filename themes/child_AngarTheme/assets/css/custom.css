@@ -314,3 +314,6 @@ float:right;
     width: auto;
     float: left;
 }
+.quickview .modal-body {
+    min-height: 27.75rem;
+}

@@ -36,7 +36,7 @@
 					<a class="cart_link" rel="nofollow" href="{$cart_url}">
 						<i class="material-icons shopping-cart">shopping_cart</i>
 						<span class="hidden-sm-down cart_title">{l s='Cart' d='Shop.Theme.Checkout'}:</span>
-						<span class="cart-products-count ">
+						<span class="cart-products-count hidden-sm-down">
 							{$cart.products_count}<span class='hidden-sm-down'> {if $cart.products_count == 1}{l s='Product' d='Shop.Theme.Mytheme'}{else}{l s='Products' d='Shop.Theme.Mytheme'}{/if} - {$cart.subtotals.products.value}</span>
 						</span>
 					</a>

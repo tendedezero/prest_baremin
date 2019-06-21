@@ -85,6 +85,7 @@
                         <span>{l s='More' d='Shop.Theme.Mytheme'}</span>
                     </a>
                 </div>
+
             </div>
             <div class="modal-footer">
                 

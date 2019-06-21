@@ -96,15 +96,24 @@ div#_desktop_user_info div.user-info {
 .ets_mm_megamenu {
     margin-top:0;
 }
-
-.ndc_mobile_icons{
-    padding: 5px;
+.ndc_mobile_icons {
+    padding-top: 15px;
     padding-right: 0px;
-    float: left;
-    width: 10%;}
+    padding-bottom: 15px;
+    padding-left: 10px;
+}
+.mm_extra_item .cart-preview a {
+    padding:0px;
+}
 
-.ndc_mobile_menu{
+/*.ndc_mobile_menu{
     float: right;
+}*/
+.mm_extra_item > div {
+    display: -webkit-box;
+}
+.mm_extra_item .cart-preview.inactive .header {
+    padding:0px;
 }
 #header div#_desktop_cart.header {
     z-index: 25;
@@ -123,15 +132,44 @@ background: initial;
     padding-top: 15px;
     padding-right: 0px;
     padding-bottom: 15px;
-    padding-left: 10px;
+    padding-left: 5px;
     }
+
+.rwd_menu_open {
+    z-index: 99;
+    position: absolute;
+    background: #fff;
+    border: 1px solid #d6d4d4;
+    border-top: 0;
+    max-width: 510px;
+    margin: 0 auto;
+    left: 15px;
+    position: fixed;
+    top: 42px;
+    z-index: 9;
+    right: 15px;
+}
     .ets_mm_megamenu.hook-custom {
     width: 35%;
     float: left;
         padding-right: 0px;
         margin-right:0px;
     }
-    .header-top{display: none;}
+    a#_desktop_logo img {
+        display: none;
+    }
+    .ets_mm_megamenu.hook-default {
+        clear: none;
+        padding: 0;
+        margin-top: 0;
+        top: 0;
+        position: absolute;
+    }
+    .mm_extra_item > div.mobile_logo {
+        width: 150px;
+        margin-top:5px;
+    }
+
     div#rwd_menu.ndc {
 
         background: #f6f6f6!important;
@@ -166,7 +204,7 @@ background: initial;
     font-size:10px!important;
   }
 
-nav.header-nav .user-info a {display:none}
+
 
 @media (min-width: 700px)   {
 

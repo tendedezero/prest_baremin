@@ -5,7 +5,7 @@
   <div class="header-banner">
     {hook h='displayBanner'}
    {hook h='displayMegaMenu'}
-      <div id="rwd_menu" class="hidden-md-up ndc">
+   {*   <div id="rwd_menu" class="hidden-md-up ndc">
           <div class="container">
               <div id="search-icon" class="ndc_mobile_icons"><i class="material-icons search">&#xE8B6;</i></div>
               <div id="user-icon" class="ndc_mobile_icons"><i class="material-icons logged">&#xE7FF;</i></div>
@@ -26,7 +26,7 @@
           </div>
       </div>
   </div>
-
+*}
    
 {/block}
 

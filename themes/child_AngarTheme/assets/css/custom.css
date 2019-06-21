@@ -29,7 +29,20 @@ float: right;
 font-weight: bold;
 color: #fff;
 background: initial!important;
+
 }
+#header div#_desktop_cart {
+    z-index:150;
+}
+
+div.user-info > div > a {
+    font-weight: 900;
+}
+div#_desktop_user_info div.user-info {
+    position: relative;
+    bottom: 5px;
+}
+
 .alphabet li:last-child {
     border-right: none;
 }

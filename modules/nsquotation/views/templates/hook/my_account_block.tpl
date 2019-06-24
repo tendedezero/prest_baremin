@@ -1,0 +1,1 @@
+<li><a href="{$add_to_quote_link}?id_customer={$id_customer}&nka=voir" title="Informations"><i class="icon-list-ol"></i><span>{l s='My Quotes' mod='nsquotation'}</span></a></li>

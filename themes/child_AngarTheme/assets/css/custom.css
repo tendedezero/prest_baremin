@@ -169,7 +169,17 @@ background: initial;
         width: 150px;
         margin-top:5px;
     }
+    .quickview .social-sharing {
+        padding: 0px!important;
+        /* border: 0; */
+        width: auto;
+        float: right!important;
+    }
+    .btn.quickview {
+        float:none;
+        margin:0;
 
+    }
     div#rwd_menu.ndc {
 
         background: #f6f6f6!important;

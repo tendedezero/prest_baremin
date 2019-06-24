@@ -166,6 +166,10 @@
                                     {include file='catalog/_partials/product-add-to-cart.tpl'}
                                 {/block}
 
+                                {block name='product_leasing_button'}
+                                    {hook h="displayProductAdditionalInfo" mod="nsquotation"}
+                                {/block}
+
                                 {block name='product_additional_info'}
                                     {include file='catalog/_partials/product-additional-info.tpl'}
                                 {/block}

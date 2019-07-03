@@ -131,6 +131,11 @@ background: initial;
 }
 
 @media (max-width: 767px)  {
+    .stickymenu_yes.sticky_menu_rwd .rwd_menu_open {
+        position: fixed;
+        top: 0px;
+        z-index: 9;
+    }
     .ybc-menu-button-toggle_icon {
 
         margin-right: 0px;

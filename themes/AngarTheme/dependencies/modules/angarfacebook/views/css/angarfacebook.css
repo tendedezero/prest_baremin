@@ -1,0 +1,43 @@
+@media (min-width: 768px){
+#likebox_content {
+position: fixed;
+z-index: 100;
+background: #3B5998;
+padding: 4px;
+top: 190px;
+right: -280px;
+width: 280px;
+z-index: 8000;
+}
+
+#likebox_content h4{
+display: none;
+}
+
+.likebox_tab {
+left: -40px;
+-webkit-border-radius: 10px 0 0 10px;
+-moz-border-radius: 10px 0 0 10px;
+border-radius: 10px 0 0 10px;
+-moz-box-shadow: -2px 0 2px rgba(0, 0, 0, 0.5);
+-webkit-box-shadow: -2px 0 2px rgba(0, 0, 0, 0.5);
+box-shadow: -2px 0 2px rgba(0, 0, 0, 0.5);
+top: 0px;
+position: absolute;
+width: 40px;
+height: 120px;
+background: #3B5998 center center no-repeat;
+cursor: pointer;
+background-image: url(../img/facebook_icon.png);
+}
+}
+
+
+@media (max-width: 767px){
+div#likebox_content {
+clear: both;
+text-align: center;
+margin: 10px 0;
+overflow: hidden;
+}
+}

@@ -1,0 +1,76 @@
+#home_man {
+width: 100%;
+margin: 0 0 20px;
+}
+
+#home_man .man_title {
+text-transform: uppercase;
+font-weight: 600;
+font-size: 16px;
+line-height: 30px;
+padding: 0px;
+margin-top: 0;
+margin-bottom: 14px;
+border-bottom: 1px solid #d6d4d4;
+}
+
+#home_man .man_title span {
+display: inline-block;
+border-bottom: 2px solid #F8653D;
+margin-bottom: -1px;
+}
+
+#home_man .bx-wrapper {
+float: left;
+}
+
+#home_man ul li {
+float: left;
+min-width: 234px;
+text-align: center;
+}
+
+#home_man ul li a {
+display: block;
+}
+
+#home_man ul li img {
+max-width: 100%;
+margin: 0 auto;
+}
+
+/* Manufacturer buttons */
+#home_man .slider-btn {
+font-weight: normal;
+float: right;
+width: 20px;
+height: 22px;
+line-height: 26px;
+text-align: center;
+margin-top: 4px;
+}
+
+#home_man .slider-btn a {
+cursor: pointer;
+color: #000;
+left: 0;
+right: 0;
+text-decoration: none;
+}
+
+#home_man .slider-btn a:before {
+display: none;
+}
+
+#home_man .slider-btn a.disabled {
+cursor: default;
+color: #ccc;
+}
+
+ul#bx_manufacturer li:nth-child(n+6) {
+display: none;
+}
+
+.bx-wrapper ul#bx_manufacturer li {
+display: block;
+}

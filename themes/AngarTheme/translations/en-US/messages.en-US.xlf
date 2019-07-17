@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\angarcontact\views\templates\front\nav.tpl" source-language="en-US" target-language="en-US" datatype="plaintext">
+    <body>
+      <trans-unit id="bbaff12800505b22a853e8b7f4eb6a22">
+        <source>Contact</source>
+        <target>Contact</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\angarcontact\views\templates\front\nav.tpl:24</note>
+      </trans-unit>
+      <trans-unit id="673ae02fffb72f0fe68a66f096a01347">
+        <source>Phone:</source>
+        <target>Phone:</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\angarcontact\views\templates\front\nav.tpl:19</note>
+      </trans-unit>
+      <trans-unit id="6a1e265f92087bb6dd18194833fe946b">
+        <source>Email:</source>
+        <target>Email:</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\angarcontact\views\templates\front\nav.tpl:31</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments-extra.tpl" source-language="en-US" target-language="en-US" datatype="plaintext">
+    <body>
+      <trans-unit id="dda9c06f33071c9b6fc237ee164109d8">
+        <source>Rating</source>
+        <target>Rating</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments-extra.tpl:30</note>
+      </trans-unit>
+      <trans-unit id="899139b5174d8d7a6e38a0360008a695">
+        <source>Read reviews</source>
+        <target>Read reviews</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments-extra.tpl:48</note>
+      </trans-unit>
+      <trans-unit id="c31732fda0c6f01c446db7163b214de4">
+        <source>Write a review</source>
+        <target>Write a review</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments-extra.tpl:53</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl" source-language="en-US" target-language="en-US" datatype="plaintext">
+    <body>
+      <trans-unit id="ab51a81c76d95ddc762194d58ec5db63">
+        <source>Are you sure that you want to report this comment?</source>
+        <target>Are you sure that you want to report this comment?</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl:35</note>
+      </trans-unit>
+      <trans-unit id="9a2ccd41653469a8bd94fbb84b271a14">
+        <source>Your comment has been added!</source>
+        <target>Your comment has been added!</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl:38</note>
+      </trans-unit>
+      <trans-unit id="b20968d9aecd2d075519992e9e2f1ffe">
+        <source>Your comment has been submitted and will be available once approved by a moderator.</source>
+        <target>Your comment has been submitted and will be available once approved by a moderator.</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl:39</note>
+      </trans-unit>
+      <trans-unit id="186c30cab59f6b64a453778330d4bbf0">
+        <source>New comment</source>
+        <target>New comment</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl:40</note>
+      </trans-unit>
+      <trans-unit id="e0aa021e21dddbd6d8cecec71e9cf564">
+        <source>OK</source>
+        <target>OK</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl:41</note>
+      </trans-unit>
+      <trans-unit id="4b3b9db8c9784468094acde0f8bf7071">
+        <source>Grade</source>
+        <target>Grade</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl:57</note>
+      </trans-unit>
+      <trans-unit id="fbe2625bf3673be380d043a4bf873f28">
+        <source>Be the first to write your review</source>
+        <target>Be the first to write your review</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl:103</note>
+      </trans-unit>
+      <trans-unit id="08c7d6f84301ee7d0aab0a5f67edc419">
+        <source>No customer reviews for the moment.</source>
+        <target>No customer reviews for the moment.</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl:106</note>
+      </trans-unit>
+      <trans-unit id="7966126831926ad29c528b239d69f855">
+        <source>Write your review</source>
+        <target>Write your review</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl:136</note>
+      </trans-unit>
+      <trans-unit id="221e705c06e231636fdbccfdd14f4d5c">
+        <source>Your name</source>
+        <target>Your name</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl:159</note>
+      </trans-unit>
+      <trans-unit id="45dacce3e2bc0f7bebde95098b9326a8">
+        <source>Title for your review</source>
+        <target>Title for your review</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl:163</note>
+      </trans-unit>
+      <trans-unit id="3421ad00975533fbbd5f17d2cb568125">
+        <source>Your review</source>
+        <target>Your review</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl:166</note>
+      </trans-unit>
+      <trans-unit id="94966d90747b97d1f0f206c98a8b1ac3">
+        <source>Send</source>
+        <target>Send</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl:172</note>
+      </trans-unit>
+      <trans-unit id="e81c4e4f2b7b93b481e13a8553c2ae1b">
+        <source>or</source>
+        <target>or</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl:173</note>
+      </trans-unit>
+      <trans-unit id="ea4788705e6873b424c65e91c2846b19">
+        <source>Cancel</source>
+        <target>Cancel</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl:173</note>
+      </trans-unit>
+      <trans-unit id="70397c4b252a5168c5ec003931cea215">
+        <source>Required fields</source>
+        <target>Required fields</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments.tpl:175</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\tab.tpl" source-language="en-US" target-language="en-US" datatype="plaintext">
+    <body>
+      <trans-unit id="34e80a799d144cfe4af46815e103f017">
+        <source>Reviews</source>
+        <target>Reviews</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\tab.tpl:3</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments_reviews.tpl" source-language="en-US" target-language="en-US" datatype="plaintext">
+    <body>
+      <trans-unit id="d844ad9202d0de8442498775ba6ef819">
+        <source>Review(s)</source>
+        <target>Review(s)</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\productcomments\views\templates\front\productcomments_reviews.tpl:39</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\smartblog\views\templates\front\category_loop.tpl" source-language="en-US" target-language="en-US" datatype="plaintext">
+    <body>
+      <trans-unit id="24ad95557100e42e28ea73335e4e8ad1">
+        <source>Posted by</source>
+        <target>Posted by</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\smartblog\views\templates\front\category_loop.tpl:32</note>
+      </trans-unit>
+      <trans-unit id="f386bccd2fe9a73a61bee9b9b414a61c">
+        <source> Comments</source>
+        <target> Comments</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\smartblog\views\templates\front\category_loop.tpl:65</note>
+      </trans-unit>
+      <trans-unit id="372e4263f5a84e6167ced32f982507e9">
+        <source> views</source>
+        <target> views</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\smartblog\views\templates\front\category_loop.tpl:71</note>
+      </trans-unit>
+      <trans-unit id="43340e6cc4e88197d57f8d6d5ea50a46">
+        <source>Read more</source>
+        <target>Read more</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\smartblog\views\templates\front\category_loop.tpl:105</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\smartblog\views\templates\front\postcategory.tpl" source-language="en-US" target-language="en-US" datatype="plaintext">
+    <body>
+      <trans-unit id="b27e535f64e5a5fc4c95910eb48c6cde">
+        <source>All Post</source>
+        <target>All Post</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\smartblog\views\templates\front\postcategory.tpl:37</note>
+      </trans-unit>
+      <trans-unit id="5c109ac48b3cfcce1b09a084b7139ce1">
+        <source>All Blog News</source>
+        <target>All Blog News</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\smartblog\views\templates\front\postcategory.tpl:57</note>
+      </trans-unit>
+      <trans-unit id="98574c0a37f23fba0cb1f608c8a8f547">
+        <source>No Post in Category</source>
+        <target>No Post in Category</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\smartblog\views\templates\front\postcategory.tpl:62</note>
+      </trans-unit>
+      <trans-unit id="6cd5964b76612e3d3a9b8493b6d1ea1b">
+        <source>No Post in Blog</source>
+        <target>No Post in Blog</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\smartblog\views\templates\front\postcategory.tpl:64</note>
+      </trans-unit>
+      <trans-unit id="b4e6101378d2a08d80df7e5da0625128">
+        <source>Showing</source>
+        <target>Showing</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\smartblog\views\templates\front\postcategory.tpl:110</note>
+      </trans-unit>
+      <trans-unit id="01b6e20344b68835c5ed1ddedf20d531">
+        <source>to</source>
+        <target>to</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\smartblog\views\templates\front\postcategory.tpl:110</note>
+      </trans-unit>
+      <trans-unit id="8bf8854bebe108183caeb845c7676ae4">
+        <source>of</source>
+        <target>of</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\smartblog\views\templates\front\postcategory.tpl:110</note>
+      </trans-unit>
+      <trans-unit id="453aceb005ceaf54a47da15fee8b2a26">
+        <source>Pages</source>
+        <target>Pages</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\smartblog\views\templates\front\postcategory.tpl:110</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\smartbloghomelatestnews\views\templates\front\smartblog_latest_news.tpl" source-language="en-US" target-language="en-US" datatype="plaintext">
+    <body>
+      <trans-unit id="099afb04ddf259fff6a50c50d7eae060">
+        <source>Latest News</source>
+        <target>Latest News</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\modules\smartbloghomelatestnews\views\templates\front\smartblog_latest_news.tpl:2</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="C:\wamp64\www\demo\presta1731\themes\AngarTheme\templates\catalog\listing\category.tpl" source-language="en-US" target-language="en-US" datatype="plaintext">
+    <body>
+      <trans-unit id="f73cc399b5ce12735a57f03414f09ef9">
+        <source>Subcategories</source>
+        <target>Subcategories</target>
+        <note>Context:
+File: C:\wamp64\www\demo\presta1731\themes\AngarTheme\templates\catalog\listing\category.tpl:59</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

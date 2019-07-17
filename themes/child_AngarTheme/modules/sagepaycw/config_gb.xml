@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>sagepaycw</name>
+    <displayName><![CDATA[Sage Pay integration]]></displayName>
+    <version><![CDATA[4.0.143]]></version>
+    <description><![CDATA[This module allows you to process payments via Sage Pay.]]></description>
+    <author><![CDATA[customweb ltd]]></author>
+    <tab><![CDATA[checkout]]></tab>
+	<confirmUninstall><![CDATA[Are you sure you wish to uninstall the module and delete all settings?]]></confirmUninstall>
+    <is_configurable>1</is_configurable>
+    <need_instance>1</need_instance>
+	<limited_countries></limited_countries>
+</module>

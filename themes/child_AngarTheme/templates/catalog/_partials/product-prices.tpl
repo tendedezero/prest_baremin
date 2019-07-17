@@ -67,7 +67,7 @@
             {/if}
         {/if}
     </div>
-
+{DEBUG}
     <div class="clearfix"></div> {* AngarTheme *}
 
     </div>

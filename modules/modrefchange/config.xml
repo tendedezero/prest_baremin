@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <module>
+            <name>modrefchange</name>
+            <displayName><![CDATA[Order referentie wijzigings module]]></displayName>
+            <version><![CDATA[1.5.4]]></version>
+            <description><![CDATA[Module voor het wijzigen van de order referentie door gebruik te maken van de Order ID EN/OF Cart ID]]></description>
+            <author><![CDATA[PrestadevNL]]></author>
+            <tab><![CDATA[administration]]></tab>
+            <is_configurable>1</is_configurable>
+            <need_instance>1</need_instance>
+	<limited_countries></limited_countries>
+        </module>

@@ -1,0 +1,1 @@
+<div class="sagepaycw-widget">{$widget nofilter}</div>

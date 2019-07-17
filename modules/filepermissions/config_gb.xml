@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>filepermissions</name>
+    <displayName><![CDATA[File permissions]]></displayName>
+    <version><![CDATA[1.0.2]]></version>
+    <description><![CDATA[This tool will change directory permissions to 755 and file permissions to 644]]></description>
+    <author><![CDATA[Mathias Reker]]></author>
+    <tab><![CDATA[administration]]></tab>
+    <is_configurable>1</is_configurable>
+    <need_instance>1</need_instance>
+	<limited_countries></limited_countries>
+</module>

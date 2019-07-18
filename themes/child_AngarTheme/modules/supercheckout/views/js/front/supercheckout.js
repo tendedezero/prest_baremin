@@ -304,8 +304,7 @@ $(document).ready(function() {
     });
 
     $("#supercheckout_confirm_order").click(function() {
-        placeOrder();
-    });
+	     placeOrder();    });
 
     //BOC - Remove Field Errors on active input of addresses
     $('#checkoutBillingAddress input, #checkoutShippingAddress input').on('focus', function() {
@@ -1829,8 +1828,10 @@ function loadPaymentAddtionalInfo() {
     if (!$('input:radio[name="payment_method"]').length) {
         return;
     }
+	$('input:radio[id="payment-option-4"]').attr('data-module-name','sagepaycw');
     var selected_option = $('input:radio[name="payment_method"]:checked').attr('id');
     var payment_module_name = $('input:radio[name="payment_method"]:checked').attr('data-module-name');
+	
     if ($('#payment_methods_additional_container').length) {
         $('#payment_methods_additional_container .payment-additional-info').hide();
         if (payment_module_name == 'kbcodwithfee') {                                 // Code added by Priyanshu on 21-April-2018
@@ -1844,6 +1845,7 @@ function loadPaymentAddtionalInfo() {
     if (!$('#' + selected_option).hasClass('binary')) {
         $('#placeorderButton').show();
     }
+
     $.ajax({
         type: 'POST',
         headers: {
@@ -1869,6 +1871,7 @@ function loadPaymentAddtionalInfo() {
             if (jsonData['html'] != '') {
                 $('#velsof_payment_dialog .velsof_content_section').html(jsonData['html']);
             }
+	
             // Changes made by rishabh jain
             if (typeof initStripeOfficial != 'undefined' && $.isFunction(initStripeOfficial)) {
                 var stripe_isInit = false;
@@ -1928,12 +1931,18 @@ function placeOrder() {
             }, "fast");
             return;
         }
-    }
+  
+    }var payment_module_name = $('input:radio[name="payment_method"]:checked').attr('data-module-name');
+    var payment_module_id = $('input:radio[name="payment_method"]:checked').attr('id');
+	$('#pay-with-' + payment_module_id).click();
 
-    //    if (!confirm(order_place_confirmation)) {
-    //        return;
-    //    }
-    var payment_module_name = $('input:radio[name="payment_method"]:checked').attr('data-module-name');
+        if (!confirm(order_place_confirmation)) {
+
+           return;
+        }
+	
+ 
+
     var errors = '';
     $.ajax({
         type: 'POST',
@@ -2128,6 +2137,7 @@ function placeOrder() {
                                     alert('Error with selected Payment Method. Please contact with store.');
                                 }
                             } else {
+ 
                                 if ($('.' + selected_payment + '_info_container #stripe-payment-form').length) {
                                     $('#velsof_payment_dialog .velsof_content_section #pay-with-form').html('');
                                     $('#stripe-payment-form').submit();

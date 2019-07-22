@@ -15,7 +15,25 @@
 
 var check_guest_checkout = "";
 $(document).ready(function() {
+   
 
+    //clear cart after removing the products from block cart.
+    document.addEventListener('click', function (event) {
+        if (event.target.matches('.ajax_cart_block_remove_link')) {
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        }
+    });
+
+    /* Start: Changes done by Anshul for adding datepicker*/
+    if ($(".kb_sc_custom_field_date").length) {
+        $(".kb_sc_custom_field_date").datepicker({ dateFormat: 'yy-mm-dd' });
+    }
+    
+    $('.kbfiletype').addClass('form-control');
+    /* End: Changes done by Anshul for adding datepicker*/
+    
     if ($("#divkbmobilelogin").length == 1) {
         $("#divkbmobilelogin").dialog({
             autoOpen: false,
@@ -65,7 +83,19 @@ $(document).ready(function() {
     if (typeof supercheckout_subscribe_mailchimp != 'undefined') {
         $("#email").blur(function() {
             var email = $("#email").val();
-            subscribeCustomer(email);
+            subscribeCustomer(email, 'mailchimp');
+        });
+    }
+    if (typeof supercheckout_subscribe_sendinblue != 'undefined') {
+        $("#email").blur(function() {
+            var email = $("#email").val();
+            subscribeCustomer(email, 'SendinBlue');
+        });
+    }
+    if (typeof supercheckout_subscribe_klaviyo != 'undefined') {
+        $("#email").blur(function() {
+            var email = $("#email").val();
+            subscribeCustomer(email, 'klaviyo');
         });
     }
     $('#' + page_lang_code + '_content').show();
@@ -80,12 +110,28 @@ $(document).ready(function() {
     //to hide social login block when by default guest checkout is selected
     if ($('input:radio[name=checkout_option]:checked').val() == 1) {
         $('#social_login_block').hide();
+        // changes by rishabh jain for google recaptcha
+        if ($("#supercheckout-new-customer-form").length) {
+            if ($('#html_element_login').length) {
+                $("#supercheckout-new-customer-form").append($('#html_element_login'));
+                $('#html_element_login').show();
+            }
+        }
     }
 
     //To hide Delivery address block when by default login checkout is selected
     if ($('input:radio[name=checkout_option]:checked').val() == 0) {
         $('#checkoutShippingAddress').hide();
         $('#checkoutBillingAddress').hide();
+        // changes by rishabh jain for google recaptcha integration
+        if ($("#forgotpasswordlink").length) {
+        if ($('#html_element_login').length) {
+            // changes by rishabh jain for google recaptcha
+            $("#forgotpasswordlink").append($('#html_element_login'));
+            $('#html_element_login').show();
+            }
+        }
+        // changes over
     }
 
     // Login Action
@@ -132,6 +178,14 @@ $(document).ready(function() {
             updateInvoiceAddress();
         }
         loadCarriers();
+        /*
+         * Added by Anshul
+         */
+        $('.shipping_update_form').remove();
+        $('#supercheckout_update_address_button').remove();
+        /*
+         * Added by Anshul
+         */
     });
 
     $('#checkoutShippingAddress').on('click', '#use_for_invoice', function() {
@@ -195,12 +249,26 @@ $(document).ready(function() {
         buildAddressBlock($(this).val(), 'invoice');
         _loadInvoiceAddress();
         checkDniandVatNumber('invoice');
+        /*
+         * Added by Anshul
+         */
+        $('.payment_update_form').remove();
+        $('#supercheckout_update_address_button').remove();
+        /*
+         * Added by Anshul
+         */
     });
 
     $('input[name="payment_address_value"]').on('click', function() {
         if ($(this).val() == 0) {
             $('#payment-new').slideUp();
         } else if ($(this).val() == 1) {
+            /* Code added by Anshul to show the new address form again if update form is cancelled. */
+            if (!$('#checkoutBillingAddress #payment-new').length) {
+                $('#payment-new').insertAfter($('#uniform-payment-address-new').closest('.supercheckout-extra-wrap'));
+                $('#payment-new').show();
+            }
+            /* Code added by Anshul to show the new address form again if update form is cancelled. */
             $('#payment-new').slideDown();
             checkDniandVatNumber('invoice');
             checkZipCode(this, false);
@@ -248,10 +316,19 @@ $(document).ready(function() {
     //BOC - Cart Detail Handling Event
     if (update_qty_button == 1) {
         //quantitty change on blur
-        $('#confirmCheckout').on('blur', '.quantitybox', function() {
+        $('#confirmCheckout').on('blur', '.quantitybox', function () {
             var element = $(this).attr("name");
             var hidden_qty = parseInt($('#confirmCheckout input[name=' + element + '_hidden]').val());
             var user_qty = parseInt($('#confirmCheckout  input[name=' + element + ']').val());
+            // chnages by rishabh jain for min quantity
+            var min_qty = parseInt($('#confirmCheckout input[name=' + element + '_minqty]').val());
+            if (min_qty > 1 && user_qty < min_qty) {
+                var id = $(this).attr("name").replace('quantity_', '');
+                deleteProductFromCart(id);
+            }
+            user_qty = parseInt(user_qty);
+            $('#confirmCheckout  input[name=' + element + ']').val(user_qty);
+            // changes over
             if (hidden_qty > user_qty) {
                 updateQty(element, 'down', (hidden_qty - user_qty), false);
             } else if (hidden_qty < user_qty) {
@@ -303,8 +380,10 @@ $(document).ready(function() {
         loadPaymentAddtionalInfo();
     });
 
-    $("#supercheckout_confirm_order").click(function() {
-	     placeOrder();    });
+    $("#supercheckout_confirm_order").click(function () {
+
+        placeOrder();
+    });
 
     //BOC - Remove Field Errors on active input of addresses
     $('#checkoutBillingAddress input, #checkoutShippingAddress input').on('focus', function() {
@@ -622,6 +701,13 @@ function checkout_option(e) {
             $('#checkoutShippingAddress').hide();
             $('#checkoutBillingAddress').hide();
             $('#supercheckout_save_address_button').hide();
+            // changes by rishabh jain for google recaptcha
+            if ($("#forgotpasswordlink").length) {
+            if ($('#html_element_login').length) {
+                $("#forgotpasswordlink").append($('#html_element_login'));
+                $('#html_element_login').show();
+                }
+            }
         } else if ($(e).val() == 1) {
             if (!$('#use_for_invoice').is(':checked')) {
                 $('#checkoutBillingAddress').show();
@@ -632,6 +718,13 @@ function checkout_option(e) {
             $('#supercheckout-new-customer-form').show();
             $('#checkoutShippingAddress').show();
             $('#supercheckout_save_address_button').show();
+            // changes by rishabh jain for google recaptcha
+            if ($("#supercheckout-new-customer-form").length) {
+            if ($('#html_element_login').length) {
+                $("#supercheckout-new-customer-form").append($('#html_element_login'));
+                    $('#html_element_login').show();
+                }
+            }
         } else {
             if (!$('#use_for_invoice').is(':checked')) {
                 $('#checkoutBillingAddress').show();
@@ -645,6 +738,13 @@ function checkout_option(e) {
                 $('#supercheckout_save_address_button').hide();
             } else {
                 $('#supercheckout_save_address_button').show();
+            }
+            // changes by rishabh jain for google recaptcha
+            if ($("#supercheckout-new-customer-form").length) {
+            if ($('#html_element_login').length) {
+                $("#supercheckout-new-customer-form").append($('#html_element_login'));
+                $('#html_element_login').show();
+                }
             }
         }
     } else // because in case of virtual cart we need to hide delivery address block
@@ -657,6 +757,13 @@ function checkout_option(e) {
             $('#checkoutShippingAddress').hide();
             $('#checkoutBillingAddress').hide();
             $('#supercheckout_save_address_button').hide();
+            // changes by rishabh jain for google recaptcha
+            if ($("#supercheckout-new-customer-form").length) {
+            if ($('#html_element_login').length) {
+                $("#supercheckout-new-customer-form").append($('#html_element_login'));
+                $('#html_element_login').show();
+                }
+            }
         } else if ($(e).val() == 1) {
             $('#supercheckout-login-box').hide();
             $('#new_customer_password').hide();
@@ -666,6 +773,13 @@ function checkout_option(e) {
             $('#use_for_invoice').prop('checked', false);
             $('#checkoutBillingAddress').slideDown();
             $('#supercheckout_save_address_button').show();
+            // changes by rishabh jain for google recaptcha
+            if ($("#forgotpasswordlink").length) {
+            if ($('#html_element_login').length) {
+                $("#forgotpasswordlink").append($('#html_element_login'));
+                $('#html_element_login').show();
+                }
+            }
         } else {
             $('#supercheckout-login-box').hide();
             $('#new_customer_password').show();
@@ -679,6 +793,13 @@ function checkout_option(e) {
             } else {
                 $('#supercheckout_save_address_button').show();
             }
+            // changes by rishabh jain for google recaptcha
+            if ($("#supercheckout-new-customer-form").length) {
+            if ($('#html_element_login').length) {
+                $("#supercheckout-new-customer-form").append($('#html_element_login'));
+                $('#html_element_login').show();
+                }
+            }
         }
     }
 }
@@ -689,6 +810,12 @@ function shipping_address_value(e) {
         loadcarriers = true;
         $('#shipping-new').slideUp();
     } else if ($(e).val() == 1) {
+        /* Code added by Anshul to show the new address form again if update form is cancelled. */
+        if (!$('#checkoutShippingAddress #shipping-new').length) {
+            $('#shipping-new').insertAfter($('#uniform-shipping-address-new').closest('.supercheckout-extra-wrap'));
+            $('#shipping-new').show();
+        }
+        /* Code added by Anshul to show the new address form again if update form is cancelled. */
         $('#shipping-new').slideDown();
         checkDniandVatNumber('delivery');
         if ($('input[name="shipping_address[postcode]"]').length && $('input[name="shipping_address[postcode]"]').val() != '') {
@@ -778,11 +905,11 @@ function updateKbGiftMessage() {
             dataType: "json",
             data: 'ajax=true' + '&msg_sender=' + msg_sender + '&msg_receiver=' + msg_reciever + '&kb_gift_msg=' + gift_message + '&method=updateGiftCardMessage&token=' + prestashop.static_token,
             beforeSend: function () {
-                $('.velsof_sc_overlay').show();
+                $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
                 $('#kb_gift_message_submit').attr('disabled', true);
             },
             complete: function () {
-                $('.velsof_sc_overlay').hide();
+                $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
                 $("#divKbgiftMessage").dialog('close');
                 $('#kb_gift_message_submit').attr('disabled', false);
                 $('#kb_gift_message_submit').val(update_text);
@@ -877,6 +1004,7 @@ function setGuestInformation() {
 }
 
 function statelist(selected_country, selected_state, element) {
+    console.log(selected_country);
     var state_html = '';
     //<option value="0">Select State</option>
     var has_states = false;
@@ -962,12 +1090,12 @@ function loadCarriers() {
         dataType: "json",
         data: 'ajax=true' + '&id_country=' + id_country + '&id_state=' + id_state + '&postcode=' + postcode + '&vat_number=' + vat_code + '&id_address_delivery=' + id_address_delivery + '&method=loadCarriers&token=' + prestashop.static_token,
         beforeSend: function() {
-            $('.velsof_sc_overlay').show();
+            $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
             $('#shippingMethodLoader').show();
             $('#shipping_method_update_warning .permanent-warning').remove();
         },
         complete: function() {
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
             $('#shippingMethodLoader').hide();
         },
         success: function(jsonData) {
@@ -984,7 +1112,7 @@ function loadCarriers() {
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
             $('#shipping_method_update_warning').html('<div class="permanent-warning">' + errors + '</div>');
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
         }
     });
 }
@@ -1004,11 +1132,11 @@ function updateCarrierOnDeliveryChange() {
         data: 'ajax=true' + delivery_option + '&method=updateCarrier&token=' + prestashop.static_token,
         beforeSend: function() {
             $('#shipping_method_update_warning .permanent-warning').remove();
-            $('.velsof_sc_overlay').show();
+            $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
             $('#shippingMethodLoader').show();
         },
         complete: function() {
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
             $('#shippingMethodLoader').hide();
         },
         success: function(jsonData) {
@@ -1017,12 +1145,13 @@ function updateCarrierOnDeliveryChange() {
                 loadCart();
             } else {
                 loadCart();
+                
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
             $('#shipping_method_update_warning').html('<div class="permanent-warning">' + errors + '</div>');
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
         }
     });
 }
@@ -1034,7 +1163,7 @@ $("#velsof_supercheckout_form").bind("keypress", function (e) {
 });
 
 function isPressedEnter(evt) {
-    
+
 }
 function updateDeliveryExtraChange() {
     var messagePattern = /[<>{}]/i;
@@ -1078,7 +1207,7 @@ function updateDeliveryExtraChange() {
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
                 displayGeneralError(errors);
-                $('.velsof_sc_overlay').hide();
+                $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
             }
         });
     }
@@ -1097,25 +1226,31 @@ function loadCart() {
         data: 'ajax=true' + '&method=loadCart&token=' + prestashop.static_token,
         beforeSend: function() {
             $('#cart_update_warning .permanent-warning').remove();
-            $('.velsof_sc_overlay').show();
+            $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
             $('#confirmLoader').show();
         },
         success: function(jsonData) {
             if (jsonData['redirect'] == true) {
                 location.reload();
             } else {
-                $('.velsof_sc_overlay').hide();
+                $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
                 $('#confirmLoader').hide();
                 $('#confirmCheckout').html(jsonData['html']);
                 loadPayments();
 
             }
             checkCustomFieldBlocks();
+            // Start: Added by Anshul
+            $('.kbfiletype').addClass('form-control');
+            if ($(".kb_sc_custom_field_date").length) {
+            $(".kb_sc_custom_field_date").datepicker({ dateFormat: 'yy-mm-dd' });
+             // End: Added by Anshul
+    }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
             $('#cart_update_warning').html('<div class="permanent-warning">' + errors + '</div>');
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
         }
     });
 }
@@ -1207,7 +1342,7 @@ function checkDniandVatNumber(type) {
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
             $('#checkoutShippingAddress .supercheckout-checkout-content .permanent-warning').html(errors);
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
         }
     });
 }
@@ -1282,7 +1417,7 @@ function isValidVatNumber(type) {
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
             displayGeneralError(errors);
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
         }
     });
 }
@@ -1341,7 +1476,7 @@ function checkZipCode(e, isCarrierLoad) {
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
                 $('#' + container + ' .supercheckout-checkout-content').html('<div class="permanent-warning">' + errors + '</div>');
-                $('.velsof_sc_overlay').hide();
+                $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
             }
         });
     }
@@ -1367,7 +1502,7 @@ function updateInvoiceStatus(element) {
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
             $('.input-different-shipping').parent().append('<div class="errorsmall">' + errors + '</div>');
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
         }
     });
 }
@@ -1404,7 +1539,7 @@ function _loadInvoiceAddress() {
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
             displayGeneralError(errors);
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
         }
     });
 }
@@ -1422,11 +1557,11 @@ function callCoupon() {
         dataType: 'json',
         beforeSend: function() {
             $('#cart_update_warning .permanent-warning').remove();
-            $('.velsof_sc_overlay').show();
+            $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
             $('#confirmLoader').show();
         },
         complete: function() {
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
             $('#confirmLoader').hide();
         },
         success: function(json) {
@@ -1450,7 +1585,7 @@ function callCoupon() {
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             var error = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
             $('#cart_update_warning').html('<div class="permanent-warning">' + error + '</div>');
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
         }
     });
 }
@@ -1468,11 +1603,11 @@ function removeDiscount(id_cart_rule) {
         dataType: 'json',
         beforeSend: function() {
             $('#cart_update_warning .permanent-warning').remove();
-            $('.velsof_sc_overlay').show();
+            $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
             $('#confirmLoader').show();
         },
         complete: function() {
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
             $('#confirmLoader').hide();
         },
         success: function(json) {
@@ -1495,22 +1630,33 @@ function removeDiscount(id_cart_rule) {
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             var error = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
             $('#cart_update_warning').html('<div class="permanent-warning">' + error + '</div>');
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
         }
     });
 }
 
 function upQty(element) {
+    // chnages by rishabh jain for min quantity
+//    var min_qty = parseInt($('#confirmCheckout input[name=' + element + '_minqty]').val());
     updateQty(element, 'up', 1, true);
 }
 
 function downQty(element) {
+
     var hidden = parseInt($('#confirmCheckout input[name=' + element + '_hidden]').val());
+    // chnages by rishabh jain for min quantity
+    var user_qty = hidden - 1;
+    var min_qty = parseInt($('#confirmCheckout input[name=' + element + '_minqty]').val());
+    if (min_qty > 1 && user_qty < min_qty) {
+        var id = element.replace('quantity_', '');
+        deleteProductFromCart(id);
+    }
+
     if (hidden == 1) {
         var id = element.replace('quantity_', '');
         deleteProductFromCart(id);
     } else {
-        updateQty(element, 'down', 1, true);
+        updateQty(element, 'down', hidden - user_qty, true);
     }
 }
 
@@ -1519,7 +1665,15 @@ function updateQtyByBtn(element) {
     var exp = new RegExp("^[0-9]+$");
     var hidden = $('#confirmCheckout input[name=' + element + '_hidden]').val();
     var input = $('#confirmCheckout  input[name=' + element + ']').val();
+
     if (exp.test(input) == true) {
+        // // chnages by rishabh jain for min quantity
+        var min_qty = parseInt($('#confirmCheckout input[name=' + element + '_minqty]').val());
+        if (min_qty > 1 && input < min_qty) {
+            var id = element.replace('quantity_', '');
+            deleteProductFromCart(id);
+        }
+        // changes over
         var QtyToUpDate = parseInt(input) - parseInt(hidden);
         var calculated_qty = parseInt(QtyToUpDate);
         if (calculated_qty == 0) {
@@ -1572,11 +1726,11 @@ function updateQty(element, action, qty, is_step_action) {
             dataType: 'json',
             beforeSend: function() {
                 $('#cart_update_warning .permanent-warning').remove();
-                $('.velsof_sc_overlay').show();
+                $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
                 $('#confirmLoader').show();
             },
             complete: function() {
-                $('.velsof_sc_overlay').hide();
+                $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
                 $('#confirmLoader').hide();
             },
             success: function(jsonData) {
@@ -1586,6 +1740,8 @@ function updateQty(element, action, qty, is_step_action) {
                         // soc by rishabh jain
                         var new_qty = $('input[name=' + element + ']').val();
                         if (is_step_action == true) {
+                            // chnages by rishabh jain for min quantity
+                            var min_qty = parseInt($('#confirmCheckout input[name=' + element + '_minqty]').val());
                             if (action == 'up') {
                                 new_qty = parseInt(new_qty) + 1;
                             } else if (action == 'down') {
@@ -1625,6 +1781,8 @@ function updateQty(element, action, qty, is_step_action) {
                 } else {
                     var new_qty = $('input[name=' + element + ']').val();
                     if (is_step_action == true) {
+                        // chnages by rishabh jain for min quantity
+                        var min_qty = parseInt($('#confirmCheckout input[name=' + element + '_minqty]').val());
                         if (action == 'up') {
                             new_qty = parseInt(new_qty) + 1;
                         } else if (action == 'down') {
@@ -1649,7 +1807,7 @@ function updateQty(element, action, qty, is_step_action) {
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
                 $('#cart_update_warning').html('<div class="permanent-warning">' + errors + '</div>');
-                $('.velsof_sc_overlay').hide();
+                $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
             }
         });
     } else {
@@ -1714,7 +1872,7 @@ function deleteProductFromCart(id) {
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
             $('#cart_update_warning').html('<div class="permanent-warning">' + errors + '</div>');
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
         }
     });
 }
@@ -1802,15 +1960,15 @@ function loadPayments() {
         data: 'ajax=true' + params + '&method=loadPayment&token=' + prestashop.static_token,
         beforeSend: function() {
             $('#payment_method_update_warning .permanent-warning').remove();
-            $('.velsof_sc_overlay').show();
+            $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
             $('#paymentMethodLoader').show();
         },
         complete: function() {
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
             $('#paymentMethodLoader').hide();
         },
         success: function(jsonData) {
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
             $('#paymentMethodLoader').hide();
             $('#payment-method').html(jsonData['html']);
             set_column_inside_height();
@@ -1819,7 +1977,7 @@ function loadPayments() {
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
             $('#payment_method_update_warning').html('<div class="permanent-warning">' + errors + '</div>');
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
         }
     });
 }
@@ -1828,10 +1986,8 @@ function loadPaymentAddtionalInfo() {
     if (!$('input:radio[name="payment_method"]').length) {
         return;
     }
-	$('input:radio[id="payment-option-4"]').attr('data-module-name','sagepaycw');
     var selected_option = $('input:radio[name="payment_method"]:checked').attr('id');
     var payment_module_name = $('input:radio[name="payment_method"]:checked').attr('data-module-name');
-	
     if ($('#payment_methods_additional_container').length) {
         $('#payment_methods_additional_container .payment-additional-info').hide();
         if (payment_module_name == 'kbcodwithfee') {                                 // Code added by Priyanshu on 21-April-2018
@@ -1845,7 +2001,6 @@ function loadPaymentAddtionalInfo() {
     if (!$('#' + selected_option).hasClass('binary')) {
         $('#placeorderButton').show();
     }
-
     $.ajax({
         type: 'POST',
         headers: {
@@ -1858,20 +2013,19 @@ function loadPaymentAddtionalInfo() {
         data: 'ajax=true' + '&selected_payment_method_id=' + $('input:radio[name="payment_method"]:checked').val() + '&method=loadPaymentAdditionalInfo&token=' + prestashop.static_token,
         beforeSend: function() {
             $('#payment_method_update_warning .permanent-warning').remove();
-            $('.velsof_sc_overlay').show();
+            $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
             $('#paymentMethodLoader').show();
         },
         complete: function() {
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
             $('#paymentMethodLoader').hide();
         },
         success: function(jsonData) {
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
             $('#paymentMethodLoader').hide();
             if (jsonData['html'] != '') {
                 $('#velsof_payment_dialog .velsof_content_section').html(jsonData['html']);
             }
-	
             // Changes made by rishabh jain
             if (typeof initStripeOfficial != 'undefined' && $.isFunction(initStripeOfficial)) {
                 var stripe_isInit = false;
@@ -1890,7 +2044,7 @@ function loadPaymentAddtionalInfo() {
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
             $('#payment_method_update_warning').html('<div class="permanent-warning">' + errors + '</div>');
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
         }
     });
     if (typeof changeCODPaymentMethodFeeCart == 'function') {
@@ -1902,6 +2056,9 @@ function display_progress(value) {
     $('#supercheckout_confirm_order').attr('disabled', true);
     $('#submission_progress_overlay').css('height', $('#supercheckout-fieldset').height());
     $('#supercheckout_order_progress_status_text').html(value + '%');
+    /* Code added by Anshul for showing new progress bar*/
+    $('#supercheckout_order_progress_status_text').parent().css('width',value + '%');
+     /* Code added by Anshul for showing new progress bar*/
     $('#submission_progress_overlay').show();
     $('#supercheckout_order_progress_bar').show();
 }
@@ -1913,10 +2070,117 @@ function hide_progress() {
     $('#supercheckout_order_progress_status_text').html('0%');
 }
 
-function placeOrder() {
-    $('.errorsmall').remove();
-    hideGeneralError();
+/*
+ * 
+ * @param {type} element
+ * @returns {undefined}
+ * Added by Anshul to upload the images using AJAX
+ */
 
+function upload() {
+    
+    $.ajax({
+        url: $('#module_url').val() + '&ajax=true&method=SaveFilesCustomField&rand=' + new Date().getTime(),
+        type: 'post',
+        data: fd,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        success: function (json) {
+           if (json['error_occured'] == 1) {
+                hide_progress();
+                $("html, body").animate({scrollTop: 0}, "fast");
+                displayGeneralError(json['msg']);
+           } else {
+                display_progress(10);
+                kbAfterPlaceOrder();
+           }
+        }
+    });
+}
+
+/*
+ * Added by Anshul to validate the images before uploading
+ */
+
+function validateFilesData()
+{
+    var error = false;
+    $(".errorsmall_custom").hide();
+    $(".errorsmall_custom").parent().parent().css("border-color", "#CCCCCC");
+    $('input[type="file"]').each(function() {
+        if ($(this).closest('.supercheckout-blocks').find('.supercheckout-required').length) {
+            if ($(this).prop('files').length == 0) {
+                error = true;
+                hide_progress();
+                $("html, body").animate({scrollTop: 0}, "fast");
+                $(this).next().html(upload_file_text);
+                $(this).next().show();
+                $(this).parent().parent().css("border-color", "#FF0000");
+            } else {
+                var extension_arr = ['pdf','jpg','jpeg', 'png', 'doc', 'docx', 'csv', 'gif'];
+                var file_ext = $(this).val().trim().substring($(this).val().trim().lastIndexOf('.') + 1).toLowerCase();
+                if ($.inArray(file_ext, extension_arr) == -1) {
+                    error = true;
+                    hide_progress();
+                    $("html, body").animate({scrollTop: 0}, "fast");
+                    $(this).next().html(valid_format_file_text);
+                    $(this).next().show();
+                    $(this).parent().parent().css("border-color", "#FF0000");
+                }
+            }
+        } else {
+            if ($(this).prop('files').length != 0) {
+                var extension_arr = ['pdf', 'jpg', 'jpeg', 'png', 'doc', 'docx', 'csv', 'gif'];
+                var file_ext = $(this).val().trim().substring($(this).val().trim().lastIndexOf('.') + 1).toLowerCase();
+                if ($.inArray(file_ext, extension_arr) == -1) {
+                    error = true;
+                    hide_progress();
+                    $("html, body").animate({scrollTop: 0}, "fast");
+                    $(this).next().html(valid_format_file_text);
+                    $(this).next().show();
+                    $(this).parent().parent().css("border-color", "#FF0000");
+            }
+        }
+        }
+    });
+    if (error) {
+        return false;
+    }
+    return true;
+}
+
+var fd = new FormData();
+// This function is called when ajax request is made
+function placeOrder() {
+    // changes by rishabh jain for product availablility by zipcode
+    if ($('#product_not_available .alert').length) {
+//            if (typeof product_not_available !== 'undefined') {
+//                if (product_not_available) {
+        displayGeneralError(zipcode_error);
+        $("html, body").animate({
+            scrollTop: 0
+        }, "fast");
+        return;
+//                }
+//            }
+    }
+    // changes over
+    
+    /*
+     * Start: Added by Anshul to check if opened form is saved or not.
+     */
+    if ($('.shipping_update_form').length || ($('.payment_update_form').length && !$('#use_for_invoice').is(':checked'))) {
+        displayGeneralError(save_update_address);
+        $("html, body").animate({
+            scrollTop: 0
+        }, "fast");
+        return;
+    }
+     /*
+     * End: Added by Anshul to check if opened form is saved or not.
+     */
+    
     if ($('#supercheckout-agree').length) {
         var is_toc_checked = true;
         $('#supercheckout-agree input[type="checkbox"]').each(function() {
@@ -1931,18 +2195,102 @@ function placeOrder() {
             }, "fast");
             return;
         }
-  
-    }var payment_module_name = $('input:radio[name="payment_method"]:checked').attr('data-module-name');
-    var payment_module_id = $('input:radio[name="payment_method"]:checked').attr('id');
-	$('#pay-with-' + payment_module_id).click();
-
-        if (!confirm(order_place_confirmation)) {
-
-           return;
+    }
+    
+    
+    // changes by rishabh jain for product availablility by zipcode
+    if ($('#product_not_available .alert').length) {
+        displayGeneralError(zipcode_error);
+        $("html, body").animate({
+            scrollTop: 0
+        }, "fast");
+        return;
+    }
+    // changes over
+    
+    //Code added by Anshul to upload and save the files first
+    $('input[type="file"]').each(function() {
+        if ($(this).hasClass('kbfiletype')) {
+            if ($(this).prop('files').length != 0) {                        
+                fd.append($(this).attr('name'), $(this)[0].files[0]);
+            }                     
         }
-	
- 
+    });
 
+    if ($('.kbfiletype').length) {
+        if (validateFilesData()) {
+            upload();
+        } else {
+            displayGeneralError(validationfailedMsg);
+            return false;
+        }   
+    } else {
+        display_progress(10);
+        kbAfterPlaceOrder();
+    }
+
+    //    if (!confirm(order_place_confirmation)) {
+    //        return;
+    //    }
+    
+}
+
+/*
+ * Added by Anshul for making it compatible with PayPlug
+ */
+
+function loadPaymentsPayPlug() {
+    var params = '';
+    if ($('input:radio[name="payment_method"]').length) {
+        params = '&selected_payment_method_id=' + $('input:radio[name="payment_method"]:checked').val();
+    }
+    $.ajax({
+        type: 'POST',
+        headers: {
+            "cache-control": "no-cache"
+        },
+        url: getURLwithTime($('#module_url').val()),
+        async: true,
+        cache: false,
+        dataType: "json",
+        data: 'ajax=true' + params + '&method=loadPayment&token=' + prestashop.static_token + '&lightbox=1',
+        beforeSend: function() {
+            $('#payment_method_update_warning .permanent-warning').remove();
+            $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
+            $('#paymentMethodLoader').show();
+        },
+        complete: function() {
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
+            $('#paymentMethodLoader').hide();
+        },
+        success: function(jsonData) {
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
+            $('#paymentMethodLoader').hide();
+            $('#payment-method').html(jsonData['html']);
+            set_column_inside_height();
+            loadPaymentAddtionalInfo();
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
+            $('#payment_method_update_warning').html('<div class="permanent-warning">' + errors + '</div>');
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
+        }
+    });
+}
+
+/*
+ * Added by Anshul for calling the Place order after file upload
+ */
+
+function kbAfterPlaceOrder() {
+    $('.errorsmall').remove();
+    hideGeneralError();
+    var payment_module_name = $('input:radio[name="payment_method"]:checked').attr('data-module-name');
+    // Start: Added by Anshul for PayPlug
+    if (payment_module_name == 'payplug') {
+        loadPaymentsPayPlug();
+    }
+    // End: Added by Anshul for PayPlug
     var errors = '';
     $.ajax({
         type: 'POST',
@@ -2122,6 +2470,31 @@ function placeOrder() {
                             createFreeOrder();
                         } else {
                             var selected_payment = $('input:radio[name="payment_method"]:checked').attr('id');
+                            // Start: Added by Anshul for making it compatible with a4ppaypalpro
+                            if ($('#payment-method').find("input[data-module-name='a4ppaypalpro']").is(':checked'))
+                            {
+                                $('#a4ppaypalpro_formblock').card({
+                                    container: '.card-wrapper',
+                                });
+                                $('.jp-card').css('min-width', 'auto');
+                            }
+                            // End: Added by Anshul for making it compatible with a4ppaypalpro
+                            
+                            
+                            // Start: Added by Anshul for making it compatible with Amazon Pay
+                            if ($('input:radio[name="payment_method"]:checked').attr('data-module-name') == 'amzpayments') {
+                                $('span#pay_with_amazon_list_button #OffAmazonPaymentsWidgets0').trigger('click');
+                                return;
+                            }
+                            // End: Added by Anshul for making it compatible with Amazon Pay
+                            
+                            //Start: Added by Anshul for making it compatible with PayPlug
+                            if (payment_module_name == 'payplug') {
+                                setTimeout(function(){ var url = $('#payplug_form_js').data('payment-url');
+                                Payplug.showPayment(url); hide_progress();}, 3000);
+                                return;
+                            }
+                            //End: Added by Anshul for making it compatible with PayPlug
                             if ($('input:radio[name="payment_method"]:checked').hasClass('binary')) {
                                 if ($('#payment_methods_binaries').length) {
                                     $('#velsof_payment_dialog .velsof_content_section').html($('#payment_methods_binaries .js-payment-' + selected_payment).html());
@@ -2137,7 +2510,6 @@ function placeOrder() {
                                     alert('Error with selected Payment Method. Please contact with store.');
                                 }
                             } else {
- 
                                 if ($('.' + selected_payment + '_info_container #stripe-payment-form').length) {
                                     $('#velsof_payment_dialog .velsof_content_section #pay-with-form').html('');
                                     $('#stripe-payment-form').submit();
@@ -2159,10 +2531,11 @@ function placeOrder() {
             $("html, body").animate({
                 scrollTop: 0
             }, "fast");
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
         }
     });
 }
+
 
 function createFreeOrder() {
     $.ajax({
@@ -2186,19 +2559,25 @@ function createFreeOrder() {
             var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
             displayGeneralError(errors);
             hide_progress();
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
         }
     });
 }
 
 function saveAddress() {
+    // changes by rishabh jain for google recaptcha integration
+    var request_params = '';
+    if ($('#g-recaptcha-response').length) {
+        request_params += '&g-recaptcha-response=' + $('#g-recaptcha-response').val();
+    }
+    // changes over
     var errors = '';
     $.ajax({
         type: 'POST',
         headers: {
             "cache-control": "no-cache"
         },
-        url: $('#module_url').val() + '&ajax=true&method=saveAddress&rand=' + new Date().getTime(),
+        url: $('#module_url').val() + '&ajax=true&method=saveAddress&rand=' + new Date().getTime() + request_params,
         async: true,
         cache: false,
         dataType: "json",
@@ -2315,7 +2694,7 @@ function saveAddress() {
             errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
             displayGeneralError(errors);
             hide_progress();
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
             $("html, body").animate({
                 scrollTop: 0
             }, "fast");
@@ -2387,7 +2766,7 @@ function isValidDni(type) {
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
                 displayGeneralError(errors);
-                $('.velsof_sc_overlay').hide();
+                $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
             }
         });
     }
@@ -2423,6 +2802,33 @@ function refresh() {
         });
     }
 }
+function showEnlargedImage(a) {
+    // Get the modal
+    var modal = document.getElementById("myModal_supercheckout");
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = a.src;
+    var modalImg = document.getElementById("img01_supercheckout");
+    var captionText = document.getElementById("caption_supercheckout");
+
+    modal.style.display = "block";
+    modalImg.src = img;
+    captionText.innerHTML = a.alt;
+
+
+//// Get the <span> element that closes the modal
+//    var span = document.getElementsByClassName("close_supercheckout")[0];
+//
+//// When the user clicks on <span> (x), close the modal
+//    span.onclick = function () {
+//        modal.style.display = "none";
+//    }
+}
+function hideEnlargedImage() {
+    var modal = document.getElementById("myModal_supercheckout");
+    modal.style.display = "none";
+
+}
 /*
  * Function Modified by Raghu on 21-Aug-2017 for fixing 'If we check log into shop and the enter the wrong password and click enter that the user is getting redirect to guest chekout option' issue
  * @param {type} e
@@ -2439,9 +2845,15 @@ function checkAction(e) {
 }
 
 function supercheckoutlogin() {
+    // changes by rishabh jain for google recaptcha integration
+    var request_params = '';
+    if ($('#g-recaptcha-response').length) {
+        request_params += '&g-recaptcha-response=' + $('#g-recaptcha-response').val();
+    }
+    // changes over
     $.ajax({
         type: "POST",
-        url: getURLwithTime($('#module_url').val()) + '&ajax=true',
+        url: getURLwithTime($('#module_url').val()) + '&ajax=true' + request_params,
         data: $('input:text[name="supercheckout_email"], #supercheckout-login-box input'),
         dataType: 'json',
         beforeSend: function() {
@@ -2473,7 +2885,7 @@ function supercheckoutlogin() {
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
             $('#checkoutLogin .supercheckout-checkout-content').html('<div class="permanent-warning">' + errors + '</div>');
-            $('.velsof_sc_overlay').hide();
+            $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
         }
     });
 }
@@ -2498,14 +2910,14 @@ function ColorLuminance(hex, lum) {
     return rgb;
 }
 
-function subscribeCustomer(email) {
+function subscribeCustomer(email, platform) {
     $.ajax({
         type: 'POST',
         url: $('#module_url').val() + '&email=' + email,
         async: true,
         cache: false,
         dataType: "json",
-        data: 'ajax=true' + '&method=addEmailToList',
+        data: 'ajax=true' + '&method=addEmailToList&platform='+platform,
         beforeSend: function() {},
         success: function(jsonData) {}
     });
@@ -2710,10 +3122,10 @@ function MobileLogin() {
                 },
                 dataType: 'json',
                 beforeSend: function() {
-                    $('.velsof_sc_overlay').show();
+                    $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
                 },
                 complete: function() {
-                    $('.velsof_sc_overlay').hide();
+                    $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
                 },
                 success: function(json) {
                     if (json.success) {
@@ -2754,10 +3166,10 @@ function MobileLogin() {
                 },
                 dataType: 'json',
                 beforeSend: function() {
-                    $('.velsof_sc_overlay').show();
+                    $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
                 },
                 complete: function() {
-                    $('.velsof_sc_overlay').hide();
+                    $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
                 },
                 success: function(json) {
                     if (json.success) {
@@ -2803,10 +3215,10 @@ function sendOtp() {
                 },
                 dataType: 'json',
                 beforeSend: function() {
-                    $('.velsof_sc_overlay').show();
+                    $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
                 },
                 complete: function() {
-                    $('.velsof_sc_overlay').hide();
+                    $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
                 },
                 success: function(json) {
                     if (json.success) {
@@ -2863,10 +3275,10 @@ function checkMobileNumberExist() {
                 dataType: 'json',
                 async:false,
                 beforeSend: function() {
-                    $('.velsof_sc_overlay').show();
+                    $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
                 },
                 complete: function() {
-                    $('.velsof_sc_overlay').hide();
+                    $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
                 },
                 success: function(json) {
                     if (json) {
@@ -2917,10 +3329,10 @@ function MobileRegister() {
                 },
                 dataType: 'json',
                 beforeSend: function() {
-                    $('.velsof_sc_overlay').show();
+                    $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
                 },
                 complete: function() {
-                    $('.velsof_sc_overlay').hide();
+                    $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
                 },
                 success: function(json) {
                     if (json.success) {
@@ -2967,7 +3379,7 @@ function verfyOtp() {
             },
             dataType: 'json',
             beforeSend: function() {
-                $('.velsof_sc_overlay').show();
+                $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
             },
             success: function(json) {
                 if (json.success) {
@@ -2993,7 +3405,7 @@ function verfyOtp() {
                 }
             },
             complete: function() {
-                $('.velsof_sc_overlay').hide();
+                $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
             }
         });
     } else {
@@ -3007,3 +3419,179 @@ function verfyOtp() {
         });
     }
 }
+
+/*
+ * Code added by Anshul for adding update & remove address -->
+ */
+
+function updateAddressForm(address_type) {
+    $('#shipping-address-existing').trigger('click');
+    $('#shipping-address-existing').parent().addClass('checked');
+    $('#shipping-address-new').parent().removeClass('checked');
+    var selected_address_id = '';
+    if (address_type == 'delivery') {
+        selected_address_id = $('#shipping-existing select[name="shipping_address_id"]').val();
+    } else if (address_type == 'invoice') {
+        selected_address_id = $('#payment-existing select[name="payment_address_id"]').val();
+    }
+        $.ajax({
+            type: 'POST',
+            headers: {
+                "cache-control": "no-cache"
+            },
+            url: $('#module_url').val() + '&rand=' + new Date().getTime(),
+            async: true,
+            cache: false,
+            dataType: "html",
+            data: 'ajax=true&method=getAddressFormToUpdate&address_type='+address_type+'&selected_address_id='+selected_address_id,
+            beforeSend: function () {
+                $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
+            },
+            complete: function () {
+                $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
+            },
+            success: function (jsonData) {
+                if (address_type == 'delivery' && $('#checkoutShippingAddress .shipping_update_form').length == 0) {
+                    $(jsonData).insertAfter($('#shipping-existing'));
+                    showSelectedState($('#checkoutShippingAddress .shipping_update_form select[name="shipping_address[id_country]"]').val(), address_type);
+                    $('select[name="shipping_address[id_country]"]').change(function () {
+                        var selected_country = $(this).find('option:selected').attr('value');
+                        var selected_state = 0;
+                        statelist(selected_country, selected_state, 'select[name="shipping_address[id_state]"]');
+                        checkDniandVatNumber('delivery');
+                        if ($('input[name="shipping_address[postcode]"]').length && $('input[name="shipping_address[postcode]"]').val() != '') {
+                            checkZipCode(this, true);
+                        } else {
+                            loadCarriers();
+                        }
+                    });
+                    $('input[name="shipping_address[postcode]"]').on('blur', function () {
+                        checkZipCode(this, true);
+                    });
+                    
+                $("#supercheckout_update_address_shipping").click(function () {
+                    $('#shipping-new').insertAfter($('#velsof_supercheckout_form'));
+                    $('#shipping-new').hide();
+                    saveAddress();
+                });
+                } else if (address_type == 'invoice' && $('#checkoutBillingAddress .payment_update_form').length == 0) {
+                     $(jsonData).insertAfter($('#payment-existing'));
+                    showSelectedState($('#checkoutBillingAddress .payment_update_form select[name="payment_address[id_country]"]').val(), address_type);
+                    $('select[name="payment_address[id_country]"]').change(function () {
+                        var selected_country = $(this).find('option:selected').attr('value');
+                        var selected_state = 0;
+                        statelist(selected_country, selected_state, 'select[name="payment_address[id_state]"]');
+                        checkDniandVatNumber('delivery');
+                        if ($('input[name="payment_address[postcode]"]').length && $('input[name="payment_address[postcode]"]').val() != '') {
+                            checkZipCode(this, true);
+                        } else {
+                            loadCarriers();
+                        }
+                    });
+                    $('input[name="payment_address[postcode]"]').on('blur', function () {
+                        checkZipCode(this, false);
+                    });
+                    
+                $("#supercheckout_update_address_payment").click(function () {
+                    $('#payment-new').insertAfter($('#velsof_supercheckout_form'));
+                    $('#payment-new').hide();
+                    saveAddress();
+                });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
+                $('#supercheckout-empty-page-content').html('<div class="permanent-warning">' + 'issues' + '</div>');
+            }
+        });
+}
+
+function showSelectedState(id_country, address_type) {
+    if (address_type == 'delivery') {
+        console.log(id_country);
+        statelist(id_country, 0, '.shipping_update_form select[name="shipping_address[id_state]"]');
+        var selected_state_id = $('.shipping_update_form #shipping_saved_state').val();
+        $('.shipping_update_form select[name="shipping_address[id_state]"] option[value="'+selected_state_id+'"]').prop('selected', true);
+    } else {
+        statelist(id_country, 0, '.payment_update_form select[name="payment_address[id_state]"]');
+        var selected_state_id = $('.payment_update_form #payment_saved_state').val();
+        $('.payment_update_form select[name="payment_address[id_state]"] option[value="'+selected_state_id+'"]').prop('selected', true);
+    }
+}
+
+/*
+ * Code added by Anshul for adding update & remove address -->
+ */
+
+function deleteAddressForm(address_type) {
+    var selected_address_id = '';
+    if (address_type == 'delivery') {
+        selected_address_id = $('#shipping-existing select[name="shipping_address_id"]').val();
+    } else if (address_type == 'invoice') {
+        selected_address_id = $('#payment-existing select[name="payment_address_id"]').val();
+    }
+    
+    $.ajax({
+            type: 'POST',
+            headers: {
+                "cache-control": "no-cache"
+            },
+            url: $('#module_url').val() + '&rand=' + new Date().getTime(),
+            async: true,
+            cache: false,
+            dataType: "json",
+            data: 'ajax=true&method=deleteAddress&address_type='+address_type+'&selected_address_id='+selected_address_id,
+            beforeSend: function () {
+                $('.kb_velsof_sc_overlay').show();$('.kb_lds-ripple').show();
+            },
+            complete: function () {
+                $('.kb_velsof_sc_overlay').hide();$('.kb_lds-ripple').hide();
+            },
+            success: function (jsonData) {
+                if (jsonData['status'] == 1) {
+                    $.gritter.add({
+                        title: notification_title,
+                        text: jsonData['msg'],
+                        class_name: 'gritter-success',
+                        sticky: false,
+                        time: '3000'
+                    });
+
+                    /*To remove the deleted address from the list on the checkout page*/
+                    if (address_type == 'delivery') {
+                        if ($('select[name="shipping_address_id"] option[value="'+selected_address_id+'"]').length) {
+                            $('select[name="shipping_address_id"] option[value="'+selected_address_id+'"]').remove();
+                            if ($('#shipping-existing select[name="shipping_address_id"]').val() == null) {
+                                location.reload();
+                            }
+                            $('#shipping-existing select[name="shipping_address_id"]').trigger('change');
+                        } else {
+                        }
+                    } else if (address_type == 'invoice') {
+                        if ($('select[name="payment_address_id"] option[value="'+selected_address_id+'"]').length) {
+                            $('select[name="payment_address_id"] option[value="'+selected_address_id+'"]').remove();
+                            if ($('#payment-existing select[name="payment_address_id"]').val() == null) {
+                                 location.reload();
+                            }
+                             $('#payment-existing select[name="payment_address_id"]').trigger('change');
+                        } else {
+                        }
+                    }
+                } else if (jsonData['error_occured'] == 1) {
+                    $.gritter.add({
+                        title: notification_title,
+                        text: jsonData['error'],
+                        class_name: 'gritter-warning',
+                        sticky: false,
+                        time: '3000'
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errors = sprintf(ajaxRequestFailedMsg, XMLHttpRequest, textStatus);
+                $('#supercheckout-empty-page-content').html('<div class="permanent-warning">' + 'issues' + '</div>');
+            }
+        });
+}
+
+

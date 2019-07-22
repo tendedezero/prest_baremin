@@ -23,7 +23,20 @@ var previousLabel = null;
 
 
 $(document).ready(function() {
-	getMailChimpList();
+    
+    
+    /* Code added by Anshul to add comma on pressing the enter */
+    
+    $('input[name="velocity_supercheckout[ip_addresses]"]').keypress(function (e) {
+        if (e.keyCode == 13) {
+            $('input[name="velocity_supercheckout[ip_addresses]"]').val($('input[name="velocity_supercheckout[ip_addresses]"]').val() + ', ');
+        }
+    });
+    /* Code added by Anshul to add comma on pressing the enter */
+    
+    getMailChimpList();
+    getSendinBlueList();
+    getklaviyoList();
     $('#velsof_tab_login').on('click',function(){
        $("#google_acc").hide();
         $("#facebook_acc").hide();
@@ -125,7 +138,7 @@ $(document).ready(function() {
             var stored_value="";
         }
 
-        bootbox.confirm('<h4>'+$("#modals_bootbox_prompt_header_html").val()+'</h4><textarea id="text_area_html_'+splitId[splitId.length - 1]+'" class="supercheckout_textarea_html" >'+ stored_value +'</textarea>',
+        bootbox.confirm('<h4>' + $("#modals_bootbox_prompt_header_html").val() + '</h4><textarea id="text_area_html_' + splitId[splitId.length - 1] + '" class="supercheckout_textarea_html" >' + stored_value + '</textarea><h4 style="color:red;">' + double_quotes_warning + '</h4>',
         function(result) {
             if(result){
                 html_string=$('#text_area_html_'+splitId[splitId.length - 1]).val().replace(/(\r\n|\n|\r)/gm, "<br/>");
@@ -196,7 +209,7 @@ function dialogExtraHtml(e){
         var stored_value="";
     }
 
-    bootbox.confirm('<h4>'+$("#modals_bootbox_prompt_header_html").val()+'</h4><textarea id="text_area_html" class="supercheckout_textarea_html" >'+ stored_value +'</textarea>',
+    bootbox.confirm('<h4>' + $("#modals_bootbox_prompt_header_html").val() + '</h4><textarea id="text_area_html" class="supercheckout_textarea_html" >' + stored_value + '</textarea><h4 style="color:red;">' + double_quotes_warning + '</h4>',
     function(result) {
         if(result){
             html_string=$('#text_area_html').val().replace(/(\r\n|\n|\r)/gm, "<br/>");
@@ -246,6 +259,9 @@ function validate_data(){
     var payment_method_error = false;
     var delivery_method_error = false;
     var cart_error = false;
+    var ip_addresses_error = false;
+    var SendinBlue_error = false;
+    var klaviyo_error = false;
 
     if($("#supercheckout_fb_login").is(":checked")){
         if($("#velocity_supercheckout_fb_app_id").val().trim() == ''){
@@ -258,6 +274,34 @@ function validate_data(){
         }
 
     }
+    
+    /* CODE ADDED BY ANSHUL FOR VALIDATE THE IPs */
+    var testip = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    var ip_values = $('input[name="velocity_supercheckout[ip_addresses]"]').val().trim();
+    if (ip_values != '') {
+        if (ip_values.indexOf(',') >= 0) {
+            var ip_array = ip_values.split(',');
+            var i;
+            var all_ip_correct = true;
+            for (i = 0; i < ip_array.length; i++) {
+                var ip = ip_array[i].trim();
+                if (!ip.match(testip)) {
+                all_ip_correct = false;
+            }
+            }
+            if (!all_ip_correct) {
+                ip_addresses_error = true;
+                $('#ip_addresses_error').html(ip_address_error);
+
+            }
+        } else {
+            if (!ip_values.match(testip)) {
+                ip_addresses_error = true;
+                $('#ip_addresses_error').html(ip_address_error);
+            }
+        }
+    }
+        /*CODE ADDED BY ANSHUL FOR VALIDATE THE IPS*/
 
     if($("#supercheckout_google_login").is(":checked")){
 
@@ -285,6 +329,22 @@ function validate_data(){
         if ($('#mailchimp_selectlist').length == 0) {
             mailchimp_error = true;
             $('#mailchimp_api_key_error').html(mailchimp_api_key_error);
+        }
+    }
+    
+    if ($("#supercheckout_SendinBlue_enable").is(":checked")) {
+
+        if ($('#SendinBlue_selectlist').length == 0) {
+            SendinBlue_error = true;
+            $('#SendinBlue_api_key_error').html(SendinBlue_api_key_error);
+        }
+    }
+    
+    if ($("#supercheckout_klaviyo_enable").is(":checked")) {
+
+        if ($('#klaviyo_selectlist').length == 0) {
+            klaviyo_error = true;
+            $('#klaviyo_api_key_error').html(klaviyo_api_key_error);
         }
     }
 
@@ -394,7 +454,8 @@ function validate_data(){
         $("#cart_product_image_size_height_error").html('');
     }
 
-    if (login_error == true || mailchimp_error == true || payment_method_error == true || delivery_method_error == true || cart_error == true || google_api_error==true) {
+    if (login_error == true || mailchimp_error == true || payment_method_error == true || delivery_method_error == true || cart_error == true || google_api_error==true || ip_addresses_error == true
+            || SendinBlue_error == true || klaviyo_error == true) {
         $('#velsof_supercheckout_container').find('li').removeClass('active');
         if (cart_error) {
             $("#velsof_tab_cart").css('color', 'red');
@@ -408,7 +469,7 @@ function validate_data(){
             $("#velsof_tab_payment_method").css('color', 'red');
             $("#velsof_tab_payment_method").trigger('click');
         }
-        if (mailchimp_error) {
+        if (mailchimp_error || SendinBlue_error || klaviyo_error) {
             $("#velsof_tab_mailchimp").css('color', 'red');
             $("#velsof_tab_mailchimp").trigger('click');
         }
@@ -419,6 +480,11 @@ function validate_data(){
         if (login_error) {
             $("#velsof_tab_login").css('color', 'red');
             $("#velsof_tab_login").trigger('click');
+        }
+        
+        if (ip_addresses_error) {
+            $("#velsof_general_tab").css('color', 'red');
+            $("#velsof_general_tab").trigger('click');
         }
 
         var errorHtml = '<div class="bootstrap supercheckout-message"><div class="alert alert-danger">';
@@ -510,7 +576,7 @@ function getMailChimpList()
 			var html = '';
 
 			if (json == 'false')
-				html = "<font color='red'>"+ no_list_msg +"</font>";
+				html = "<font color='red'>"+ no_list_msg +"</font>"; 
 			else
 			{
 				html += '<select name="velocity_supercheckout[mailchimp][list]"';
@@ -532,6 +598,100 @@ function getMailChimpList()
 			$('select.vss_sc_ver15#mailchimp_selectlist').selectpicker();
 		}
 	});
+}
+
+function getSendinBlueList()
+{
+    var key = $("#supercheckout_SendinBlue_key").val().trim();
+    var listid = $("#supercheckout_SendinBlue_list").val();
+    if (key != '') {
+    $.ajax({
+        type: "POST",
+        url: scp_ajax_action,
+        data: 'ajax=true&method=getSendinBlueList&key=' + key,
+        dataType: 'json',
+        beforeSend: function () {
+            $("#supercheckout_list").html('');
+            $("#SendinBlue_loading").show();
+        },
+        success: function (json) {
+            var html = '';
+
+            if (json == 'false')
+                html = "<font color='red'>" + no_list_msg + "</font>";
+            else
+            {
+                html += '<select name="velocity_supercheckout[SendinBlue][list]"';
+                if (ps_ver == 15)
+                    html += 'class="selectpicker vss_sc_ver15"';
+                html += 'id="SendinBlue_selectlist">';
+
+                for (i in json)
+                {
+                    if (listid == json[i]['id'])
+                        html += '<option value="' + json[i]['id'] + '" selected>' + json[i]['name'] + '</option>';
+                    else
+                        html += '<option value="' + json[i]['id'] + '">' + json[i]['name'] + '</option>';
+                }
+                html += '</select>';
+            }
+            $("#SendinBlue_loading").hide();
+            $("#SendinBlue_supercheckout_list").html(html);
+            $('select.vss_sc_ver15#SendinBlue_selectlist').selectpicker();
+        }
+    });
+   } else {
+       var html = '';
+       html = "<font color='red'>" + no_list_msg + "</font>";
+       $("#SendinBlue_supercheckout_list").html(html);
+   }
+}
+
+function getklaviyoList()
+{
+    var key = $("#supercheckout_klaviyo_key").val().trim();
+    var listid = $("#supercheckout_klaviyo_list").val();
+    if (key != '') {
+    $.ajax({
+        type: "POST",
+        url: scp_ajax_action,
+        data: 'ajax=true&method=getklaviyoList&key=' + key,
+        dataType: 'json',
+        beforeSend: function () {
+            $("#supercheckout_list").html('');
+            $("#klaviyo_loading").show();
+        },
+        success: function (json) {
+            var html = '';
+
+            if (json == 'false')
+                html = "<font color='red'>" + no_list_msg + "</font>";
+            else
+            {
+                html += '<select name="velocity_supercheckout[klaviyo][list]"';
+                if (ps_ver == 15)
+                    html += 'class="selectpicker vss_sc_ver15"';
+                html += 'id="klaviyo_selectlist">';
+
+                for (i in json)
+                {
+                    if (listid == json[i]['value'])
+                        html += '<option value="' + json[i]['value'] + '" selected>' + json[i]['label'] + '</option>';
+                    else
+                        html += '<option value="' + json[i]['value'] + '">' + json[i]['label'] + '</option>';
+                }
+                html += '</select>';
+            }
+            $("#klaviyo_loading").hide();
+            $("#klaviyo_supercheckout_list").html(html);
+            $('select.vss_sc_ver15#klaviyo_selectlist').selectpicker();
+        }
+    });
+    } else {
+       var html = '';
+       html = "<font color='red'>" + no_list_msg + "</font>";
+       $("#klaviyo_supercheckout_list").html(html);
+   }
 }
 
 function configurationAccordian(id)
@@ -892,6 +1052,14 @@ function getCustomFieldsTypeTranslatedText(type_value)
         case 'checkbox':
             final_txt = check_boxes_txt;
             break;
+        /* Start: Code added by Anshul for adding date and file type */
+        case 'date':
+            final_txt = date;
+            break;
+        case 'file':
+            final_txt = file;
+            break;
+        /* End: Code added by Anshul for adding date and file type */
     }
     return final_txt;
 }

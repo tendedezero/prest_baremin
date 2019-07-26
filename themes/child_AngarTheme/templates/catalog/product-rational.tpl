@@ -137,21 +137,15 @@
                                 <input type="hidden" name="id_product" value="{$product.id}" id="product_page_product_id">
                                 <input type="hidden" name="id_customization" value="{$product.id_customization}" id="product_customization_id">
 
-                                {block name='product_variants'}
-                                    {include file='catalog/_partials/product-variants.tpl'}
+                                {block name='product_variants'}gfdg
+                                    Why pick Rational?
+                                    You can grill, roast, bake, steam, stew, blanch or poach food, all within a space of less than about 1 mÂ². Meat, fish, poultry, vegetables, egg dishes, baked goods, desserts, you can do it all. Whether you'e cooking for thirty or for several thousand. It reduces workloads exactly the way kitchen teams need: it cooks quickly, it's easy to use, it delivers the food quality you specify, and it even saves you time, money and energy in the process. It takes all monitoring and checking work off your hands. It adjusts temperature, moisture and cooking time settings on its own. It monitors your foods browning and degree of doneness, and even saves you the trouble of repeatedly turning pan-fried dishes.
+
+
                                 {/block}
 
                                 {block name='product_pack'}
-                                    {if $packItems}
-                                        <section class="product-pack">
-                                            <h3 class="h4">{l s='This pack contains' d='Shop.Theme.Catalog'}</h3>
-                                            {foreach from=$packItems item="product_pack"}
-                                                {block name='product_miniature'}
-                                                    {include file='catalog/_partials/miniatures/pack-product.tpl' product=$product_pack}
-                                                {/block}
-                                            {/foreach}
-                                        </section>
-                                    {/if}
+
                                 {/block}
 
                                 {block name='product_discounts'}

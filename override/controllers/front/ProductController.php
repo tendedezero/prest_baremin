@@ -96,14 +96,7 @@ class ProductControllerCore extends ProductPresentingFrontControllerCore
         parent::init();
 
         $id_product = (int) Tools::getValue('id_product');
-        $productMan = (int) Tools::getValue('id_manufacturer');
 
-
-        if (Tools::getValue($productMan)==209){  // For product number 3
-            $this->setTemplate('catalog/product-rational');
-        } else {
-            $this->setTemplate('catalog/product');
-        }
 
 
         $this->setTemplate('catalog/product', array(
@@ -113,6 +106,16 @@ class ProductControllerCore extends ProductPresentingFrontControllerCore
 
         if ($id_product) {
             $this->product = new Product($id_product, true, $this->context->language->id, $this->context->shop->id);
+        }
+
+
+        $productMan =  $this->product->id_manufacturer;
+
+
+        if (Tools::getValue($productMan,id)==209){  // For product number 3
+            $this->setTemplate('catalog/product-rational');
+        } else {
+            $this->setTemplate('catalog/product');
         }
 
         if (!Validate::isLoadedObject($this->product)) {

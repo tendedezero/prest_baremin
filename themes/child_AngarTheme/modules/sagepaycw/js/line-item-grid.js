@@ -2,7 +2,7 @@
 	
 	window['SagePayCwLineItemGrid'] = {
 		decimalPlaces: 2,
-		currencyCode: 'EUR',
+		currencyCode: 'GBP',
 		
 		init: function() {
 			this.decimalPlaces = parseFloat($("#sagepaycw-decimal-places").val());

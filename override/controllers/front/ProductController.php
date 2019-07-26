@@ -52,6 +52,13 @@ class ProductControllerCore extends ProductPresentingFrontControllerCore
     protected $quantity_discounts;
     protected $adminNotifications = array();
 
+    private static function checkProductTemplate($link_rewrite)
+    {
+        return file_exists(_PS_THEME_DIR_ . 'product_' . $link_rewrite . '.tpl');
+    }
+
+
+
     public function canonicalRedirection($canonical_url = '')
     {
         if (Validate::isLoadedObject($this->product)) {
@@ -89,6 +96,15 @@ class ProductControllerCore extends ProductPresentingFrontControllerCore
         parent::init();
 
         $id_product = (int) Tools::getValue('id_product');
+        $productMan = (int) Tools::getValue('id_manufacturer');
+
+
+        if (Tools::getValue($productMan)==209){  // For product number 3
+            $this->setTemplate('catalog/product-rational');
+        } else {
+            $this->setTemplate('catalog/product');
+        }
+
 
         $this->setTemplate('catalog/product', array(
             'entity' => 'product',

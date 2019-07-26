@@ -120,7 +120,7 @@
 								<span class="sr-only">{l s='Price' d='Shop.Theme.Catalog'}</span>
 
 								<div class='current-price sale-price inc-vat' {if $smarty.cookies.VATMODE == 'false'} style='display:none' {/if}> <span class="price">{$product.price}</span> Inc Vat</div>
-								<div class='current-price sale-price ex-vat' {if $smarty.cookies.VATMODE == 'true'} style='display:none'{/if}><span class="price">{Product::getPriceStatic($product.id_product,false)}</span> Exc Vat</div>
+								<div class='current-price sale-price ex-vat' {if $smarty.cookies.VATMODE == 'true'} style='display:none'{/if}><span class="price">{Tools::displayPrice($product.price_tax_exc)}</span> Exc Vat</div>
 
                                 {if $product.has_discount}
                                     {hook h='displayProductPriceBlock' product=$product type="old_price"}
@@ -205,5 +205,4 @@
 
 {/block}
 
-{debug}
 

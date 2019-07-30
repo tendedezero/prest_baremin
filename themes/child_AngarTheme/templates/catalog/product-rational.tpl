@@ -137,12 +137,12 @@
                                 <input type="hidden" name="id_product" value="{$product.id}" id="product_page_product_id">
                                 <input type="hidden" name="id_customization" value="{$product.id_customization}" id="product_customization_id">
 
-                                {block name='product_variants'}gfdg
-                                    Why pick Rational?
-                                    You can grill, roast, bake, steam, stew, blanch or poach food, all within a space of less than about 1 mÂ². Meat, fish, poultry, vegetables, egg dishes, baked goods, desserts, you can do it all. Whether you'e cooking for thirty or for several thousand. It reduces workloads exactly the way kitchen teams need: it cooks quickly, it's easy to use, it delivers the food quality you specify, and it even saves you time, money and energy in the process. It takes all monitoring and checking work off your hands. It adjusts temperature, moisture and cooking time settings on its own. It monitors your foods browning and degree of doneness, and even saves you the trouble of repeatedly turning pan-fried dishes.
+                                                   {block name='product_variants'}gfdg
+                                Why pick Rational?
+                                You can grill, roast, bake, steam, stew, blanch or poach food, all within a space of less than about 1 mÂ². Meat, fish, poultry, vegetables, egg dishes, baked goods, desserts, you can do it all. Whether you'e cooking for thirty or for several thousand. It reduces workloads exactly the way kitchen teams need: it cooks quickly, it's easy to use, it delivers the food quality you specify, and it even saves you time, money and energy in the process. It takes all monitoring and checking work off your hands. It adjusts temperature, moisture and cooking time settings on its own. It monitors your foods browning and degree of doneness, and even saves you the trouble of repeatedly turning pan-fried dishes.
 
 
-                                {/block}
+                            {/block}
 
                                 {block name='product_pack'}
 
@@ -259,19 +259,7 @@
                     {block name='product_attachments'}
                         {if $product.attachments}
                             <div class="tab-pane fade in" id="attachments" role="tabpanel">
-                                <section class="product-attachments">
-                                    <div class="h5 text-uppercase index_title"><span>{l s='Attachments' d='Shop.Theme.Catalog'}</span></div>
-                                    <div class="h5 text-uppercase">{l s='Download' d='Shop.Theme.Actions'}</div>
-                                    {foreach from=$product.attachments item=attachment}
-                                        <div class="attachment">
-                                            <h6><a href="{url entity='attachment' params=['id_attachment' => $attachment.id_attachment]}">{$attachment.name}</a></h6>
-                                            <p>{$attachment.description}</p>
-                                            <a href="{url entity='attachment' params=['id_attachment' => $attachment.id_attachment]}">
-                                                {l s='Download' d='Shop.Theme.Actions'} ({$attachment.file_size_formatted})
-                                            </a>
-                                        </div>
-                                    {/foreach}
-                                </section>
+                                {hook h="awProduct"}
                             </div>
                         {/if}
                     {/block}

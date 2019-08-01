@@ -259,7 +259,7 @@
                     {block name='product_attachments'}
                         {if $product.attachments}
                             <div class="tab-pane fade in" id="attachments" role="tabpanel">
-                                {hook h="awProduct"}
+                              
                             </div>
                         {/if}
                     {/block}
@@ -277,7 +277,7 @@
         </div>
         {/block}
 
-
+{hook h="awProduct"} 
 
 
 

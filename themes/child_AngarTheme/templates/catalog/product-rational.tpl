@@ -137,7 +137,7 @@
                                 <input type="hidden" name="id_product" value="{$product.id}" id="product_page_product_id">
                                 <input type="hidden" name="id_customization" value="{$product.id_customization}" id="product_customization_id">
 
-                                                   {block name='product_variants'}gfdg
+                                                   {block name='product_variants'}112
                                 Why pick Rational?
                                 You can grill, roast, bake, steam, stew, blanch or poach food, all within a space of less than about 1 mÂ². Meat, fish, poultry, vegetables, egg dishes, baked goods, desserts, you can do it all. Whether you'e cooking for thirty or for several thousand. It reduces workloads exactly the way kitchen teams need: it cooks quickly, it's easy to use, it delivers the food quality you specify, and it even saves you time, money and energy in the process. It takes all monitoring and checking work off your hands. It adjusts temperature, moisture and cooking time settings on its own. It monitors your foods browning and degree of doneness, and even saves you the trouble of repeatedly turning pan-fried dishes.
 
@@ -194,15 +194,28 @@
         {block name='product_tabs'}
             <div class="tabs">
                 <ul class="nav nav-tabs" role="tablist">
+
+                        <li class="nav-item cust_tab">
+                            <a
+                                    class="nav-link active"
+                                    data-toggle="tab"
+                                    href="#customtab"
+                                    role="tab"
+                                    aria-controls="customtab"
+                                    {if $product.is_customizable && count($product.customizations.fields)}aria-selected="true"{/if}>{l s='Options' d='Shop.Theme.Catalog'}</a>
+                        </li>
+
+
+
                     {if $product.description}
                         <li class="nav-item desc_tab">
                             <a
-                                    class="nav-link{if $product.description} active{/if}"
+                                    class="nav-link"
                                     data-toggle="tab"
                                     href="#description"
                                     role="tab"
                                     aria-controls="description"
-                                    {if $product.description} aria-selected="true"{/if}>{l s='Description' d='Shop.Theme.Catalog'}</a>
+                                    {if $product.description}aria-selected="true"{/if}>{l s='Description' d='Shop.Theme.Catalog'}</a>
                         </li>
                     {/if}
                     <li class="nav-item product_details_tab">
@@ -245,6 +258,11 @@
 
                 {* AngarTheme *}
                 <div class="tab-content" id="tab-content">
+                    <div class="tab-pane fade in active" id="customtab" role="tabpanel">
+                        {block name='product_description'}
+                            {hook h="awProduct"}
+                        {/block}
+                    </div>
                     <div class="tab-pane fade in{if $product.description} active{/if}" id="description" role="tabpanel">
                         {block name='product_description'}
                             {if $product.description}<div class="h5 text-uppercase index_title"><span>{l s='Description' d='Shop.Theme.Catalog'}</span></div>{/if}
@@ -277,7 +295,7 @@
         </div>
         {/block}
 
-{hook h="awProduct"} 
+
 
 
 

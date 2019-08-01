@@ -112,7 +112,7 @@ class ProductControllerCore extends ProductPresentingFrontControllerCore
         $productMan =  $this->product->id_manufacturer;
 
 
-        if (Tools::getValue($productMan)==209){  // For product number 3
+        if (Tools::getValue($productMan)=='209'){  // For product number 3
             $this->setTemplate('catalog/product-rational');
         } else {
             $this->setTemplate('catalog/product');

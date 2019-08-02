@@ -22,6 +22,7 @@
         <div class="current-price sale-price inc-vat" {if $smarty.cookies.VATMODE == 'false'} style="display:none"{/if}>
             <span class="price" itemprop="price"  content="{$product.price_amount}" >{$product.price}</span><span class="tax_display">VAT Included</span>
         </div>
+<div class="rrp-price"><span class="rrp" style="text-decoration:line-through" content="{$rrp}" >{$rrp}</span><span class="tax_display">VAT Included</span></div>
 
           {if $product.has_discount}
             {if $product.discount_type === 'percentage'}

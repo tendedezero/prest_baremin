@@ -259,11 +259,12 @@
                 {* AngarTheme *}
                 <div class="tab-content" id="tab-content">
                     <div class="tab-pane fade in active" id="customtab" role="tabpanel">
-                        {block name='product_description'}
+                        {block name='product_customize'}
                             {hook h="awProduct"}
+                            {include file='catalog/_partials/product-variants.tpl'}
                         {/block}
                     </div>
-                    <div class="tab-pane fade in{if $product.description} active{/if}" id="description" role="tabpanel">
+                    <div class="tab-pane fade in" id="description" role="tabpanel">
                         {block name='product_description'}
                             {if $product.description}<div class="h5 text-uppercase index_title"><span>{l s='Description' d='Shop.Theme.Catalog'}</span></div>{/if}
                             <div class="product-description">{$product.description nofilter}</div>

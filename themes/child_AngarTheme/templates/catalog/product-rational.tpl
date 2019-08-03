@@ -261,7 +261,7 @@
                     <div class="tab-pane fade in active" id="customtab" role="tabpanel">
                         {block name='product_customize'}
                             {hook h="awProduct"}
-                            {include file='catalog/_partials/product-variants.tpl'}
+                          
                         {/block}
                     </div>
                     <div class="tab-pane fade in" id="description" role="tabpanel">
@@ -312,7 +312,7 @@
             {if $accessories}
                 <section class="page-product-box clearfix">
                     <div class="page-product-heading">
-                        <span>{l s='You might also like' d='Shop.Theme.Catalog'}</span>
+                        <span>{l s='Accessories' d='Shop.Theme.Catalog'}</span>
 
                         <div id="next_accessories" class="slider-btn"></div>
                         <div id="prev_accessories" class="slider-btn"></div>

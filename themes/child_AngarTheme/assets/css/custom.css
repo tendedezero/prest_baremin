@@ -5,11 +5,24 @@
 .payment-option > label > img {
 display:none
 }
-.leasetable.leasepagetable{display:none}.leasetable{width:100%;text-align:center}.leasingheadings tr th{text-align:center;padding:10px}.leasingheadings{background:# d3d3d3
-}
+.leasetable.leasepagetable{display:none}.leasetable{width:100%;text-align:center}.leasingheadings tr th{text-align:center;padding:10px}.leasingheadings{background:#d3d3d3}
 .leasingheadings.odd {
-background - color: #fff2ce
+    background-color: #fff2ce
 }
+div.rrp-price {text-decoration:line-through;}
+div#_desktop_search_widget {
+    float: left!important;
+}
+.mm_extra_item .cart-preview.inactive .header {
+    padding: 0!important;
+}
+li.rational div.ets_mm_block.mm_block_type_image {
+    text-align:center;
+}
+#header .layout_layout1 li.rational .mm_columns_ul .ets_mm_block > h4 a {
+    color: #cc0000;
+}
+
 select.form-control:not([size]):not([multiple]) {
     height: auto;
 }
@@ -40,7 +53,7 @@ select.form-control:not([size]):not([multiple]) {
     font-size: 15px;
     transition: 0.4s;
     }
-    .active, .accordion:hover {
+    .active.accordion:hover {
     background-color: #ccc;
     }
     .panel1 {

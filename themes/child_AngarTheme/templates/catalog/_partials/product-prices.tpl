@@ -18,11 +18,11 @@
       >
         <link itemprop="availability" href="https://schema.org/InStock"/>
         <meta itemprop="priceCurrency" content="{$currency.iso_code}">
+            <div class="rrp-price">RRP <span class="price rrp">{Tools::displayPrice($product.rrp)}</span></div>
 
         <div class="current-price sale-price inc-vat" {if $smarty.cookies.VATMODE == 'false'} style="display:none"{/if}>
             <span class="price" itemprop="price"  content="{$product.price_amount}" >{$product.price}</span><span class="tax_display">VAT Included</span>
         </div>
-<div class="rrp-price"><span class="rrp" style="text-decoration:line-through" content="{$rrp}" >{$rrp}</span><span class="tax_display">VAT Included</span></div>
 
           {if $product.has_discount}
             {if $product.discount_type === 'percentage'}

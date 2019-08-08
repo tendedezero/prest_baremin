@@ -18,15 +18,15 @@ class NDCVatDisplay extends Module implements WidgetInterface
     {
         $this->name = 'NDCVatDisplay';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.0';
+        $this->version = '1.0.3';
         $this->author = 'RPaterson';
         $this->need_instance = 0;
 
         $this->bootstrap = true;
         parent::__construct();
 
-        $this->displayName = $this->l('NDC Vat Display');
-        $this->description = $this->l('Displays VAT.');
+        $this->displayName = $this->l('NDC Vat & RRP Display');
+        $this->description = $this->l('Displays VAT & RRP.');
         $this->ps_versions_compliancy = array('min' => '1.7', 'max' => _PS_VERSION_);
 
         $this->templateFile = 'module:NDCVatDisplay/NDCVatDisplay.tpl';
@@ -51,26 +51,7 @@ public function uninstall()
     public function displayForm()
 {
     // < init fields for form array >
-    $fields_form[0]['form'] = array(
-        'legend' => array(
-            'title' => $this->l('VATDISPLAYMODE'),
-        ),
-        'input' => array(
-            array(
-                'type' => 'text',
-                'label' => $this->l('VATDISPLAYMODE'),
-                'name' => 'VATDISPLAYMODE',
-                'lang' => true,
-                'size' => 20,
-                'required' => true
-            ),
-        ),
-        'submit' => array(
-            'title' => $this->l('Save'),
-            'class' => 'btn btn-default pull-right'
-        )
-    );
-
+ 
     // < load helperForm >
     $helper = new HelperForm();
 
@@ -84,24 +65,9 @@ public function uninstall()
     $helper->title = $this->displayName;
     $helper->show_toolbar = true;        // false -> remove toolbar
     $helper->toolbar_scroll = true;      // yes - > Toolbar is always visible on the top of the screen.
-    $helper->submit_action = 'submit'.$this->name;
-    $helper->toolbar_btn = array(
-        'save' =>
-            array(
-                'desc' => $this->l('Save'),
-                'href' => AdminController::$currentIndex.'&configure='.$this->name.'&save'.$this->name.
-                    '&token='.Tools::getAdminTokenLite('AdminModules'),
-            ),
-        'back' => array(
-            'href' => AdminController::$currentIndex.'&token='.Tools::getAdminTokenLite('AdminModules'),
-            'desc' => $this->l('Back to list')
-        )
-    );
+    
 
-    // < load current value >
-    $helper->fields_value['VATDISPLAYMODE'] = Configuration::get('VATDISPLAYMODE');
-
-    return $helper->generateForm($fields_form);
+ 
 }
 
     public function getContent()
@@ -109,23 +75,6 @@ public function uninstall()
     $output = null;
 
 
-    // < here we check if the form is submited for this module >
-    if (Tools::isSubmit('submit'.$this->name)) {
-        $NDCVatDisplay = strval(Tools::getValue('VATDISPLAYMODE'));
-
-        // < make some validation, check if we have something in the input >
-        if (!isset($NDCVatDisplay))
-            $output .= $this->displayError($this->l('Please insert something in this field.'));
-        else
-        {
-            // < this will update the value of the Configuration variable >
-            Configuration::updateValue('$VATDISPLAYMODE', $NDCVatDisplay);
-
-
-            // < this will display the confirmation message >
-            $output .= $this->displayConfirmation($this->l('Vat Setting Updated'));
-        }
-    }
     return $output.$this->displayForm();
 }
 
@@ -136,7 +85,7 @@ public function getWidgetVariables($hookName, array $configuration)
 
 
     $link = $this->context->link;
-   $vatmode=$this->vatmode;
+   $vatmode='1';
 
      return array(
         'vlink' => $link,

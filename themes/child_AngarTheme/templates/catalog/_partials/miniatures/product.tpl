@@ -117,7 +117,6 @@
                         {if $product.show_price}
 							<div class="product-price-and-shipping">
                                 {hook h='displayProductPriceBlock' product=$product type="before_price"}
-								<span class="sr-only">{l s='Price' d='Shop.Theme.Catalog'}</span>
 								<div class="rrp-price">RRP <span class="price rrp">{Tools::displayPrice($product.rrp)}</span></div>
 								<div class='current-price sale-price inc-vat' {if $smarty.cookies.VATMODE == 'false'} style='display:none' {/if}> <span class="price">{$product.price}</span> inc vat</div>
 								<div class='current-price sale-price ex-vat' {if $smarty.cookies.VATMODE == 'true'} style='display:none'{/if}><span class="price">{Tools::displayPrice($product.price_tax_exc)}</span> ex vat</div>

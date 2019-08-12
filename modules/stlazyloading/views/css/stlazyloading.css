@@ -1,0 +1,13 @@
+.is_stlazyloading img.stlazyloading_holder{
+  display: inline-block;
+}
+img.stlazyloading_holder{
+  display: none;
+  height: auto;
+  opacity: 0;
+}
+img.stlazyloadthis{
+  opacity: 0;
+  height: 0;
+  display: block;
+}

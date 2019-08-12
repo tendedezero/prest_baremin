@@ -23,10 +23,9 @@
           <article class="product-miniature js-product-miniature" data-id-product="{$product.id_product|intval}" data-id-product-attribute="{$product.id_product_attribute|intval}" itemscope itemtype="http://schema.org/Product">
           <div class="thumbnail-container">
             {block name='product_thumbnail'}
-              <a href="{$product.url|escape:'html':'UTF-8'}" class="thumbnail product-thumbnail is_stlazyloading">
-                  <img src="{$stlazyloading.img_prod_url}{$stlazyloading.lang_iso_code}-default-home_default.jpg" class="stlazyloading_holder" width="{$product.cover.bySize.home_default.width}" height="{$product.cover.bySize.home_default.height}" alt="{if !empty($product.cover.legend)}{$product.cover.legend}{else}{$product.name}{/if}" />
+              <a href="{$product.url|escape:'html':'UTF-8'}" class="thumbnail product-thumbnail">
                   {if isset($product.image_id)}{assign var='imageLink' value=$link->getImageLink($product.link_rewrite, $product.image_id, $imageType)}{else}{assign var='imageLink' value=$link->getImageLink($product.link_rewrite, $product.id_image, $imageType)}{/if}
-                  <img data-src = "{$product.cover.bySize.home_default.url}" class="stlazyloadthis"
+                  <img src="/img/pixel.gif" data-src = "{$product.cover.bySize.home_default.url}" class="lazymenu"
                        src="{if (strpos($imageLink,'http://')===false || strpos($imageLink,'https://'))}{$protocol_link nofilter}{/if}{$imageLink|escape:'html':'UTF-8'}"
                        alt="{if !empty($product.legend)}{$product.legend|escape:'html':'UTF-8'}{else}{$product.name|escape:'html':'UTF-8'}{/if}"
                        data-full-size-image-url = "{if (strpos($imageLink,'http://')===false || strpos($imageLink,'https://'))}{$protocol_link nofilter}{/if}{$imageLink|escape:'html':'UTF-8'}"

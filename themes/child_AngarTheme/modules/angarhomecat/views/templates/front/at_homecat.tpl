@@ -17,9 +17,8 @@
 
 						{if $show_img == 1}
 						<div class="catimg_container ">
-								<a href="{$link->getCategoryLink({$catProduct.id|escape:'htmlall':'UTF-8'},{$catProduct.link_rewrite})|escape:'html':'UTF-8'}" class="is_stlazyloading" title="{$catProduct.name|escape:'htmlall':'UTF-8'}">
-								<img src="/img/p/gb-default-home_default.jpg" class="stlazyloading_holder" alt="{$catProduct.name|escape:'html':'UTF-8'}"/>
-								<img class="replace-2x stlazyloadthis" data-src="{$link->getCatImageLink($catProduct.link_rewrite, $catProduct.id_image, 'category_default')|escape:'html':'UTF-8'}" alt="{$catProduct.name|escape:'html':'UTF-8'}" />
+								<a href="{$link->getCategoryLink({$catProduct.id|escape:'htmlall':'UTF-8'},{$catProduct.link_rewrite})|escape:'html':'UTF-8'}"  title="{$catProduct.name|escape:'htmlall':'UTF-8'}">
+								<img class="replace-2x lazy" data-src="{$link->getCatImageLink($catProduct.link_rewrite, $catProduct.id_image, 'category_default')|escape:'html':'UTF-8'}" alt="{$catProduct.name|escape:'html':'UTF-8'}" />
 								</a>
 						</div>
 						{/if}

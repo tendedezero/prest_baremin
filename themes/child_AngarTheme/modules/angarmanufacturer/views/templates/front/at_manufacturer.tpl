@@ -16,9 +16,8 @@
 	<ul id="bx_manufacturer">
 	{foreach from=$homeManufacturers item=homeManufacturer name=atHomeMan}
 		<li>
-			<a class="is_stlazyloading" title="{$homeManufacturer.name|escape:'htmlall':'UTF-8'}" href="{$link->getManufacturerLink({$homeManufacturer.id},{$homeManufacturer.link_rewrite})|escape:'html':'UTF-8'}">
-				<img src="/img/p/gb-default-home_default.jpg" class="stlazyloading_holder"  alt="{$homeManufacturer.name|escape:'htmlall':'UTF-8'}"/>
-				<img class="stlazyloadthis" data-src="{$urls.img_manu_url|escape:'html':'UTF-8'}{$homeManufacturer.image|escape:'html':'UTF-8'}" alt="{$homeManufacturer.name|escape:'htmlall':'UTF-8'}" />
+			<a  title="{$homeManufacturer.name|escape:'htmlall':'UTF-8'}" href="{$link->getManufacturerLink({$homeManufacturer.id},{$homeManufacturer.link_rewrite})|escape:'html':'UTF-8'}">
+				<img class="lazy" data-src="{$urls.img_manu_url|escape:'html':'UTF-8'}{$homeManufacturer.image|escape:'html':'UTF-8'}" alt="{$homeManufacturer.name|escape:'htmlall':'UTF-8'}" />
 			</a>
 		</li>
 	{/foreach}

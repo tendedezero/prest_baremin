@@ -11,9 +11,8 @@
 		<ul id="angarslider">
 		  {foreach from=$angarslider.slides item=slide name='angarslider'}
 			<li class="angarslider-container">
-			  <a href="{$slide.url|escape:'html':'UTF-8'}" title="{$slide.legend}" class="is_stlazyloading">
-				  <img src="/img/p/gb-default-home_default.jpg" class="stlazyloading_holder" alt="{$slide.legend}"/>
-				  <img data-src="{$slide.image_url}" alt="{$slide.legend}" width="100%" height="100%" class="stlazyloadthis">
+			  <a href="{$slide.url|escape:'html':'UTF-8'}" title="{$slide.legend}">
+				  <img data-src="{$slide.image_url}" src="/img/pixel.gif" alt="{$slide.legend}" width="100%" height="100%" class="lazy">
 			  </a>
 
 			  {if $slide.description}

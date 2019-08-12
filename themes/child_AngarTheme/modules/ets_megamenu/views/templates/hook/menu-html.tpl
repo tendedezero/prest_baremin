@@ -39,7 +39,7 @@
                <a {if isset($menu.menu_open_new_tab) && $menu.menu_open_new_tab == 1} target="_blank"{/if} href="{$menu.menu_link|escape:'html':'UTF-8'}" style="{if $menu.enabled_vertical}{if isset($menu.menu_ver_text_color) && $menu.menu_ver_text_color}color:{$menu.menu_ver_text_color};{/if}{if isset($menu.menu_ver_background_color) && $menu.menu_ver_background_color}background-color:{$menu.menu_ver_background_color};{/if}{/if}{if Configuration::get('ETS_MM_HEADING_FONT_SIZE')}font-size:{Configuration::get('ETS_MM_HEADING_FONT_SIZE')|intval}px;{/if}">
                     <span class="mm_menu_content_title">
                         {if $menu.menu_img_link}
-                            <img src="{$menu.menu_img_link|escape:'html':'UTF-8'}" title="" alt="" width="20" />
+                            <img src="/img/pixel.gif" data-src="{$menu.menu_img_link|escape:'html':'UTF-8'}" title="" alt="" width="20" class="lazymenu" />
                         {elseif $menu.menu_icon}
                             <i class="fa {$menu.menu_icon|escape:'html':'UTF-8'}"></i>
                         {/if}
@@ -65,8 +65,8 @@
                                                     <a href="{$tab.url|escape:'html':'UTF-8'}">
                                                 {/if}
                                                 {if $tab.tab_img_link}
-                                                    <img src="{$tab.tab_img_link|escape:'html':'UTF-8'}" title="" alt="" width="20" />
-                                                {else if $tab.tab_icon}
+                                                    <img src="/img/pixel.gif" data-src="{$tab.tab_img_link|escape:'html':'UTF-8'}" title="" alt="" width="20" class="lazymenu" />
+                                                {elseif $tab.tab_icon}
                                                     <i class="fa {$tab.tab_icon|escape:'html':'UTF-8'}"></i>
                                                 {/if}
                                                 {$tab.title|escape:'html':'UTF-8'}

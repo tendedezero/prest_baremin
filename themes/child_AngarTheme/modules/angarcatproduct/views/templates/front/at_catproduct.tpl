@@ -31,10 +31,9 @@
 						
 						<div class="product_container">
 							<div class="left-block">
-								<a class="product_img_link is_stlazyloading" href="{$product.link|escape:'html':'UTF-8'}" title="{$product.name|escape:'html':'UTF-8'}">
+								<a class="product_img_link" href="{$product.link|escape:'html':'UTF-8'}" title="{$product.name|escape:'html':'UTF-8'}">
 								{if !empty($product.cover.bySize.home_default.url)}
-									<img src="/img/p/gb-default-home_default.jpg" class="stlazyloading_holder" alt="{if !empty($product.legend)}{$product.legend|escape:'html':'UTF-8'}{else}{$product.name|escape:'html':'UTF-8'}{/if}"/>
-									<img class="replace-2x img-responsive stlazyloadthis" data-src="{$link->getImageLink($product.link_rewrite, $product.id_image, 'small_default')|escape:'html':'UTF-8'}" alt="{if !empty($product.legend)}{$product.legend|escape:'html':'UTF-8'}{else}{$product.name|escape:'html':'UTF-8'}{/if}" title="{if !empty($product.legend)}{$product.legend|escape:'html':'UTF-8'}{else}{$product.name|escape:'html':'UTF-8'}{/if}" {if isset($smallSize)} width="{$smallSize.width}" height="{$smallSize.height}"{/if} />
+										<img class="replace-2x img-responsive lazy" data-src="{$link->getImageLink($product.link_rewrite, $product.id_image, 'small_default')|escape:'html':'UTF-8'}" alt="{if !empty($product.legend)}{$product.legend|escape:'html':'UTF-8'}{else}{$product.name|escape:'html':'UTF-8'}{/if}" title="{if !empty($product.legend)}{$product.legend|escape:'html':'UTF-8'}{else}{$product.name|escape:'html':'UTF-8'}{/if}" {if isset($smallSize)} width="{$smallSize.width}" height="{$smallSize.height}"{/if} />
 								{else}
 									<img class="replace-2x img-responsive" src = "{$urls.img_url}en-default-home_default.jpg" alt = "{$product.name|truncate:30:'...'}" >
 								{/if}

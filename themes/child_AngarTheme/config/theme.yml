@@ -29,6 +29,8 @@ assets:
         path: assets/js/angartheme.js
       - id: achild_angar
         path: assets/js/custom.js
+      - id: lazyloader
+        path: assets/js/jquery.lazy.min.js
 
 global_settings:
     hooks:
@@ -36,13 +38,13 @@ global_settings:
       displayNav1:
         - angarcontact
       displayNav2:
-        - ps_languageselector
-        - ps_currencyselector
-	- NDCVatDisplay
+      - ps_languageselector
+      - ps_currencyselector
+      - NDCVatDisplay
       displayTop:
         - ps_shoppingcart
         - ps_searchbar
-	- ps_customersignin
+        - ps_customersignin
 
 
  

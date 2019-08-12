@@ -48,11 +48,10 @@
                     {/block}
 
                     {block name='product_thumbnail'}
-						<a href="{$product.url}" class="thumbnail product-thumbnail is_stlazyloading">
+						<a href="{$product.url}" class="thumbnail product-thumbnail">
                             {* AngarTheme *}
                             {if !empty($product.cover.bySize.home_default.url)}
-								<img src="{$stlazyloading.img_prod_url}{$stlazyloading.lang_iso_code}-default-home_default.jpg" class="stlazyloading_holder" width="{$product.cover.bySize.home_default.width}" height="{$product.cover.bySize.home_default.height}" alt="{if !empty($product.cover.legend)}{$product.cover.legend}{else}{$product.name}{/if}" />
-								<img data-src = "{$product.cover.bySize.home_default.url}" class="stlazyloadthis"
+								<img src="/img/pixel.gif" data-src = "{$product.cover.bySize.home_default.url}" class="lazy"
 										alt = "{if !empty($product.cover.legend)}{$product.cover.legend}{else}{$product.name|truncate:30:'...'}{/if}"
 										data-full-size-image-url = "{$product.cover.large.url}"
 								>

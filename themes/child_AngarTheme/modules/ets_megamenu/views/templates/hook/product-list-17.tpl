@@ -25,8 +25,8 @@
             {block name='product_thumbnail'}
               <a href="{$product.url|escape:'html':'UTF-8'}" class="thumbnail product-thumbnail">
                   {if isset($product.image_id)}{assign var='imageLink' value=$link->getImageLink($product.link_rewrite, $product.image_id, $imageType)}{else}{assign var='imageLink' value=$link->getImageLink($product.link_rewrite, $product.id_image, $imageType)}{/if}
-                  <img src="/img/pixel.gif" data-src = "{$product.cover.bySize.home_default.url}" class="lazymenu"
-                       src="{if (strpos($imageLink,'http://')===false || strpos($imageLink,'https://'))}{$protocol_link nofilter}{/if}{$imageLink|escape:'html':'UTF-8'}"
+                  <img src="/img/pixel.gif" class="lazymenu"
+                       data-src="{if (strpos($imageLink,'http://')===false || strpos($imageLink,'https://'))}{$protocol_link nofilter}{/if}{$imageLink|escape:'html':'UTF-8'}"
                        alt="{if !empty($product.legend)}{$product.legend|escape:'html':'UTF-8'}{else}{$product.name|escape:'html':'UTF-8'}{/if}"
                        data-full-size-image-url = "{if (strpos($imageLink,'http://')===false || strpos($imageLink,'https://'))}{$protocol_link nofilter}{/if}{$imageLink|escape:'html':'UTF-8'}"
                   />

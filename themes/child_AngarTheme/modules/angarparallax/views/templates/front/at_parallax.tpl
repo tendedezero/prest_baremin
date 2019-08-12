@@ -4,7 +4,7 @@
 * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *}
 
-<div id="parallax_baner" {if isset($parallax_img)}style="background-image: url({$parallax_img|escape:'htmlall':'UTF-8'})"{/if}>
+<div id="parallax_baner" {if isset($parallax_img)} data-src="{$parallax_img|escape:'htmlall':'UTF-8'}"{/if} style="background-position: center" class="lazy">
 
 	<div class="parallax_desc">
 		{$parallax_desc nofilter} {*HTML CONTENT*}

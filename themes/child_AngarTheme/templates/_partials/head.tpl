@@ -23,7 +23,9 @@
  * International Registered Trademark & Property of PrestaShop SA
  *}
 {block name='head_charset'}
+<html lang="eng">
   <meta charset="utf-8">
+  
 {/block}
 {block name='head_ie_compatibility'}
   <meta http-equiv="x-ua-compatible" content="ie=edge">

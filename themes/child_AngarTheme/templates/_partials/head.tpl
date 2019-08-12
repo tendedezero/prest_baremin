@@ -41,6 +41,8 @@
   {/if}
 {/block}
 
+<link rel="manifest" href="/manifest.json" />
+
 {block name='head_viewport'}
   <meta name="viewport" content="width=device-width, initial-scale=1">
 {/block}

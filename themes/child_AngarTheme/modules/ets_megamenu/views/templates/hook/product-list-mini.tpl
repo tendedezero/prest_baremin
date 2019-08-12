@@ -28,7 +28,7 @@
 					<div class="product-image-container">
 						<a class="product_img_link" href="{$product.link|escape:'html':'UTF-8'}" title="{$product.name|escape:'html':'UTF-8'}" itemprop="url">
 							{if isset($product.image_id)}{assign var='imageLink' value=$link->getImageLink($product.link_rewrite, $product.image_id, $imageType)}{else}{assign var='imageLink' value=$link->getImageLink($product.link_rewrite, $product.id_image, $imageType)}{/if}
-                            <img class="replace-2x img-responsive lazymenu" data-src="{if (strpos($imageLink,'http://')===false || strpos($imageLink,'https://'))}{$protocol_link|escape:'html':'UTF-8'}{/if}{$imageLink|escape:'html':'UTF-8'}" alt="{if !empty($product.legend)}{$product.legend|escape:'html':'UTF-8'}{else}{$product.name|escape:'html':'UTF-8'}{/if}" title="{if !empty($product.legend)}{$product.legend|escape:'html':'UTF-8'}{else}{$product.name|escape:'html':'UTF-8'}{/if}" {if isset($homeSize)} width="{$homeSize.width|floatval}" height="{$homeSize.height|floatval}"{/if} itemprop="image" />
+                            <img class="replace-2x img-responsive lazymenu" src="/img/pixel.gif" data-src="{if (strpos($imageLink,'http://')===false || strpos($imageLink,'https://'))}{$protocol_link|escape:'html':'UTF-8'}{/if}{$imageLink|escape:'html':'UTF-8'}" alt="{if !empty($product.legend)}{$product.legend|escape:'html':'UTF-8'}{else}{$product.name|escape:'html':'UTF-8'}{/if}" title="{if !empty($product.legend)}{$product.legend|escape:'html':'UTF-8'}{else}{$product.name|escape:'html':'UTF-8'}{/if}" {if isset($homeSize)} width="{$homeSize.width|floatval}" height="{$homeSize.height|floatval}"{/if} itemprop="image" />
 						</a>
                     </div>
 				</div>

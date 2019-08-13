@@ -17,9 +17,15 @@ div#_desktop_search_widget {
     padding: 0!important;
 }
 li.rational div.ets_mm_block.mm_block_type_image {
+     text-align:center;
+ }
+#header .layout_layout1 li.rational .mm_columns_ul .ets_mm_block > h4 a {
+    color: #cc0000;
+}
+li.diamond div.ets_mm_block.mm_block_type_image {
     text-align:center;
 }
-#header .layout_layout1 li.rational .mm_columns_ul .ets_mm_block > h4 a {
+#header .layout_layout1 li.diamond .mm_columns_ul .ets_mm_block > h4 a {
     color: #cc0000;
 }
 span.aeuc_from_label {

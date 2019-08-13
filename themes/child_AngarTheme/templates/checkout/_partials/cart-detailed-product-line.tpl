@@ -57,7 +57,7 @@
         </div>
       {/if}
       <div class="current-price" >
-        {if $product.has_discount}{else}<div class="price inc-vat" {if $smarty.cookies.VATMODE == 'false'}style="display: none;"{/if}><span class="price">{$product.price} inc vat</span></div><div class="price ex-vat" {if $smarty.cookies.VATMODE == 'true'}style="display: none;"{/if}><span class="product-price">{Tools::displayPrice(Product::getPriceStatic($product.id_product,false))} exc vat</span> </div>
+        {if $product.has_discount}{else}<div class="price inc-vat" style="display: none;"><span class="price">{$product.price} inc vat</span></div><div class="price ex-vat" style="display: none;"><span class="product-price">{Tools::displayPrice(Product::getPriceStatic($product.id_product,false))} ex vat</span> </div>
 </span>{/if}
         {if $product.unit_price_full}
           <div class="unit-price-cart">{$product.unit_price_full}</div>

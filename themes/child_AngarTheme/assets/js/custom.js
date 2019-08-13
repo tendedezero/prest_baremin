@@ -43,7 +43,21 @@ if (typeof getCookie("VATMODE") == 'undefined') {
 	$(".inc-vat").show();
         $(".ex-vat").hide();
 	setCookie("VATMODE", "true", 365);
- }
+ } else {
+    if (getCookie("VATMODE") == 'true') {
+        $("#NDCToggle").removeClass( "toggle--off" );
+        $(".inc-vat").show();
+        $(".ex-vat").hide();
+        setCookie("VATMODE", "true", 365);
+    }else{
+        $("#NDCToggle").addClass("toggle--off");
+        $(".inc-vat").hide();
+        $(".ex-vat").show();
+        setCookie("VATMODE", "false", 365);
+    }
+
+}
+
 
 /* PRODUCT-LIST LIST */
 $(document).ready(function(){

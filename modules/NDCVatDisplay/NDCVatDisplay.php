@@ -18,7 +18,7 @@ class NDCVatDisplay extends Module implements WidgetInterface
     {
         $this->name = 'NDCVatDisplay';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.3';
+        $this->version = '1.0.5';
         $this->author = 'RPaterson';
         $this->need_instance = 0;
 
@@ -70,38 +70,38 @@ public function uninstall()
  
 }
 
-    public function getContent()
+public function getContent()
 {
     $output = null;
-
-
     return $output.$this->displayForm();
 }
 
 
 
 public function getWidgetVariables($hookName, array $configuration)
-    {
-
-
+{
+    $vatmode = null;
     $link = $this->context->link;
-   $vatmode='1';
-
-     return array(
+    $cookieKey = 'VATMODE';
+    if (!isset($_COOKIE['VATMODE'])) {
+        $this->context->cookie->__set($cookieKey, "true");
+        $vatmode = 'true';
+    }
+    else
+    {
+        $vatmode = $_COOKIE['VATMODE'];
+    }
+    return array(
         'vlink' => $link,
         'vatmode' => $vatmode,
     );
- }
-
-    public function renderWidget($hookName, array $configuration)
+}
+public function renderWidget($hookName, array $configuration)
     {
         if (Configuration::isCatalogMode())  {
             return false;
         }
-
-        
-$this->smarty->assign($this->getWidgetVariables($hookName, $configuration));
-
+        $this->smarty->assign($this->getWidgetVariables($hookName, $configuration));
         return $this->fetch($this->templateFile);
     }
 }

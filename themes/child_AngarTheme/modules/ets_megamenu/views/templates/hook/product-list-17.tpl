@@ -54,8 +54,8 @@
                 {if $product.show_price}
                   <div class="product-price-and-shipping">
                     {hook h='displayProductPriceBlock' product=$product type="before_price"}
-                    <span itemprop="price" class="price inc-vat" {if $smarty.cookies.VATMODE == 'false'} style="display:none"{/if}>{$product.price|escape:'html':'UTF-8'} inc vat</span>
-                      <span class="price ex-vat"{if $smarty.cookies.VATMODE == 'true'} style="display:none"{/if}>{Tools::displayPrice($product.price_tax_exc|escape:'html':'UTF-8')} exc vat</span>
+                    <span itemprop="price" class="price inc-vat" style="display:none">{$product.price|escape:'html':'UTF-8'} inc vat</span>
+                      <span class="price ex-vat" style="display:none">{Tools::displayPrice($product.price_tax_exc|escape:'html':'UTF-8')} ex vat</span>
 
                       {if $product.has_discount}
                       {hook h='displayProductPriceBlock' product=$product type="old_price"}

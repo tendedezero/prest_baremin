@@ -19,7 +19,7 @@ class ndcleasing extends PaymentModule
     {
         $this->name = 'ndcleasing';
         $this->tab = 'payments_gateways';
-        $this->version = '1.0.1';
+        $this->version = '1.0.5';
         $this->author = 'R Paterson';
         $this->controllers = array('payment', 'validation');
 

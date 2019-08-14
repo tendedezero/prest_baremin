@@ -30,6 +30,14 @@ li.diamond div.ets_mm_block.mm_block_type_image {
 #header .layout_layout1 li.diamond .mm_columns_ul .ets_mm_block > h4 a {
     color: #cc0000;
 }
+li.blueseal div.ets_mm_block.mm_block_type_image {
+    text-align:center;
+}
+#header .layout_layout1 li.blueseal .mm_columns_ul .ets_mm_block > h4 a {
+    color: #2868a6;
+}
+
+
 span.aeuc_from_label {
     line-height: 22px;
     display: none;

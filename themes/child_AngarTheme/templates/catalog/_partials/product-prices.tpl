@@ -20,7 +20,7 @@
         <meta itemprop="priceCurrency" content="{$currency.iso_code}">
             <div class="rrp-price">RRP <span class="price rrp">{Tools::displayPrice($product.rrp)}</span></div>
 
-        <div class="current-price sale-price inc-vat" {if $smarty.cookies.VATMODE == 'false'} style="display:none"{/if}>
+        <div class="current-price sale-price inc-vat"  style="display:none">
             <span class="price" itemprop="price"  content="{$product.price_amount}" >{$product.price}</span><span class="tax_display">VAT Included</span>
         </div>
 
@@ -33,7 +33,7 @@
               </span>
             {/if}
           {/if}
-            <div class="current-price sale-price ex-vat" {if $smarty.cookies.VATMODE == 'true'}style="display: none;"{/if}>
+            <div class="current-price sale-price ex-vat" style="display: none;">
                 <span class="price" >{Tools::displayPrice($product.price_tax_exc)}</span><span class="tax_display">VAT Excluded</span>
             </div>
         </div>

@@ -2,8 +2,10 @@
  * Custom code goes here.
  * A template should always ship with an empty custom.css
  */
-.payment-option > label > img {
-display:none
+.ets_mm_block input {
+    font-size: 14px;
+    border: none;
+    padding-left: 10px;
 }
 .leasetable.leasepagetable{display:none}.leasetable{width:100%;text-align:center}.leasingheadings tr th{text-align:center;padding:10px}.leasingheadings{background:#d3d3d3}
 .leasingheadings.odd {

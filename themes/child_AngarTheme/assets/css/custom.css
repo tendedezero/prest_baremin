@@ -7,6 +7,9 @@
     border: none;
     padding-left: 10px;
 }
+.ets_item_img {
+    overflow: initial;
+}
 .leasetable.leasepagetable{display:none}.leasetable{width:100%;text-align:center}.leasingheadings tr th{text-align:center;padding:10px}.leasingheadings{background:#d3d3d3}
 .leasingheadings.odd {
     background-color: #fff2ce

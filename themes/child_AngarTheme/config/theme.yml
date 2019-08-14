@@ -30,7 +30,7 @@ assets:
       - id: achild_angar
         path: assets/js/custom.js
       - id: lazyloader
-        path: assets/js/jquery.lazy.min.js
+        path: assets/js/lozad.min.js
 
 global_settings:
     hooks:

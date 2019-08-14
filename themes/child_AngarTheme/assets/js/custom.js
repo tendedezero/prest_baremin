@@ -74,14 +74,22 @@ $(document).ready(function(){
     });
 $("#leasecalculate").click(function(){populateLeaseFields(parseFloat($("#leaseamount").val())),$(".leasetable.leasepagetable").length>0&&($(".leasetable.leasepagetable").css({display:"table"}),$(".leaseextrainfo").css({display:"block"}))})
 $("#leasecalculate").click();
+    const observer = lozad('.lazy', {
+        rootMargin: '10px 0px', // syntax similar to that of CSS Margin
+        threshold: 0.1 // ratio of element convergence
+    });
+    observer.observe();
 });
 
 function populateLeaseFields(e){if(e<10000){for(var t=[{term:24,rate:.05031,type:"over"},{term:36,rate:.03519,type:"over"},{term:48,rate:.02868,type:"over"},{term:60,rate:.02438,type:"over"},{term:36,rate:.041,type:"under"},{term:60,rate:.029,type:"under"}],i=0;i<t.length;i++){var n=t[i],s=e*n.rate,a=s*n.term*.22,o=$("#m"+n.term+"y"+n.type);o.children(":eq(1)").children(".cellvalue").html("&pound;"+currencyPad(s)),o.children(":eq(2)").children(".cellvalue").html("&pound;"+currencyPad(12*s/52)),60==n.term&&"over"==n.type&&$("#cheapestlease").html(currencyPad(12*s/52)),o.children(":eq(3)").children(".cellvalue").html("&pound;"+currencyPad(s*n.term)),o.children(":eq(4)").children(".cellvalue").html("&pound;"+currencyPad(a)),o.children(":eq(5)").children(".cellvalue").html("&pound;"+currencyPad(s*n.term-a))}}
 else{for(var t=[{term:24,rate:.050,type:"over"},{term:36,rate:.03390,type:"over"},{term:48,rate:.02715,type:"over"},{term:60,rate:.02284,type:"over"},{term:36,rate:.041,type:"under"},{term:60,rate:.029,type:"under"}],i=0;i<t.length;i++){var n=t[i],s=e*n.rate,a=s*n.term*.22,o=$("#m"+n.term+"y"+n.type);o.children(":eq(1)").children(".cellvalue").html("&pound;"+currencyPad(s)),o.children(":eq(2)").children(".cellvalue").html("&pound;"+currencyPad(12*s/52)),60==n.term&&"over"==n.type&&$("#cheapestlease").html(currencyPad(12*s/52)),o.children(":eq(3)").children(".cellvalue").html("&pound;"+currencyPad(s*n.term)),o.children(":eq(4)").children(".cellvalue").html("&pound;"+currencyPad(a)),o.children(":eq(5)").children(".cellvalue").html("&pound;"+currencyPad(s*n.term-a))}}}
 function currencyPad(e,t){var i=String(e);return i.indexOf(".")<0?i+=".00":(i=String(Math.round(100*e)/100),i.indexOf(".")<0?i+=".00":i.indexOf(".")==i.length-2&&(i+="0")),t?i:i.replace(/\B(?=(\d{3})+(?!\d))/g,",")}
-$(function() {
-    $('.lazy').lazy();
-});
+
+
 $("div.ets_mm_megamenu").on("mouseover", function() {
-    $('.lazymenu').lazy();;
+    const observer = lozad('.lazymenu', {
+        rootMargin: '0px 0px', // syntax similar to that of CSS Margin
+        threshold: 0.1 // ratio of element convergence
+    });
+    observer.observe();
 })

@@ -6,8 +6,8 @@
   "background_color": "#fff",
   "theme_color": "#ec434a",
   "icons": [{
-    "src": "/img/logo-menu-mobile.png",
-    "sizes": "256x256",
-    "type": "image/png"
+    "src": "/img/logo-man.jpg",
+    "sizes": "200x90",
+    "type": "image/jpg"
   }]
 }

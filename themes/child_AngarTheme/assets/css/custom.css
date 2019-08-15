@@ -177,12 +177,12 @@ div#_desktop_user_info div.user-info {
     width: 3.84%;
 }
 .zoom {
-    padding: 50px;
-    transition: transform .2s;
+    padding: 10px;
+    transition: transform .5s;
     /* Animation */
     margin: 0 auto;
-    width: 300px;
-    height: 200px;
+    /*width: 300px;
+    height: 200px;*/
 }
 .zoom:hover {
     transform: scale(1.1);

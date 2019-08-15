@@ -54,7 +54,10 @@ var reduction_percent = {$reduction_percent|floatval};
 
 </script>
 <div id="aw_box">
-
+	<b class="xtop"><b class="xb1"></b><b class="xb2 xbtop"></b><b class="xb3 xbtop"></b><b class="xb4 xbtop"></b></b>
+	<div class="aw_header">
+		<b style="font-size:14px">{l s='Product Options' mod='attributewizard'}</b>
+	</div>
 	<div class="aw_content">
 <form name="aw_wizard">
 <table width="100%" border="0"> 
@@ -105,7 +108,9 @@ var reduction_percent = {$reduction_percent|floatval};
 			</div>
 		</td>
 	</tr>
-
+	<tr height="8">
+		<td {if $aw_ps_version >= 1.6}colspan="8"{/if}>&nbsp;</td>
+	</tr>
 	{/if}
 {foreach from=$aw_groups key=id_attribute_group item=group}
 	{assign var='aw_default_impact' value=0}
@@ -175,7 +180,6 @@ var reduction_percent = {$reduction_percent|floatval};
 										
 									
 										<div id="aw_select_colors_{$group.id_group|intval}" {if isset($group.group_width) && $group.group_width}style="width:{$group.group_width|intval}px;height:{$group.group_height|intval}px;"{/if}>
-											<div></div>
 											{foreach from=$group.attributes item=aw_group_attribute}
 											{assign var='id_attribute' value=$aw_group_attribute.0}
 												{if file_exists($col_img_dir|cat:$id_attribute|cat:'.jpg')}
@@ -505,7 +509,8 @@ var reduction_percent = {$reduction_percent|floatval};
 </table>
 </form>
 					</div>
-						</div>
+					<b class="xbottom"><b class="xb4 xbbot"></b><b class="xb3 xbbot"></b><b class="xb2 xbbot"></b><b class="xb1"></b></b>
+				</div>
 
 </div>
 

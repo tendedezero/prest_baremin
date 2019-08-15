@@ -167,7 +167,31 @@
                                 {/block}
 
                                 {block name='product_leasing_button'}
-                                    {hook h="displayProductAdditionalInfo" mod="nsquotation"}
+                                    <div id="desktop-leasing-options" class="ndcleasing">
+                                        <div class="ndcleasingHeader">
+                                            <span>Finance options available over </span>
+                                            <span>
+                                                <select id="termOptions" class="needsclick">
+                                                                <option value="12_None" data-display="">
+                                                                    12 Months
+                                                                </option>
+                                                                <option value="24_None" data-display="">
+                                                                    24 Months
+                                                                </option>
+                                                                <option value="36_None" data-display="">
+                                                                    36 Months
+                                                                </option>
+                                                                <option value="48_None" selected="" data-display="">
+                                                                    48 Months
+                                                                </option>
+                                                            </select>
+                                            </span>
+                                            <a class="expand"></a>
+                                        </div>
+                                    </div>
+
+
+
                                 {/block}
 
                                 {block name='product_additional_info'}

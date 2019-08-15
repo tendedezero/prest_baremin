@@ -7,11 +7,9 @@
     border: none;
     padding-left: 10px;
 }
-#homepage-slider{
-    min-height:430px;
-}
+
 .ets_item_img {
-    overflow: initial;
+    overflow: initial!important;
 }
 .leasetable.leasepagetable{display:none}.leasetable{width:100%;text-align:center}.leasingheadings tr th{text-align:center;padding:10px}.leasingheadings{background:#d3d3d3}
 .leasingheadings.odd {
@@ -34,7 +32,7 @@ li.diamond div.ets_mm_block.mm_block_type_image {
     text-align:center;
 }
 #header .layout_layout1 li.diamond .mm_columns_ul .ets_mm_block > h4 a {
-    color: #cc0000;
+    color: #870914;
 }
 li.blueseal div.ets_mm_block.mm_block_type_image {
     text-align:center;
@@ -97,11 +95,16 @@ div.mm-product-description > div.product-price-and-shipping > span.price {color:
 .mm_block_type_product .thumbnail-container .product-title > a {line-height: 14px}
 p.mmenu_vertical {text-align:center;}
 
-#homepage-slider .angarslider-description  {
+#homepage-slider .angarslider-description,   {
     top: auto!important;
     bottom: 10px!important;
 }
 
+#homepage-slider .angarslider-description, #angarbanners_top div.item-html {
+    top: 70px;
+    color: white;
+    position: relative;
+}
 a.stalwart.button {
     border: 3px solid;
     border-radius: 50em;
@@ -181,8 +184,8 @@ div#_desktop_user_info div.user-info {
     transition: transform .5s;
     /* Animation */
     margin: 0 auto;
-    /*width: 300px;
-    height: 200px;*/
+    min-height: 100px;
+    max-height: 100px;
 }
 .zoom:hover {
     transform: scale(1.1);
@@ -469,3 +472,262 @@ float:right;
 .quickview .modal-body {
     min-height: 27.75rem;
 }
+
+/*From Modules*/
+/*angarcmsdesc.css*/
+div#angarinfo_desc {
+    clear: both;
+    text-align: left;
+    padding: 0 0 10px;
+}
+
+div#angarinfo_desc .desc_block {
+    padding: 0 0 10px;
+}
+
+div#angarinfo_desc  h3{
+    margin: 0 0 10px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+div#angarinfo_desc p{
+    margin: 0 0 10px;
+}
+
+div#angarinfo_desc a:hover{
+    text-decoration: underline;
+}
+
+div#angarinfo_desc ul li {
+    display: inline-block;
+    position: relative;
+    padding-left: 14px;
+}
+
+div#angarinfo_desc ul li:before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    background: black;
+    display: inline-block;
+    border-radius: 10px;
+    position: absolute;
+    left: 0;
+    top: 6px;
+}
+/*angarcmsinfo.css*/
+div#angarinfo_block {
+    text-align: center;
+    float: left;
+    width: 100%;
+    padding: 10px 0 0;
+}
+
+div#angarinfo_block .icon_cms {
+    font-size: 36px;
+    margin: 0 0 6px;
+    width: 100%;
+    color: #1379CE;
+}
+
+div#angarinfo_block .icon_cms span{
+    display: none;
+}
+
+div#angarinfo_block  h3{
+    margin: 2px 0 4px;
+    font-weight: bold;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+div#angarinfo_block p{
+    margin: 0;
+}
+
+div#angarinfo_block a:hover{
+    text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+
+    div#angarinfo_block{
+        margin: 10px 0;
+        padding: 0;
+    }
+
+    div#angarinfo_block .col-xs-3{
+        width: 50%;
+        margin-bottom: 10px;
+    }
+
+    div#angarinfo_block .col-xs-3:nth-child(3){
+        clear: both;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    div#angarinfo_block {
+        padding: 0px 0;
+    }
+
+    div#angarinfo_block .col-xs-3{
+        width: 100%;
+    }
+
+}
+/* angarfcaebook.css*/
+@media (min-width: 768px){
+    #likebox_content {
+        position: fixed;
+        z-index: 100;
+        background: #3B5998;
+        padding: 4px;
+        top: 190px;
+        right: -280px;
+        width: 280px;
+        z-index: 8000;
+    }
+
+    #likebox_content h4{
+        display: none;
+    }
+
+    .likebox_tab {
+        left: -40px;
+        -webkit-border-radius: 10px 0 0 10px;
+        -moz-border-radius: 10px 0 0 10px;
+        border-radius: 10px 0 0 10px;
+        -moz-box-shadow: -2px 0 2px rgba(0, 0, 0, 0.5);
+        -webkit-box-shadow: -2px 0 2px rgba(0, 0, 0, 0.5);
+        box-shadow: -2px 0 2px rgba(0, 0, 0, 0.5);
+        top: 0px;
+        position: absolute;
+        width: 40px;
+        height: 120px;
+        background: #3B5998 center center no-repeat;
+        cursor: pointer;
+        background-image: url(../img/facebook_icon.png);
+    }
+}
+
+
+@media (max-width: 767px){
+    div#likebox_content {
+        clear: both;
+        text-align: center;
+        margin: 10px 0;
+        overflow: hidden;
+    }
+}
+/*ScrollTop*/
+#scroll_top {
+    position: fixed;
+    z-index: 1;
+    right: 24px;
+    bottom: 24px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background: #f8653d;
+    display: none;
+    text-align: center;
+    font-size: 18px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.10);
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.10);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.10);
+}
+
+#scroll_top:before {
+    font-family: "FontAwesome";
+    content: "\f106";
+}
+
+#scroll_top:hover,
+#scroll_top:focus {
+    background: #282828;
+    text-decoration: none;
+}
+/*Bx Wrapper */
+
+/* DIRECTION CONTROLS (NEXT / PREV) */
+
+/*
+.product-thumbinals {
+display: none;
+}
+
+.bx-wrapper .product-thumbinals {
+display: block;
+}
+
+ul.product-thumbinals li {
+float: left;
+padding: 0 10px;
+}
+
+ul.product-thumbinals li img {
+max-width: 100%;
+border: 1px solid #ccc;
+}
+
+.bx-wrapper {
+position: relative;
+margin: 0 auto;
+}
+
+.bx-wrapper .bx-controls-direction a {
+margin-top: 38px;
+height: 20px;
+width: 20px;
+line-height: 0;
+position: absolute;
+top: 45%;
+margin-top: -10px;
+font-size: 0;
+overflow: hidden;
+outline: none;
+text-decoration: none;
+background: #000;
+}
+
+.bx-wrapper .bx-controls-direction a:before {
+padding-left: 2px;
+color: #fff;
+font-family: "FontAwesome";
+font-size: 20px;
+line-height: 22px;
+}
+
+.bx-wrapper .bx-controls-direction a:hover:before {
+color: #333;
+}
+
+.bx-next {
+right: -20px;
+}
+
+.bx-next:before {
+content: ">";
+}
+
+.bx-prev {
+left: -20px;
+}
+
+.bx-prev:before {
+content: "<";
+}
+
+.bx-wrapper .bx-controls-direction a.disabled {
+display: none;
+}
+
+*/

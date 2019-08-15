@@ -23,7 +23,7 @@
 *  International Registered Trademark & Property of PrestaShop SA
 *}
 
-{block name='social_sharing'}
+{block name='social_sharer'}
   {if $social_share_links}
     <div class="social-sharing">
       <ul>

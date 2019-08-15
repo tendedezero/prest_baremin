@@ -1,28 +1,4 @@
 <?php
-/**
-* 2007-2016 PrestaShop
-*
-* NOTICE OF LICENSE
-*
-* This source file is subject to the Open Software License (OSL 3.0)
-* that is bundled with this package in the file LICENSE.txt.
-* It is also available through the world-wide-web at this URL:
-* http://opensource.org/licenses/osl-3.0.php
-* If you did not receive a copy of the license and are unable to
-* obtain it through the world-wide-web, please send an email
-* to license@prestashop.com so we can send you a copy immediately.
-*
-* DISCLAIMER
-*
-* Do not edit or add to this file if you wish to upgrade PrestaShop to newer
-* versions in the future. If you wish to customize PrestaShop for your
-* needs please refer to http://www.prestashop.com for more information.
-*
-*  @author    PrestaShop SA <contact@prestashop.com>
-*  @copyright 2007-2016 PrestaShop SA
-*  @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
-*  International Registered Trademark & Property of PrestaShop SA
-*/
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -30,7 +6,7 @@ if (!defined('_PS_VERSION_')) {
 
 use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
 
-class Ps_Sharebuttons extends Module implements WidgetInterface
+class ndcSharer extends Module implements WidgetInterface
 {
     protected static $networks = array('Facebook', 'Twitter', 'Google', 'Pinterest');
 
@@ -38,9 +14,9 @@ class Ps_Sharebuttons extends Module implements WidgetInterface
 
     public function __construct()
     {
-        $this->name = 'ps_sharebuttons';
+        $this->name = 'ndcSharer';
         $this->author = 'PrestaShop';
-        $this->version = '2.0.1';
+        $this->version = '1.0.0';
         $this->need_instance = 0;
 
         $this->ps_versions_compliancy = array('min' => '1.7.1.0', 'max' => _PS_VERSION_);
@@ -49,19 +25,19 @@ class Ps_Sharebuttons extends Module implements WidgetInterface
         $this->bootstrap = true;
         parent::__construct();
 
-        $this->displayName = $this->trans('Social media share buttons', array(), 'Modules.Sharebuttons.Admin');
-        $this->description = $this->trans('Displays social media sharing buttons (Twitter, Facebook, Google+ and Pinterest) on every product page.', array(), 'Modules.Sharebuttons.Admin');
+        $this->displayName = $this->trans('Social media share buttons', array(), 'Modules.ndcSharer.Admin');
+        $this->description = $this->trans('Displays social media sharing buttons on every product page.', array(), 'Modules.ndcSharer.Admin');
 
-        $this->templateFile = 'module:ps_sharebuttons/views/templates/hook/ps_sharebuttons.tpl';
+        $this->templateFile = 'module:ndcSharer/views/templates/hook/ndcSharer.tpl';
     }
 
     public function install()
     {
         return parent::install()
-            && Configuration::updateValue('PS_SC_TWITTER', 1)
-            && Configuration::updateValue('PS_SC_FACEBOOK', 1)
-            && Configuration::updateValue('PS_SC_GOOGLE', 1)
-            && Configuration::updateValue('PS_SC_PINTEREST', 1)
+            && Configuration::updateValue('NDC_SC_TWITTER', 1)
+            && Configuration::updateValue('NDC_SC_FACEBOOK', 1)
+            && Configuration::updateValue('NDC_SC_GOOGLE', 1)
+            && Configuration::updateValue('NDC_SC_PINTEREST', 1)
             && $this->registerHook('displayProductButtons')
         ;
     }
@@ -103,7 +79,7 @@ class Ps_Sharebuttons extends Module implements WidgetInterface
             $fields[] = array(
                 'type' => 'switch',
                 'label' => $network,
-                'name' => 'PS_SC_'.Tools::strtoupper($network),
+                'name' => 'NDC_SC_'.Tools::strtoupper($network),
                 'values' => array(
                     array(
                         'id' => Tools::strtolower($network).'_active_on',
@@ -137,7 +113,7 @@ class Ps_Sharebuttons extends Module implements WidgetInterface
 
     public function renderWidget($hookName, array $params)
     {
-        $key = 'ps_sharebuttons|' . $params['product']['id_product'];
+        $key = 'ndcSharer|' . $params['product']['id_product'];
         if (!empty($params['product']['id_product_attribute'])) {
             $key .= '|' . $params['product']['id_product_attribute'];
         }
@@ -174,33 +150,33 @@ class Ps_Sharebuttons extends Module implements WidgetInterface
 
         $sharing_img = addcslashes($this->context->link->getImageLink($product->link_rewrite, $image_cover_id), "'");
 
-        if (Configuration::get('PS_SC_FACEBOOK')) {
+        if (Configuration::get('NDC_SC_FACEBOOK')) {
             $social_share_links['facebook'] = array(
-                'label' => $this->trans('Share', array(), 'Modules.Sharebuttons.Shop'),
+                'label' => $this->trans('Share', array(), 'Modules.ndcSharer.Shop'),
                 'class' => 'facebook',
                 'url' => 'http://www.facebook.com/sharer.php?u='.$sharing_url,
             );
         }
 
-        if (Configuration::get('PS_SC_TWITTER')) {
+        if (Configuration::get('NDC_SC_TWITTER')) {
             $social_share_links['twitter'] = array(
-                'label' => $this->trans('Tweet', array(), 'Modules.Sharebuttons.Shop'),
+                'label' => $this->trans('Tweet', array(), 'Modules.ndcSharer.Shop'),
                 'class' => 'twitter',
                 'url' => 'https://twitter.com/intent/tweet?text='.$sharing_name.' '.$sharing_url,
             );
         }
 
-        if (Configuration::get('PS_SC_GOOGLE')) {
+        if (Configuration::get('NDC_SC_GOOGLE')) {
             $social_share_links['googleplus'] = array(
-                'label' => $this->trans('Google+', array(), 'Modules.Sharebuttons.Shop'),
+                'label' => $this->trans('Google+', array(), 'Modules.ndcSharer.Shop'),
                 'class' => 'googleplus',
                 'url' => 'https://plus.google.com/share?url='.$sharing_url,
             );
         }
 
-        if (Configuration::get('PS_SC_PINTEREST')) {
+        if (Configuration::get('NDC_SC_PINTEREST')) {
             $social_share_links['pinterest'] = array(
-                'label' => $this->trans('Pinterest', array(), 'Modules.Sharebuttons.Shop'),
+                'label' => $this->trans('Pinterest', array(), 'Modules.ndcSharer.Shop'),
                 'class' => 'pinterest',
                 'url' => 'http://www.pinterest.com/pin/create/button/?media='.$sharing_img.'&url='.$sharing_url,
             );

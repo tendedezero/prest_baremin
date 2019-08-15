@@ -79,6 +79,10 @@ $("#leasecalculate").click();
         threshold: 0.1 // ratio of element convergence
     });
     observer.observe();
+    var pictureObserver = lozad('.lazypicture', {
+        threshold: 0.1
+    })
+    pictureObserver.observe()
 });
 
 function populateLeaseFields(e){if(e<10000){for(var t=[{term:24,rate:.05031,type:"over"},{term:36,rate:.03519,type:"over"},{term:48,rate:.02868,type:"over"},{term:60,rate:.02438,type:"over"},{term:36,rate:.041,type:"under"},{term:60,rate:.029,type:"under"}],i=0;i<t.length;i++){var n=t[i],s=e*n.rate,a=s*n.term*.22,o=$("#m"+n.term+"y"+n.type);o.children(":eq(1)").children(".cellvalue").html("&pound;"+currencyPad(s)),o.children(":eq(2)").children(".cellvalue").html("&pound;"+currencyPad(12*s/52)),60==n.term&&"over"==n.type&&$("#cheapestlease").html(currencyPad(12*s/52)),o.children(":eq(3)").children(".cellvalue").html("&pound;"+currencyPad(s*n.term)),o.children(":eq(4)").children(".cellvalue").html("&pound;"+currencyPad(a)),o.children(":eq(5)").children(".cellvalue").html("&pound;"+currencyPad(s*n.term-a))}}

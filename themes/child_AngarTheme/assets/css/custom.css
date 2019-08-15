@@ -7,6 +7,9 @@
     border: none;
     padding-left: 10px;
 }
+#homepage-slider{
+    min-height:430px;
+}
 .ets_item_img {
     overflow: initial;
 }

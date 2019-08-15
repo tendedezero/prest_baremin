@@ -1,0 +1,6 @@
+[{shop_name}]({shop_url})
+Hi,
+
+Thank you for subscribing to our newsletter.
+
+[{shop_name}]({shop_url}) powered by [PrestaShop™](http://www.prestashop.com/)

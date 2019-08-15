@@ -32,20 +32,6 @@ assets:
       - id: lazyloader
         path: assets/js/lozad.min.js
 
-global_settings:
-    hooks:
-      modules_to_hook:
-      displayNav1:
-        - angarcontact
-      displayNav2:
-      - ps_languageselector
-      - ps_currencyselector
-      - NDCVatDisplay
-      displayTop:
-        - ps_shoppingcart
-        - ps_searchbar
-        - ps_customersignin
-
 
  
 

@@ -30,14 +30,14 @@
 	<div class="brand-block">
 		<div class="brands img">
 			<span class="man_img_spacer"></span>
-			<a href="{$brand.url}"><img src="{$brand.image}" alt="{$brand.name}" data-src="{$brand.image}" class="zoom"></a>
+			<a href="{$brand.url}"><img data-src="{$brand.image}" src="/img/pixel.gif" alt="{$brand.name}" data-src="{$brand.image}" class="zoom lazy"></a>
 			{*
 				<img src="{$urls.img_manu_url|escape:'html':'UTF-8'}{$brand.id_manufacturer}.jpg" alt="{$homeManufacturer.name|escape:'htmlall':'UTF-8'}" />
 			*}
 		</div>
 
 		<div class="brand-infos">
-			{*<h3><a href="{$brand.url}">{$brand.name}</a></h3>*}
+			<h3><a href="{$brand.url}">{$brand.name}</a></h3>
 			<a href="{$brand.url}">{$brand.nb_products}</a>
 		</div>
 		

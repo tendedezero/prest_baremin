@@ -116,7 +116,8 @@
                         {if $product.show_price}
 							<div class="product-price-and-shipping">
                                 {hook h='displayProductPriceBlock' product=$product type="before_price"}
-								<div class="rrp-price">RRP <span class="price rrp">{Tools::displayPrice($product.rrp)}</span></div>
+
+                        <div class="rrp-price">{if ($product.rrp != 0)} RRP <span class="price rrp">{Tools::displayPrice($product.rrp)}</span>{/if}</div>
 								<div class='current-price sale-price inc-vat'  style='display:none' > <span class="price">{$product.price}</span> inc vat</div>
 								<div class='current-price sale-price ex-vat' style='display:none'><span class="price">{Tools::displayPrice($product.price_tax_exc)}</span> ex vat</div>
 

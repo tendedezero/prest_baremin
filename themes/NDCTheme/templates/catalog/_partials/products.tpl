@@ -1,4 +1,8 @@
 <div id="js-product-list">
+    {block name='pagination'}
+        {include file='_partials/pagination.tpl' pagination=$listing.pagination}
+    {/block}
+
     <div class="products row">
         {foreach from=$listing.products item="product"}
             {block name='product_miniature'}
@@ -7,9 +11,7 @@
         {/foreach}
     </div>
 
-    {block name='pagination'}
-        {include file='_partials/pagination.tpl' pagination=$listing.pagination}
-    {/block}
+
 
     {* AngarThemes *}
     <div class="hidden-md-up text-xs-right up">

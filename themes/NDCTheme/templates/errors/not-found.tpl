@@ -23,25 +23,47 @@
  * International Registered Trademark & Property of PrestaShop SA
  *}
 
-{if $subcategories|count}
+{if $page.page_name == 'category'}
+
+	{if $subcategories|count}
+
+	{else}
+	<section id="content" class="page-content page-not-found">
+	  {block name='page_content'}
+
+		<h4>{l s='Sorry for the inconvenience.' d='Shop.Theme.Global'}</h4>
+		<p>{l s='Search again what you are looking for' d='Shop.Theme.Global'}</p>
+
+		{block name='search'}
+		  {hook h='displaySearch'}
+		{/block}
+
+		{block name='hook_not_found'}
+		  {hook h='displayNotFound'}
+		{/block}
+
+	  {/block}
+	</section>
+	{/if}
 
 {else}
-<section id="content" class="page-content page-not-found">
-  {block name='page_content'}
 
-    <h4>{l s='Sorry for the inconvenience.' d='Shop.Theme.Global'}</h4>
-    <p>{l s='Search again what you are looking for' d='Shop.Theme.Global'}</p>
+	<section id="content" class="page-content page-not-found">
+	  {block name='page_content'}
 
-    {block name='search'}
-      {hook h='displaySearch'}
-    {/block}
+		<h4>{l s='Sorry for the inconvenience.' d='Shop.Theme.Global'}</h4>
+		<p>{l s='Search again what you are looking for' d='Shop.Theme.Global'}</p>
 
-    {block name='hook_not_found'}
-      {hook h='displayNotFound'}
-    {/block}
+		{block name='search'}
+		  {hook h='displaySearch'}
+		{/block}
 
-  {/block}
-</section>
+		{block name='hook_not_found'}
+		  {hook h='displayNotFound'}
+		{/block}
+
+	  {/block}
+	</section>
+
 {/if}
-
 

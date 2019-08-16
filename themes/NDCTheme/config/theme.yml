@@ -1,7 +1,7 @@
 parent: AngarTheme
-name: child_AngarTheme
-display_name: Child theme of AngarTheme's theme
-version: 1.0.1
+name: NDCTheme
+display_name: NDC Theme
+version: 1.1.0
 assets:
   use_parent_assets: true
   css:
@@ -31,6 +31,20 @@ assets:
         path: assets/js/custom.js
       - id: lazyloader
         path: assets/js/lozad.min.js
+
+global_settings:
+    hooks:
+      modules_to_hook:
+      displayNav1:
+        - angarcontact
+      displayNav2:
+      - ps_languageselector
+      - ps_currencyselector
+      - NDCVatDisplay
+      displayTop:
+        - ps_shoppingcart
+        - ps_searchbar
+        - ps_customersignin
 
 
  

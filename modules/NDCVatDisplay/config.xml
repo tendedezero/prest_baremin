@@ -2,7 +2,7 @@
 <module>
     <name>NDCVatDisplay</name>
     <displayName><![CDATA[NDC - VAT DISPLAY]]></displayName>
-    <version><![CDATA[1.0.5]]></version>
+    <version><![CDATA[1.0.6]]></version>
     <description><![CDATA[NDC - VAT DISPLAY]]></description>
     <author><![CDATA[RPaterson]]></author>
     <tab><![CDATA[front_office_features]]></tab>

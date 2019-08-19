@@ -161,7 +161,7 @@
                                 {/block}
 
                                 {block name='product_leasing_button'}
-                                    {hook h="displayProductAdditionalInfo" mod="nsquotation"}
+                                    {hook h="displayProductAdditionalInfo" mod="ndcleasing"}
                                 {/block}
 
                                 {block name='product_additional_info'}

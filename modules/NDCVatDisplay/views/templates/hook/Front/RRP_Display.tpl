@@ -23,8 +23,17 @@
  *  International Registered Trademark & Property of PrestaShop SA
  *
  *
- * @author    Arnaud Merigeau <contact@arnaud-merigeau.fr>
- * @copyright  Copyright (c) 2009-2018 Arnaud Merigeau - https://www.arnaud-merigeau.fr
- * @license    You only can use module, nothing more!
+ * @author    R Paterson
+ * @copyright  Copyright (c) NDC
 *}
+<div class="rrp_block">
+{if ($rrp != 0)}
+<div class="current-price rrp-price inc-vat">
+     <div class="rrp-price">RRP <span class="rrp-price">{Tools::displayPrice($rrp_inc_vat)} inc vat</span></div>
+</div>
+<div class="current-price rrp-price ex-vat" style="display: none;">
+    <div class="rrp-price">RRP <span class="rrp-price">{Tools::displayPrice($rrp)} ex  vat</span></div>
+</div>
+{/if}
+</div>
 

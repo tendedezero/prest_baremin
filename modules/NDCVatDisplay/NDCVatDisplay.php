@@ -6,6 +6,7 @@
 */
 
 use PrestaShop\PrestaShop\Adapter\ObjectPresenter;
+use PrestaShop\PrestaShop\Adapter\Product\PriceFormatter;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -71,12 +72,30 @@ public function getContent()
     $output = null;
     return $output.$this->displayForm();
 }
-    public function hookDisplayNav2($params)
+    public function hookDisplayNav2()
     {
         if (Configuration::isCatalogMode())  {
             return false;
         }
-        return $this->display(__FILE__, 'views/templates/hook/front/VAT_DisplayMod.tpl');
+
+            $vatmode = null;
+            $link = $this->context->link;
+            $cookieKey = 'VATMODE';
+            if (!isset($_COOKIE['VATMODE'])) {
+                $this->context->cookie->__set($cookieKey, "true");
+                $vatmode = 'true';
+            }
+            else
+            {
+                $vatmode = $_COOKIE['VATMODE'];
+            }
+
+        $this->context->smarty->assign(array(
+            'vlink' => $link,
+            'vatmode' => $vatmode,
+        ));
+
+        return $this->display(__FILE__, 'views/templates/hook/Front/VAT_DisplayMod.tpl');
     }
 
     public function hookDisplayProductPriceBlock($params)
@@ -84,6 +103,22 @@ public function getContent()
         if (Configuration::isCatalogMode())  {
             return false;
         }
+        if ($params['type'] !='rrp') {
+            return;
+        };
+
+        $product = $params['product'];
+
+        $rrp =  $product->rrp;
+
+        $rrp_inc_vat = ($rrp * 1.2);
+        $this->context->smarty->assign(array(
+                'rrp' => $rrp,
+                'rrp_inc_vat' => $rrp_inc_vat,
+            )
+        );
+
+        return $this->display(__FILE__, 'views/templates/hook/Front/RRP_Display.tpl');
     }
     /**
      * Params for hook
@@ -93,11 +128,11 @@ public function getContent()
     public function hookDisplayAdminProductsExtra($params) {
         $product = new Product($params['id_product']);
         $this->context->smarty->assign(array(
-                'rrp_price_ex' => $product->rrp_price_ex,
+                'rrp' => $product->rrp,
                 'default_language' => $this->context->employee->id_lang,
             )
         );
-        return $this->display(__FILE__, 'views/templates/hook/RRP_Display.tpl');
+
     }
 
 }

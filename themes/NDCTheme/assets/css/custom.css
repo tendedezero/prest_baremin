@@ -18,13 +18,10 @@
 a.product-flags span.product-flag.new, #home_cat_product a.product-flags span.product-flag.new, #product #content .product-flags li, #product #content .product-flags .product-flag.new {
     background: #ff0000;
 }
-a.product-flags span.product-flag.new {
-    background: #00b0ff;
-}
+.product-price-and-shipping span.rrp-price{font-size: 14px;}
 a.product-flags span {
     float: left;
     clear: left;
-    background: #00b0ff;
     font-weight: 400;
     font-size: 12px;
     line-height: 12px;
@@ -35,7 +32,7 @@ a.product-flags span {
     padding: 5px 6px;
     margin-bottom: 4px;
 }
-div.rrp-price {text-decoration:line-through;min-height: 30px;}
+div.rrp_block {text-decoration:line-through;min-height: 30px;}
 div#_desktop_search_widget {
     float: left!important;
 }

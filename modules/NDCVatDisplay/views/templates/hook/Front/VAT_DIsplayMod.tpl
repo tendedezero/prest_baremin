@@ -27,4 +27,4 @@
     <a id="Inc_VAT_toggle" href="#" class="inc ">INC VAT</a>
     <a href="#" class="toggle {if $vatmode == 'false'} toggle--off {/if}" id='NDCToggle' onclick="setVATPref();"></a>
     <a id="Ex_VAT_toggle" href="#" class="ex">EX VAT</a>
-</div>
+</div> 

@@ -20,8 +20,9 @@ a.product-flags span.product-flag.new, #home_cat_product a.product-flags span.pr
 }
 .product-price-and-shipping span.rrp-price{font-size: 14px;}
 a.product-flags span {
-    float: left;
-    clear: left;
+    position: absolute;
+    left:0;
+    top:0;
     font-weight: 400;
     font-size: 12px;
     line-height: 12px;

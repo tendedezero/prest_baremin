@@ -1,7 +1,7 @@
 <div class="mm_extra_item hidden-sm-up">
 
     <div class="mobile_logo">
-        <div id="ndc-mobile_logo" class="ndc_mobile_menu"><img src="/img/logo-menu-mobile.png"/></div>
+        <div id="ndc-mobile_logo" class="ndc_mobile_menu"><a href="/" title="Nextday Catering - Home"><img src="/img/logo-menu-mobile.png"/></a></div>
     </div>
     <div class="one icon">
         <div id="search-icon" class="ndc_mobile_icons"><i class="material-icons search">&#xE8B6;</i></div>

@@ -51,7 +51,7 @@ public function uninstall()
      */
     protected function _installSql() {
         $sqlInstall = "ALTER TABLE " . _DB_PREFIX_ . "product "
-            . "ADD rrp_price_ex decimal(20,6) NULL";
+            . "ADD rrp decimal(20,6) NULL";
         $returnSql = Db::getInstance()->execute($sqlInstall);
         return $returnSql;
     }
@@ -61,7 +61,7 @@ public function uninstall()
      */
     protected function _unInstallSql() {
         $sqlInstall = "ALTER TABLE " . _DB_PREFIX_ . "product "
-            . "DROP rrp_price_ex";
+            . "DROP rrp";
         $returnSql = Db::getInstance()->execute($sqlInstall);
         return $returnSql;
     }
@@ -93,7 +93,7 @@ public function getContent()
     public function hookDisplayAdminProductsExtra($params) {
         $product = new Product($params['id_product']);
         $this->context->smarty->assign(array(
-                'rrp_price_ex' => $product->rrp_price_ex,
+                'rrp' => $product->rrp,
                 'default_language' => $this->context->employee->id_lang,
             )
         );

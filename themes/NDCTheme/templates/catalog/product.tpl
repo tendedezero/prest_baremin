@@ -138,7 +138,7 @@
                                 <input type="hidden" name="id_customization" value="{$product.id_customization}" id="product_customization_id">
 
                                 {block name='product_variants'}
-                                    {include file='catalog/_partials/product-variants.tpl'}
+                                    {hook h="awProduct"}
                                 {/block}
 
                                 {block name='product_pack'}

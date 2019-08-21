@@ -19,8 +19,7 @@
         <link itemprop="availability" href="https://schema.org/InStock"/>
         <meta itemprop="priceCurrency" content="{$currency.iso_code}">
 
-           {if ($product.rrp != 0)} <div class="rrp-price">RRP <span class="price rrp">{Tools::displayPrice($product.rrp)} inc vat</span></div>{/if}
-
+            {hook h='displayProductPriceBlock' product=$product type="rrp"}
 
         <div class="current-price sale-price inc-vat">
             <span class="price" itemprop="price"  content="{$product.price_amount}" >{$product.price}</span><span class="tax_display">VAT Included</span>

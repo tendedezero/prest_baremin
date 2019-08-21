@@ -161,7 +161,7 @@
                                 {/block}
 
                                 {block name='product_leasing_button'}
-                                    {hook h="displayProductAdditionalInfo" mod="nsquotation"}
+                                    {hook h="displayProductAdditionalInfo" mod="ndcleasing"}
                                 {/block}
 
                                 {block name='product_additional_info'}
@@ -297,23 +297,6 @@
             </div>
         </div>
         {/block}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        {block name='product_footer'}
-            {hook h='displayFooterProduct' product=$product category=$category}
-        {/block}
         {block name='product_accessories'}
             {if $accessories}
                 <section class="page-product-box clearfix">
@@ -333,6 +316,10 @@
                     </div>
                 </section>
             {/if}
+        {/block}
+
+        {block name='product_footer'}
+            {hook h='displayFooterProduct' product=$product category=$category}
         {/block}
         {block name='product_images_modal'}
             {include file='catalog/_partials/product-images-modal.tpl'}

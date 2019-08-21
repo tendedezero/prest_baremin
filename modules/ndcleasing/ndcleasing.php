@@ -61,6 +61,7 @@ class ndcleasing extends PaymentModule
         return parent::install()
             && $this->registerHook('paymentOptions')
             && $this->registerHook('paymentReturn')
+            && $this->registerHook('displayProductAdditionalInfo')
         ;
     }
 
@@ -117,6 +118,25 @@ class ndcleasing extends PaymentModule
 
         return $this->_html;
     }
+
+    public function displayProductAdditionalInfo($params)
+    {
+        if (Configuration::isCatalogMode())  {
+            return false;
+        }
+
+        $this->smarty->assign(array(
+            'term' => $this->context->shop->name,
+            'calc' => $this->checkName,
+            'this' => Tools::nl2br($this->address),
+            'that' => 'ok',
+            'next' => $params['order']->id
+        ));
+
+        return $this->fetch('module:ndcleasing/views/templates/hook/hookDIsplayLeasingOptions.tpl');
+
+    }
+
 
     public function hookPaymentOptions($params)
     {

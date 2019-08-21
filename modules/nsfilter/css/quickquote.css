@@ -1,0 +1,19 @@
+div#raketafilter_block_home p {
+  font-size: 150%;
+  font-style:italic;
+}
+
+
+#PRESUPUESTO {
+    width: 350px;
+    float: left;
+    position: relative;
+    margin-bottom: 0;
+    clear: right;
+    font-size: 11px;
+    border: 0 solid #999;
+    background-color: #d2ec46;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    padding: 20px;
+}

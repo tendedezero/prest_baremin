@@ -18,17 +18,7 @@
 a.product-flags span.product-flag.new, #home_cat_product a.product-flags span.product-flag.new, #product #content .product-flags li, #product #content .product-flags .product-flag.new {
     background: #ff0000;
 }
-.card {
-    margin: 10px auto;
-    width: 100px;
-    height: 100px;
-    text-align: center;
-    font-family: helvetica;
-    color: #333;
-    background-color: #f51b33;
-    border-radius: 50%;
-    padding: 10px;
-}
+
 .product-price-and-shipping span.rrp-price{font-size: 14px;}
 a.product-flags span {
     position: absolute;

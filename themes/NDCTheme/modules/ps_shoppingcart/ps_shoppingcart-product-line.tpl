@@ -46,7 +46,7 @@
 	<span class="product-quantity">{$product.quantity}x</span>
 	<span class="product-name"><a href="{$product.url}" data-id_customization="{$product.id_customization|intval}">{$product.name}</a></span>
 	<span class="product-price inc-vat" style="display: none;">{$product.price} inc vat</span>
-	<span class="product-price ex-vat" style="display: none;">{Tools::displayPrice(Product::getPriceStatic($product.id_product,false))}  ex vat</span>
+	<span class="product-price ex-vat" style="display: none;">{l sprintf=['%price%' => $product.price_tax_exc] s='&pound;%price%'}</span><span class="tax_display">{l s=' ex vat' d='Shop.Theme.Catalog' }</span>
 
 	
 </div>

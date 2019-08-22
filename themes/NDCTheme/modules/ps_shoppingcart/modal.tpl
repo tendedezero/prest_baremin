@@ -40,15 +40,15 @@
           <div class="col-md-6 divide-right">
             <div class="row">
               <div class="col-md-6">
-                <img class="product-image" src="{$product.cover.medium.url}" alt="{$product.cover.legend}" title="{$product.cover.legend}" itemprop="image">
+                <img class="product-image lazy" src="{$product.cover.medium.url}" alt="{$product.cover.legend}" title="{$product.cover.legend}" itemprop="image">
               </div>
               <div class="col-md-6">
                 <h6 class="h6 product-name">{$product.name}</h6>
                 <span class="sale-price-inc-vat">
-                <p class="price">{$product.price} Inc VAT</p> 
+                <p class="price">{$product.price} inc vat</p>
                 </span>
                 <span class="sale-price-exc-vat" style="display:none">
-               {* <p class="price">{Tools::displayPrice(Product::getPriceStatic($product.id_product,false))} Exc VAT</p>*} 
+                  <p class="price">{l sprintf=['%price%' => $product.price_tax_exc] s='&pound;%price%'}</span><span class="tax_display">{l s=' ex vat' d='Shop.Theme.Catalog' }</p>
                 </span>
                 {hook h='displayProductPriceBlock' product=$product type="unit_price"}
                 {foreach from=$product.attributes item="property_value" key="property"}

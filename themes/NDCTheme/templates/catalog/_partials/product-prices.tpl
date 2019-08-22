@@ -18,11 +18,13 @@
       >
         <link itemprop="availability" href="https://schema.org/InStock"/>
         <meta itemprop="priceCurrency" content="{$currency.iso_code}">
-
+	{if $product.specific_prices.to AND $product.specific_prices.to != "0000-00-00 00:00:00"}
+		<meta itemprop="priceValidUntil" content="{$product.specific_prices.to}" />
+		{/if}
             {hook h='displayProductPriceBlock' product=$product type="rrp"}
 
         <div class="current-price sale-price inc-vat">
-            <span class="price" itemprop="price"  content="{$product.price_amount}" >{$product.price}</span><span class="tax_display">VAT Included</span>
+            <span class="price" itemprop="price"  content="{$product.price_amount}" >{$product.price}</span><span class="tax_display">inc vat</span>
         </div>
 
           {if $product.has_discount}
@@ -35,7 +37,7 @@
             {/if}
           {/if}
             <div class="current-price sale-price ex-vat" style="display: none;">
-                <span class="price" >{Tools::displayPrice($product.price_tax_exc)}</span><span class="tax_display">VAT Excluded</span>
+                <span class="price" >{l sprintf=['%price%' => $product.price_tax_exc] s='&pound;%price%'}</span><span class="tax_display">{l s=' ex vat' d='Shop.Theme.Catalog' }</span>
             </div>
         </div>
 
@@ -45,7 +47,7 @@
           {/if}
         {/block}
       </div>
-      
+      {debug}
     {/block}
      {block name='product_without_taxes'}{/block}
       {block name='product_displaytaxes'}{/block}

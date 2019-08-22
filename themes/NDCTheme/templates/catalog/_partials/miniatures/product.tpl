@@ -117,9 +117,9 @@
 							<div class="product-price-and-shipping">
                                 {hook h='displayProductPriceBlock' product=$product type="before_price"}
                                 {hook h='displayProductPriceBlock' product=$product type="rrp"}
-
+                 
 								<div class='current-price sale-price inc-vat'  style='display:none' > <span class="price">{$product.price}</span> inc vat</div>
-								<div class='current-price sale-price ex-vat' style='display:none'><span class="price">{Tools::displayPrice($product.price_tax_exc)}</span> ex vat</div>
+								<div class='current-price sale-price ex-vat' style='display:none'><span class="price">{l sprintf=['%price%' => $product.price_tax_exc] s='&pound;%price%'}</span><span class="tax_display">{l s=' ex vat' d='Shop.Theme.Catalog' }</span></div>
 
                                 {if $product.has_discount}
                                     {hook h='displayProductPriceBlock' product=$product type="old_price"}
@@ -144,12 +144,12 @@
                             {if !$configuration.is_catalog}
                                 {if (!isset($product.customization_required) || !$product.customization_required) && ($product.allow_oosp || $product.quantity > 0)}
 									<button class="btn add-to-cart" data-button-action="add-to-cart" type="submit" {if !$product.add_to_cart_url}disabled{/if}>
-										<i class="material-icons shopping-cart"></i>
+										<i class="material-icons shopping-cart">?</i>
                                         {l s='Add to cart' d='Shop.Theme.Actions'}
 									</button>
                                 {else}
 									<button class="btn add-to-cart" data-button-action="add-to-cart" type="submit" disabled>
-										<i class="material-icons shopping-cart"></i>
+										<i class="material-icons shopping-cart">?</i>
                                         {l s='Add to cart' d='Shop.Theme.Actions'}
 									</button>
                                 {/if}

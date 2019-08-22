@@ -24,44 +24,29 @@
  *}
 
 {* AngarThemes *}
-
-{if !empty($smarty.get.order)}
-    {capture assign='ordering'}order={$smarty.get.order}&a{/capture}
-{else}
-    {assign var='ordering' value=''}
-{/if}
-
 {if !empty($smarty.get.resultsPerPage)}
-    {assign var='results_per_page' value=$smarty.get.resultsPerPage}
-{else}
-    {assign var='results_per_page' value=20}
-{/if}
+        {assign var='resultsPerPage' value=$smarty.get.resultsPerPage}
+    {else}
+        {assign var='resultsPerPage' value=12}
+    {/if}
 
-<span class="col-sm-3 col-md-5 hidden-sm-down sort-by">{l s='Sort by:' d='Shop.Theme.Global'}</span>
-
-    <div style="float:left;padding-left: 0px;" class="sort-select dropdown js-dropdown col-lg-3 col-md-3 col-sm-3">
-        <a class="custom-select select-title" rel="nofollow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {$results_per_page}
-        </a>﻿
-
-    <div class="dropdown-menu">
-        <a rel="nofollow" href="?{$ordering}resultsPerPage=20" class="dropdown-item js-search-link">
-            20
+<div class="{if !empty($listing.rendered_facets)}col-sm-9 col-xs-8{else}col-sm-12 col-xs-12{/if} col-md-7 products-sort-order dropdown">
+<button class="btn-unstyle select-title" rel="nofollow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+     {$resultsPerPage}
+</button>
+  <div class="dropdown-menu">
+      <a rel="nofollow" href="?{$ordering}resultsPerPage=25" class="dropdown-item js-search-link">
+            12
         </a>
-        <a rel="nofollow" href="?{$ordering}resultsPerPage=40" class="dropdown-item js-search-link">
-            40
+      <a rel="nofollow" href="?{$ordering}resultsPerPage=50" class="dropdown-item js-search-link">
+            24
         </a>
-        <a rel="nofollow" href="?{$ordering}resultsPerPage=60" class="dropdown-item js-search-link">
-            60
+      <a rel="nofollow" href="?{$ordering}resultsPerPage=75" class="dropdown-item js-search-link">
+            48
         </a>
-        <a rel="nofollow" href="?{$ordering}resultsPerPage=80" class="dropdown-item js-search-link">
-            80
-        </a>
-        <a rel="nofollow" href="?{$ordering}resultsPerPage=100" class="dropdown-item js-search-link">
-            100﻿
-        </a>﻿
     </div>
 </div>
+
 
 <div class="{if !empty($listing.rendered_facets)}col-sm-9 col-xs-8{else}col-sm-12 col-xs-12{/if} col-md-7 products-sort-order dropdown">
   <button
@@ -86,3 +71,4 @@
     {/foreach}
   </div>
 </div>
+

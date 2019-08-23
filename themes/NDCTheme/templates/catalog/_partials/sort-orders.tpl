@@ -24,29 +24,31 @@
  *}
 
 {* AngarThemes *}
-{if !empty($smarty.get.resultsPerPage)}
-        {assign var='resultsPerPage' value=$smarty.get.resultsPerPage}
-    {else}
-        {assign var='resultsPerPage' value=12}
-    {/if}
+
+
 
 <div class="{if !empty($listing.rendered_facets)}col-sm-9 col-xs-8{else}col-sm-12 col-xs-12{/if} col-md-7 products-sort-order dropdown">
-<button class="btn-unstyle select-title" rel="nofollow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-     {$resultsPerPage}
-</button>
-  <div class="dropdown-menu">
-      <a rel="nofollow" href="?{$ordering}resultsPerPage=25" class="dropdown-item js-search-link">
-            12
-        </a>
-      <a rel="nofollow" href="?{$ordering}resultsPerPage=50" class="dropdown-item js-search-link">
-            24
-        </a>
-      <a rel="nofollow" href="?{$ordering}resultsPerPage=75" class="dropdown-item js-search-link">
-            48
-        </a>
-    </div>
-</div>
+        <button
+                class="btn-unstyle select-title"
+                rel="nofollow"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+            {if isset($listing.results_Per_Pages_selected)}{$listing.results_Per_Pages_selected}{else}{l s='Select' d='Shop.Theme.Actions'}{/if}
+            <i class="material-icons float-xs-right">&#xE313;</i>
+        </button>
 
+        <div class="dropdown-menu">
+            {foreach from=$listing.results_Per_Pages item=results_Per_Page}
+                <a
+                        rel="nofollow"
+                        href="{$results_Per_Page.url}"
+                        class="select-list {['current' => $results_Per_Page.current, 'js-search-link' => true]|classnames}"
+                >
+                    {$results_Per_Page.label}
+                </a>
+            {/foreach}
+        </div>
 
 <div class="{if !empty($listing.rendered_facets)}col-sm-9 col-xs-8{else}col-sm-12 col-xs-12{/if} col-md-7 products-sort-order dropdown">
   <button

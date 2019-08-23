@@ -166,8 +166,6 @@ class Feed
                 $products = Product::getProducts($id_lang, 0, 0, 'id_product', 'ASC', $export_category, $export_active);
                 foreach ($products as $product)
                 {
-if ($product['custom_field'] == 'googlefeed') {
-
                     if (Tools::getValue('gmfeed_products','false') != 'false'){
                         if (in_array($product['id_product'], Tools::getValue('gmfeed_products'))){
                             continue;
@@ -195,7 +193,7 @@ if ($product['custom_field'] == 'googlefeed') {
                                 }
                                 break;
                             case 'id':
-                                $line[$field] = $p->reference;
+                                $line[$field] = $p->id;
                                 break;
                             case 'gtin':
                                 if (Tools::getValue('export_gtin') == 'upc'){
@@ -417,7 +415,6 @@ if ($product['custom_field'] == 'googlefeed') {
                         }
                     }
                 }
-}
                 break;
             case 'combinations':
                 $currency = new Currency(Tools::getValue('export_currency', (int)Configuration::get('PS_CURRENCY_DEFAULT')));

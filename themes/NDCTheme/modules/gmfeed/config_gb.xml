@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>gmfeed</name>
+    <displayName><![CDATA[Google Merchant Center Feed]]></displayName>
+    <version><![CDATA[1.6.0]]></version>
+    <description><![CDATA[An easiest way to export your products catalog to .csv file for google merchant center feed purposes]]></description>
+    <author><![CDATA[MyPresta.eu]]></author>
+    <tab><![CDATA[administration]]></tab>
+    <is_configurable>1</is_configurable>
+    <need_instance>1</need_instance>
+	<limited_countries></limited_countries>
+</module>

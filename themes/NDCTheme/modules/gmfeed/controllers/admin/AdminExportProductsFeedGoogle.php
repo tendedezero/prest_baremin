@@ -16,9 +16,15 @@ include_once('../modules/gmfeed/gmfeed.php');
 class AdminExportProductsFeedGoogleController extends ModuleAdminController
 {
     public $available_fields;
+    public $id_country_default;
+    public $default_carrier;
+    public $all_carriers;
 
     public function __construct()
     {
+        $this->all_carriers = Carrier::getCarriers(Tools::getValue('export_language', Configuration::get('PS_LANG_DEFAULT')), true, false, false, null, Carrier::ALL_CARRIERS);
+        $this->default_carrier = new Carrier((int)Configuration::get('PS_CARRIER_DEFAULT'));
+        $this->id_country_default = Configuration::get('PS_COUNTRY_DEFAULT');
         $this->taxonomyFiles = array(
             'Argentina' => 'https://www.google.com/basepages/producttype/taxonomy-with-ids.es-ES.txt',
             'Australia' => 'http://www.google.com/basepages/producttype/taxonomy-with-ids.en-AU.txt',
@@ -373,6 +379,20 @@ class AdminExportProductsFeedGoogleController extends ModuleAdminController
             );
         }
 
+        $export_shipping_info = array(
+            array(
+                'id_option' => '0',
+                'name' => $this->l('Do not include')
+            ),
+            array(
+                'id_option' => '1',
+                'name' => $this->l('Include (shipping price calculated for each item separately)')
+            ),
+            array(
+                'id_option' => '2',
+                'name' => $this->l('Set shipping price manually')
+            ),
+        );
 
         $export_id_product = array(
             array(
@@ -471,6 +491,62 @@ class AdminExportProductsFeedGoogleController extends ModuleAdminController
                     ),
                 ),
                 'is_bool' => true,
+            ),
+            array(
+                'type' => 'select',
+                'label' => $this->l('Include shipping price'),
+                'desc' => $this->l('Select if you want to include shipping price to feed and how you want to define the price of shipping'),
+                'name' => 'export_shipping_info',
+                'class' => 't',
+                'options' => array(
+                    'query' => $export_shipping_info,
+                    'id' => 'id_option',
+                    'name' => 'name'
+                )
+            ),
+            array(
+                'type' => 'select',
+                'label' => $this->l('Include product\'s additional shipping cost'),
+                'desc' => $this->l('Each product can have own unique value of additional shipping fee. If you will activate this option module will include it to delivery price'),
+                'name' => 'export_additional_sc',
+                'class' => 't',
+                'options' => array(
+                    'query' => $yesno,
+                    'id' => 'id_option',
+                    'name' => 'name'
+                )
+            ),
+            array(
+                'type' => 'text',
+                'label' => $this->l('Manual shipping value'),
+                'desc' => $this->l('Set the value of shipping cost that will be included to each product'),
+                'name' => 'export_shipping_info_price',
+                'class' => 't',
+                'prefix' => '<div id="shipping_currency"></div>'
+            ),
+            array(
+                'type' => 'select',
+                'label' => $this->l('Automatic shipping price zone select'),
+                'desc' => $this->l('If you selected option to include the shipping price automatically, select the zone. Module will calculate shipping price for selected zone. Please note that automatic price calculation requires more hosting resources than flat value of delivery for each product.'),
+                'name' => 'export_shipping_id_zone',
+                'class' => 't',
+                'options' => array(
+                    'query' => Zone::getZones(false, false),
+                    'id' => 'id_zone',
+                    'name' => 'name'
+                )
+            ),
+            array(
+                'type' => 'select',
+                'label' => $this->l('Include weight'),
+                'desc' => $this->l('Include weight of product to feed'),
+                'name' => 'export_product_weight',
+                'class' => 't',
+                'options' => array(
+                    'query' => $yesno,
+                    'id' => 'id_option',
+                    'name' => 'name'
+                )
             ),
             array(
                 'type' => 'select',
@@ -575,10 +651,10 @@ class AdminExportProductsFeedGoogleController extends ModuleAdminController
                         'value' => 1,
                         'label' => $this->l('Export only active products')
                     ),
-                    array(
+ array(
                         'id' => 'active_on',
                         'value' => 2,
-                        'label' => $this->l('Export selected products')
+                        'label' => $this->l('Export select products')
                     ),
                 ),
                 'is_bool' => true,
@@ -589,14 +665,14 @@ class AdminExportProductsFeedGoogleController extends ModuleAdminController
                 'name' => 'export_instock',
                 'values' => array(
                     array(
-                        'id' => 'active_on',
+                        'id' => 'active_off',
                         'value' => 0,
                         'label' => $this->l('Export all products.')
                     ),
                     array(
-                        'id' => 'active_off',
+                        'id' => 'active_on',
                         'value' => 1,
-                        'label' => $this->l('Export with Gfeed Attrib')
+                        'label' => $this->l('Export only in-stock products')
                     ),
                 ),
                 'is_bool' => true,
@@ -836,6 +912,7 @@ class AdminExportProductsFeedGoogleController extends ModuleAdminController
     public function getConfigFieldsValues()
     {
         return array(
+            'export_additional_sc' => false,
             'export_active' => false,
             'export_instock' => false,
             'export_format' => 'csv',
@@ -860,7 +937,7 @@ class AdminExportProductsFeedGoogleController extends ModuleAdminController
             'export_tax' => 'price_tin',
             'export_product_type' => 0,
             'export_exclude' => '',
-            'export_include' => '',
+            'export_product_weight' => 0
         );
     }
 
@@ -881,6 +958,7 @@ class AdminExportProductsFeedGoogleController extends ModuleAdminController
             $delimiter = Tools::getValue('export_delimiter');
             $id_lang = Tools::getValue('export_language');
             $id_shop = (int)$this->context->shop->id;
+            $weight_unit = Configuration::get('PS_WEIGHT_UNIT');
 
 
             if (Tools::getValue('export_product_type') == 1)
@@ -888,6 +966,18 @@ class AdminExportProductsFeedGoogleController extends ModuleAdminController
                $this->available_fields[$export_type]['product_type'] = array('label' => 'product_type');
             }
 
+            if (Tools::getValue('export_product_weight') == 1)
+            {
+               $this->available_fields[$export_type]['weight'] = array('label' => 'shipping_weight');
+            }
+
+            if (Tools::getValue('export_shipping_info', 'false') != 'false')
+            {
+                if (Tools::getValue('export_shipping_info', 'false') != 0)
+                {
+                    $this->available_fields[$export_type]['shipping'] = array('label' => 'shipping');
+                }
+            }
 
             set_time_limit(0);
             echo "\xEF\xBB\xBF";
@@ -958,209 +1048,253 @@ class AdminExportProductsFeedGoogleController extends ModuleAdminController
                 case 'products':
                     $currency = new Currency(Tools::getValue('export_currency'));
                     $products = Product::getProducts($id_lang, 0, 0, 'id_product', 'ASC', $export_category, $export_active);
-                    foreach ($products as $product) {
-                        if ($product['custom_field'] == 'googlefeed') {
-                            if (Tools::getValue('gmfeed_products', 'false') != 'false') {
+                    foreach ($products as $product)
+                    {
+                        if (Tools::getValue('gmfeed_products','false') != 'false'){
+                            if (in_array($product['id_product'], Tools::getValue('gmfeed_products'))){
+                                continue;
+                            }
+                        }
 
-
+                        $line = array();
+                        $p = new Product($product['id_product'], true, $id_lang, $id_shop);
+			if ($p->custom_field != 'googlefeed') {break;}
+                        $p->loadStockData();
+                        $category_default = new Category($p->id_category_default, $id_lang);
+                        foreach ($this->available_fields['products'] as $field => $array)
+                        {
+                 
+                            if ($export_instock == true && $p->quantity <= 0)
+                            {
+                                continue;
                             }
 
-                            $line = array();
-                            $p = new Product($product['id_product'], true, $id_lang, $id_shop);
-
-                            $p->loadStockData();
-                            $category_default = new Category($p->id_category_default, $id_lang);
-                            foreach ($this->available_fields['products'] as $field => $array) {
-                                if ($export_instock == true && $p->quantity <= 0) {
-                                    continue;
-                                }
-
-                                switch ($field) {
-                                    case 'id':
-                                        $line[$field] = $p->id;
-                                        break;
-                                    case 'gtin':
-                                        if (Tools::getValue('export_gtin') == 'upc') {
-                                            if (Validate::isUpc($p->upc)) {
-                                                $line[$field] = $p->upc;
-                                            } elseif (Validate::isEan13($p->ean13)) {
-                                                $line[$field] = $p->ean13;
-                                            } else {
-                                                $line[$field] = '';
-                                            }
-                                        } elseif (Tools::getValue('export_gtin') == 'ean13') {
-                                            if (Validate::isEan13($p->ean13)) {
-                                                $line[$field] = $p->ean13;
-                                            } elseif (Validate::isUpc($p->upc)) {
-                                                $line[$field] = $p->upc;
-                                            } else {
-                                                $line[$field] = '';
-                                            }
-                                        } elseif (Tools::getValue('export_gtin') == 'reference') {
-                                            if (isset($p->reference)) {
-                                                $line[$field] = $p->reference;
-                                            } elseif (Validate::isUpc($p->upc)) {
-                                                $line[$field] = $p->upc;
-                                            } elseif (Validate::isEan13($p->ean13)) {
-                                                $line[$field] = $p->ean13;
-                                            } else {
-                                                $line[$field] = '';
-                                            }
+                            switch ($field)
+                            {
+                                case 'shipping':
+                                    if (Tools::getValue('export_shipping_info') == 1) {
+                                        $line[$field] = ":::".Tools::ps_round((Tools::getValue('export_additional_sc') == 1 ? Tools::convertPrice($p->additional_shipping_cost, $currency, true):0)+Tools::convertPrice($this->getShippingCost($p->price, $p->weight), $currency, true), _PS_PRICE_COMPUTE_PRECISION_) . ' ' . $currency->iso_code;
+                                    } elseif (Tools::getValue('export_shipping_info') == 2) {
+                                        $line[$field] = ":::".Tools::ps_round((Tools::getValue('export_additional_sc') == 1 ? Tools::convertPrice($p->additional_shipping_cost, $currency, true):0)+Tools::convertPrice(Tools::getValue('export_shipping_info_price'), $currency, true), _PS_PRICE_COMPUTE_PRECISION_) . ' ' . $currency->iso_code;
+                                    }
+                                    break;
+                                case 'id':
+                                    $line[$field] = $p->id;
+                                    break;
+                                case 'gtin':
+                                    if (Tools::getValue('export_gtin') == 'upc'){
+                                        if (Validate::isUpc($p->upc)) {
+                                            $line[$field] = $p->upc;
+                                        } elseif(Validate::isEan13($p->ean13)) {
+                                            $line[$field] = $p->ean13;
                                         } else {
                                             $line[$field] = '';
                                         }
-
-                                        if ($line[$field] == 0) {
+                                    } elseif (Tools::getValue('export_gtin') == 'ean13'){
+                                        if (Validate::isEan13($p->ean13)) {
+                                            $line[$field] = $p->ean13;
+                                        } elseif(Validate::isUpc($p->upc)) {
+                                            $line[$field] = $p->upc;
+                                        } else {
                                             $line[$field] = '';
                                         }
-                                        break;
-                                    case 'identifier_exists':
-                                        if ($line['gtin'] == '' || $line['gtin'] == 0) {
-                                            $line[$field] = 'false';
+                                    } elseif (Tools::getValue('export_gtin') == 'reference'){
+                                        if (isset($p->reference)) {
+                                            $line[$field] = $p->reference;
+                                        } elseif(Validate::isUpc($p->upc)){
+                                            $line[$field] = $p->upc;
+                                        } elseif (Validate::isEan13($p->ean13)){
+                                            $line[$field] = $p->ean13;
                                         } else {
-                                            $line[$field] = 'true';
+                                            $line[$field] = '';
                                         }
-                                        break;
-                                    case 'name':
-                                        $line[$field] = ucfirst($p->name);
-                                        break;
-                                    case 'quantity':
-                                        $line[$field] = (Tools::getValue('export_instock_info') == 0 ? ($p->quantity > 0 ? 'in stock' : 'out of stock') : (Tools::getValue('export_instock_info') == 1 ? 'in stock' : (Tools::getValue('export_instock_info') == 2 ? 'out of stock' : 'in stock')));
-                                        break;
-                                    case 'condition':
-                                        $line[$field] = $p->condition;
-                                        break;
-                                    case 'include_url':
-                                        $line['include_url'] = Context::getContext()->link->getProductLink($p->id, null, null, null, $id_lang, $this->context->shop->id);
-                                        break;
-                                    case 'image_url':
-                                        $line['image_url'] = '';
-                                        $imagelinks = array();
-                                        $images = $p->getImages($id_lang);
-                                        foreach ($images as $image) {
-                                            $imagelinks[] = $this->context->link->getImageLink($p->link_rewrite, $p->id . '-' . $image['id_image'], Tools::getValue('export_img'));
-                                        }
-                                        if (isset($imagelinks[0])) {
-                                            $line['image_url'] = $imagelinks[0];
-                                        } else {
-                                            $line['image_url'] = $this->context->shop->getBaseUrl(true, true) . 'img/p/' . $this->context->language->iso_code . '-default-' . Tools::getValue('export_img') . '.jpg';
-                                        }
-                                        if ($line['image_url'] == '') {
-                                            $line['image_url'] = $this->context->shop->getBaseUrl(true, true) . 'img/p/' . $this->context->language->iso_code . '-default-' . Tools::getValue('export_img') . '.jpg';
-                                        }
-                                        break;
-                                    case 'additional_image_link':
-                                        $line['additional_image_link'] = '';
-                                        $imagelinks = array();
-                                        $images = $p->getImages($id_lang);
-                                        foreach ($images as $image) {
-                                            $imagelinks[] = $this->context->link->getImageLink($p->link_rewrite, $p->id . '-' . $image['id_image'], Tools::getValue('export_img'));
-                                        }
-                                        if (isset($imagelinks[0]) && Tools::getValue('export_what_pictures') == 1) {
-                                            array_shift($imagelinks);
-                                            $line['additional_image_link'] = $imagelinks[0];
-                                        } else {
-                                            $line['additional_image_link'] = $this->context->shop->getBaseUrl(true, true) . 'img/p/' . $this->context->language->iso_code . '-default-' . Tools::getValue('export_img') . '.jpg';
-                                        }
-
-                                        if ($line['additional_image_link'] == '') {
-                                            $line['additional_image_link'] = $this->context->shop->getBaseUrl(true, true) . 'img/p/' . $this->context->language->iso_code . '-default-' . Tools::getValue('export_img') . '.jpg';
-                                        }
-                                        break;
-                                    case 'item_subtitle':
-                                        $line[$field] = ucfirst($p->name);
-                                        $meta = Meta::getProductMetas($p->id, $id_lang, '');
-                                        $line['item_subtitle'] = $meta['meta_title'];
-                                        break;
-                                    case 'description_short':
-                                        $description_short = '-';
-                                        if (Tools::getValue('export_short_description_what', 'short') == 'short') {
-                                            if (Tools::getValue('export_removehtml', 0) != 0) {
-                                                $description_short = strip_tags($p->description_short);
-                                            } else {
-                                                $description_short = $p->description_short;
-                                            }
-                                        } elseif (Tools::getValue('export_short_description_what', 'short') == 'desc') {
-                                            if (Tools::getValue('export_removehtml', 0) != 0) {
-                                                $description_short = strip_tags($p->description);
-                                            } else {
-                                                $description_short = $p->description;
-                                            }
-                                        }
-                                        $line[$field] = (strlen(trim($description_short)) > 0 ? trim($description_short) : '-');
-                                        break;
-                                    case 'item_category':
-                                        $line[$field] = $category_default->name;
-                                        break;
-                                    case 'price_tin':
-                                        $line[$field] = Tools::ps_round(Tools::convertPrice($p->getPrice(true, null, 2, null, false, false), $currency, true), _PS_PRICE_COMPUTE_PRECISION_) . ' ' . $currency->iso_code;
-                                        break;
-                                    case 'price_tex':
-                                        $line[$field] = Tools::ps_round(Tools::convertPrice($p->getPrice(false, null, 2, null, false, false), $currency, true), _PS_PRICE_COMPUTE_PRECISION_) . ' ' . $currency->iso_code;
-                                        break;
-                                    case 'sale_price_tin':
-                                        $line[$field] = Tools::ps_round(Tools::convertPrice($p->getPrice(true, null, 2), $currency, true), _PS_PRICE_COMPUTE_PRECISION_) . ' ' . $currency->iso_code;
-                                        break;
-                                    case 'sale_price_tex':
-                                        $line[$field] = Tools::ps_round(Tools::convertPrice($p->getPrice(false, null, 2), $currency, true), _PS_PRICE_COMPUTE_PRECISION_) . ' ' . $currency->iso_code;
-                                        break;
-                                    case 'brand':
-                                        $line[$field] = ($p->manufacturer_name != "" ? $p->manufacturer_name : Tools::getValue('export_manufacturers_default', 'Default'));
-                                        break;
-                                    case 'contextual_keywords':
-                                        $name = explode(" ", $p->name);
-                                        $line[$field] = implode(';', $name);
-                                        break;
-                                    case 'google_product_category':
-                                        if (isset($pixel_google_categories[$p->id_category_default]['id_google'])) {
-                                            $line['google_product_category'] = $pixel_google_categories[$p->id_category_default]['id_google'];
-                                        } else {
-                                            $line['google_product_category'] = 0;
-                                        }
-                                        break;
-                                    case 'product_type':
-                                        $category_names_array = array();
-                                        foreach (Product::getProductCategories($p->id) AS $pcatid) {
-                                            if (!isset($category_names[$pcatid])) {
-                                                $category_names[$pcatid] = new Category($pcatid, Tools::getValue('export_language'));
-                                                $category_names_array[] = $category_names[$pcatid]->name;
-                                            } else {
-                                                $category_names_array[] = $category_names[$pcatid]->name;
-                                            }
-                                        }
-                                        $line['product_type'] = implode(" > ", $category_names_array);
-                                        break;
-                                }
-                            }
-
-                            $include = 1;
-
-                            if (Tools::getValue('export_manufacturers') != 99999) {
-                                if ($p->id_manufacturer != Tools::getValue('export_manufacturers')) {
-                                    $include = 0;
-                                }
-                            }
-                            if (Tools::getValue('export_suppliers') != 99999) {
-                                if (Supplier::getProductInformationsBySupplier(Tools::getValue('export_suppliers'), $p->id) == null) {
-                                    $include = 0;
-                                }
-
-                            }
-                            if ($include == 1) {
-                                if (Tools::getValue('export_file_format', 'csv') == 'csv') {
-                                    foreach ($line as $lkey => $litem) {
-                                        $lkey = $this->changeKeyToGoogleFeed($lkey);
-                                        $new_line[$lkey] = $litem;
+                                    } else {
+                                        $line[$field] = '';
                                     }
-                                    fputcsv($f, $line, $delimiter, '"');
-                                } elseif (Tools::getValue('export_file_format', 'csv') == 'xml') {
-                                    $new_line = array();
-                                    foreach ($line as $lkey => $litem) {
-                                        $lkey = $this->changeKeyToGoogleFeed($lkey);
-                                        $new_line[$lkey] = $litem;
+
+                                    if ($line[$field] == 0){
+                                        $line[$field] = '';
                                     }
-                                    $xml_array[] = $new_line;
+                                    break;
+                                case 'identifier_exists':
+                                    if ($line['gtin'] == '' || $line['gtin'] == 0) {
+                                        $line[$field] = 'false';
+                                    } else {
+                                        $line[$field] = 'true';
+                                    }
+                                    break;
+                                case 'name':
+                                    $line[$field] = ucfirst($p->name);
+                                    break;
+                                case 'quantity':
+                                    $line[$field] = (Tools::getValue('export_instock_info') == 0 ? ($p->quantity > 0 ? 'in stock' : 'out of stock'):(Tools::getValue('export_instock_info') == 1 ? 'in stock':(Tools::getValue('export_instock_info') == 2 ? 'out of stock':'in stock')));
+                                    break;
+                                case 'condition':
+                                    $line[$field] = $p->condition;
+                                    break;
+                                case 'include_url':
+                                    $line['include_url'] = Context::getContext()->link->getProductLink($p->id, null, null, null, $id_lang, $this->context->shop->id);
+                                    break;
+                                case 'image_url':
+                                    $line['image_url'] = '';
+                                    $imagelinks = array();
+                                    $images = $p->getImages($id_lang);
+                                    foreach ($images as $image)
+                                    {
+                                        $imagelinks[] = $this->context->link->getImageLink($p->link_rewrite, $p->id . '-' . $image['id_image'], Tools::getValue('export_img'));
+                                    }
+                                    if (isset($imagelinks[0]))
+                                    {
+                                        $line['image_url'] = $imagelinks[0];
+                                    }
+                                    else
+                                    {
+                                        $line['image_url'] = $this->context->shop->getBaseUrl(true, true) . 'img/p/' . $this->context->language->iso_code . '-default-' . Tools::getValue('export_img') . '.jpg';
+                                    }
+                                    if ($line['image_url'] == ''){
+                                        $line['image_url'] = $this->context->shop->getBaseUrl(true, true) . 'img/p/' . $this->context->language->iso_code . '-default-' . Tools::getValue('export_img') . '.jpg';
+                                    }
+                                    break;
+                                case 'additional_image_link':
+                                    $line['additional_image_link']='';
+                                    $imagelinks = array();
+                                    $images = $p->getImages($id_lang);
+                                    foreach ($images as $image)
+                                    {
+                                        $imagelinks[] = $this->context->link->getImageLink($p->link_rewrite, $p->id . '-' . $image['id_image'], Tools::getValue('export_img'));
+                                    }
+                                    if (isset($imagelinks[0]) && Tools::getValue('export_what_pictures') == 1)
+                                    {
+                                        array_shift($imagelinks);
+                                        $line['additional_image_link'] = $imagelinks[0];
+                                    }
+                                    else
+                                    {
+                                        $line['additional_image_link'] = $this->context->shop->getBaseUrl(true, true) . 'img/p/' . $this->context->language->iso_code . '-default-' . Tools::getValue('export_img') . '.jpg';
+                                    }
+
+                                    if ($line['additional_image_link'] == ''){
+                                        $line['additional_image_link'] = $this->context->shop->getBaseUrl(true, true) . 'img/p/' . $this->context->language->iso_code . '-default-' . Tools::getValue('export_img') . '.jpg';
+                                    }
+                                    break;
+                                case 'item_subtitle':
+                                    $line[$field] = ucfirst($p->name);
+                                    $meta = Meta::getProductMetas($p->id, $id_lang, '');
+                                    $line['item_subtitle'] = $meta['meta_title'];
+                                    break;
+                                case 'description_short':
+                                    $description_short = '-';
+                                    if (Tools::getValue('export_short_description_what', 'short') == 'short')
+                                    {
+                                        if (Tools::getValue('export_removehtml', 0) !=0)
+                                        {
+                                            $description_short = strip_tags($p->description_short);
+                                        }
+                                        else
+                                        {
+                                            $description_short = $p->description_short;
+                                        }
+                                    }
+                                    elseif (Tools::getValue('export_short_description_what', 'short') == 'desc')
+                                    {
+                                        if (Tools::getValue('export_removehtml', 0) !=0)
+                                        {
+                                            $description_short = strip_tags($p->description);
+                                        }
+                                        else
+                                        {
+                                            $description_short = $p->description;
+                                        }
+                                    }
+                                    $line[$field] = (strlen(trim($description_short)) > 0 ? trim($description_short) : '-');
+                                    break;
+                                case 'item_category':
+                                    $line[$field] = $category_default->name;
+                                    break;
+                                case 'price_tin':
+                                    $line[$field] = Tools::ps_round(Tools::convertPrice($p->getPrice(true, null, 2, null, false, false), $currency, true), _PS_PRICE_COMPUTE_PRECISION_) . ' ' . $currency->iso_code;
+                                    break;
+                                case 'price_tex':
+                                    $line[$field] = Tools::ps_round(Tools::convertPrice($p->getPrice(false, null, 2, null, false, false), $currency, true), _PS_PRICE_COMPUTE_PRECISION_) . ' ' . $currency->iso_code;
+                                    break;
+                                case 'sale_price_tin':
+                                    $line[$field] = Tools::ps_round(Tools::convertPrice($p->getPrice(true, null, 2), $currency, true), _PS_PRICE_COMPUTE_PRECISION_) . ' ' . $currency->iso_code;
+                                    break;
+                                case 'sale_price_tex':
+                                    $line[$field] = Tools::ps_round(Tools::convertPrice($p->getPrice(false, null, 2), $currency, true), _PS_PRICE_COMPUTE_PRECISION_) . ' ' . $currency->iso_code;
+                                    break;
+                                case 'brand':
+                                    $line[$field] = ($p->manufacturer_name != "" ? $p->manufacturer_name:Tools::getValue('export_manufacturers_default', 'Default'));
+                                    break;
+                                case 'contextual_keywords':
+                                    $name = explode(" ", $p->name);
+                                    $line[$field] = implode(';', $name);
+                                    break;
+                                case 'google_product_category':
+                                    if (isset($pixel_google_categories[$p->id_category_default]['id_google']))
+                                    {
+                                        $line['google_product_category'] = $pixel_google_categories[$p->id_category_default]['id_google'];
+                                    }
+                                    else
+                                    {
+                                        $line['google_product_category'] = 0;
+                                    }
+                                    break;
+                                case 'product_type':
+                                    $category_names_array = array();
+                                    foreach (Product::getProductCategories($p->id) AS $pcatid) {
+                                        if (!isset($category_names[$pcatid]))
+                                        {
+                                            $category_names[$pcatid] = new Category($pcatid, Tools::getValue('export_language'));
+                                            $category_names_array[] = $category_names[$pcatid]->name;
+                                        } else {
+                                            $category_names_array[] = $category_names[$pcatid]->name;
+                                        }
+                                    }
+                                    $line['product_type'] = implode(" > ", $category_names_array);
+                                    break;
+                                case 'weight':
+                                    $line['weight'] = number_format($p->weight, 2,'.','').' '.$weight_unit;
+                                    break;
+                            }
+                        }
+
+                        $include = 1;
+
+                        if (Tools::getValue('export_manufacturers') != 99999)
+                        {
+                            if ($p->id_manufacturer != Tools::getValue('export_manufacturers'))
+                            {
+                                $include = 0;
+                            }
+                        }
+                        if (Tools::getValue('export_suppliers') != 99999)
+                        {
+                            if (Supplier::getProductInformationsBySupplier(Tools::getValue('export_suppliers'), $p->id) == null)
+                            {
+                                $include = 0;
+                            }
+
+                        }
+                        if ($include == 1)
+                        {
+                            if (Tools::getValue('export_file_format', 'csv') == 'csv')
+                            {
+                                foreach ($line as $lkey => $litem) {
+                                    $lkey = $this->changeKeyToGoogleFeed($lkey);
+                                    $new_line[$lkey] = $litem;
                                 }
+                                fputcsv($f, $line, $delimiter, '"');
+                            }
+                            elseif (Tools::getValue('export_file_format', 'csv') == 'xml')
+                            {
+                                $new_line = array();
+                                foreach ($line as $lkey => $litem)
+                                {
+                                    $lkey = $this->changeKeyToGoogleFeed($lkey);
+                                    $new_line[$lkey] = $litem;
+                                }
+                                $xml_array[]=$new_line;
                             }
                         }
                     }
@@ -1256,6 +1390,13 @@ class AdminExportProductsFeedGoogleController extends ModuleAdminController
                                 {
                                     switch ($field)
                                     {
+                                        case 'shipping':
+                                            if (Tools::getValue('export_shipping_info') == 1) {
+                                                $line[$field] = ":::".Tools::ps_round((Tools::getValue('export_additional_sc') == 1 ? Tools::convertPrice($p->additional_shipping_cost, $currency, true):0)+Tools::convertPrice($this->getShippingCost($p->price, $p->weight), $currency, true), _PS_PRICE_COMPUTE_PRECISION_) . ' ' . $currency->iso_code;
+                                            } elseif (Tools::getValue('export_shipping_info') == 2) {
+                                                $line[$field] = ":::".Tools::ps_round((Tools::getValue('export_additional_sc') == 1 ? Tools::convertPrice($p->additional_shipping_cost, $currency, true):0)+Tools::convertPrice(Tools::getValue('export_shipping_info_price'), $currency, true), _PS_PRICE_COMPUTE_PRECISION_) . ' ' . $currency->iso_code;
+                                            }
+                                            break;
                                         case 'id':
                                             if (Tools::getValue('export_identification') == 'id_product')
                                             {
@@ -1456,6 +1597,9 @@ class AdminExportProductsFeedGoogleController extends ModuleAdminController
                                             }
                                             $line['product_type'] = implode(" > ", $category_names_array);
                                             break;
+                                        case 'weight':
+                                            $line['weight'] = number_format($value['weight'], 2,'.','').' '.$weight_unit;
+                                            break;
                                     }
 
                                     if (!array_key_exists($field, $line))
@@ -1530,7 +1674,16 @@ class AdminExportProductsFeedGoogleController extends ModuleAdminController
 
     public function getCategories($id_lang, $active, $id_shop)
     {
-    
+        $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
+			SELECT *
+			FROM `' . _DB_PREFIX_ . 'category` c
+			LEFT JOIN `' . _DB_PREFIX_ . 'category_lang` cl ON c.`id_category` = cl.`id_category`
+			WHERE ' . ($id_shop ? 'cl.`id_shop` = ' . (int)$id_shop : '') . ' ' . ($id_lang ? 'AND `id_lang` = ' . (int)$id_lang : '') . '
+			' . ($active ? 'AND `active` = 1' : '') . '
+			' . (!$id_lang ? 'GROUP BY c.id_category' : '') . '
+			ORDER BY c.`level_depth` ASC, c.`position` ASC');
+
+        return $result;
     }
 
     /**
@@ -1575,5 +1728,33 @@ class AdminExportProductsFeedGoogleController extends ModuleAdminController
         $key = str_replace('description_short', 'description', $key);
         $key = str_replace('image_url', 'image_link', $key);
         return $key;
+    }
+
+    function getShippingCost($price, $weight, $id_zone = 1) {
+        $carrier_by_weight = $this->default_carrier->getDeliveryPriceByWeight($weight, $id_zone);
+        if ($carrier_by_weight != false) {
+            return $carrier_by_weight;
+        }
+
+        $carrier_by_price = $this->default_carrier->getDeliveryPriceByPrice($price, $id_zone, Tools::getValue('export_currency'));
+        if ($carrier_by_price != false) {
+            return $carrier_by_price;
+        }
+
+        foreach ($this->all_carriers AS $carrier) {
+            $carrier = new Carrier($carrier['id_carrier']);
+            if ($carrier->shipping_method == 2) {
+                $carrier_by_price = $carrier->getDeliveryPriceByPrice($price, $id_zone, Tools::getValue('export_currency'));
+                if ($carrier_by_price != false) {
+                    return $carrier_by_price;
+                }
+            } elseif ($carrier->shipping_method == 1) {
+                $carrier_by_weight = $carrier->getDeliveryPriceByWeight($weight, $id_zone);
+                if ($carrier_by_weight != false) {
+                    return $carrier_by_weight;
+                }
+            }
+        }
+
     }
 }

@@ -54,10 +54,8 @@ var reduction_percent = {$reduction_percent|floatval};
 
 </script>
 <div id="aw_box">
-	<b class="xtop"><b class="xb1"></b><b class="xb2 xbtop"></b><b class="xb3 xbtop"></b><b class="xb4 xbtop"></b></b>
-	<div class="aw_header">
-		<b style="font-size:14px">{l s='Product Options' mod='attributewizard'}</b>
-	</div>
+	
+	
 	<div class="aw_content">
 <form name="aw_wizard">
 <table width="100%" border="0"> 
@@ -130,8 +128,7 @@ var reduction_percent = {$reduction_percent|floatval};
 			</td>
 			<td align="left" valign="top" width="100%">
 				<div id="aw_box">
-					<b class="xtop"><b class="xb1"></b><b class="xb2 xbtop"></b><b class="xb3 xbtop"></b><b class="xb4 xbtop"></b></b>
-					<div class="aw_header">
+									<div class="aw_header">
 						{if isset($group.group_header) && $group.group_header}
 							{$group.group_header|escape:'quotes':'UTF-8'}
 						{else}
@@ -147,32 +144,7 @@ var reduction_percent = {$reduction_percent|floatval};
 					<div class="aw_content">
 					{if $group.group_type == "dropdown"}
 						<table cellpadding="6">
-						{if $group.group_color == 1}
-							{if isset($group.group_display_multiple) && $group.group_display_multiple == 1}
-									<tr style="height:{if isset($group.group_height) && $group.group_height}{$group.group_height|floatval}{else}20{/if}px">
-										<td>
-											<div id="aw_select_multiple_colors_{$group.id_group|intval}">
-												{foreach from=$group.attributes item=aw_group_attribute}
-												{assign var='id_attribute' value=$aw_group_attribute.0}
-													{if file_exists($col_img_dir|cat:$id_attribute|cat:'.jpg')}
-														{assign var="width" value=$group.group_width-2}
-														{assign var="height" value=$group.group_height-2}
-														<INPUT onClick=" event.returnValue=false; aw_select('{$group.id_group|intval}',{$id_attribute|intval}, {$aw_currency.id_currency|intval}); event.returnValue=false; return false;" id="multiple_aw_group_div_{$id_attribute|intval}" class="aw_multiple_color aw_group_image" style="float: left; {if isset($group.group_width) && $group.group_width}width:{$width|floatval}px;height:{$height|floatval}px;{/if}" type="image" src="{$img_col_dir|escape:'htmlall':'UTF-8'}{$id_attribute|intval}.jpg" value="">
-
-
-													{else}
-														<button onClick=" event.returnValue=false;  aw_select('{$group.id_group|intval}',{$id_attribute|intval}, {$aw_currency.id_currency|intval});return false;" id="multiple_aw_group_div_{$id_attribute|intval}" class="aw_multiple_color aw_group_color" style="float: left;{if isset($group.group_width)}width:{$group.group_width|intval}px;height:{$group.group_height|intval}px;{/if}background-color:{$aw_group_attribute.2|escape:'htmlall':'UTF-8'};">
-															{if $aw_group_attribute.2 != ""}
-															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-															{/if}
-														</button>
-													{/if}
-												{/foreach}
-											</div>
-										</td>
-									</tr>
-							{/if}
-						{/if}
+						
                 		<tr style="height:{if isset($group.group_height) && $group.group_height}{$group.group_height|floatval}{else}20{/if}px">
                     		<td align="left">
 								{if isset($group.group_color) && $group.group_color == 1 && isset($group.group_display_multiple) && $group.group_display_multiple != 1}
@@ -232,6 +204,32 @@ var reduction_percent = {$reduction_percent|floatval};
                     			
                     		</td>
                 		</tr>
+{if $group.group_color == 1}
+							{if isset($group.group_display_multiple) && $group.group_display_multiple == 1}
+									<tr style="height:{if isset($group.group_height) && $group.group_height}{$group.group_height|floatval}{else}20{/if}px">
+										<td>
+											<div id="aw_select_multiple_colors_{$group.id_group|intval}">
+												{foreach from=$group.attributes item=aw_group_attribute}
+												{assign var='id_attribute' value=$aw_group_attribute.0}
+													{if file_exists($col_img_dir|cat:$id_attribute|cat:'.jpg')}
+														{assign var="width" value=$group.group_width-2}
+														{assign var="height" value=$group.group_height-2}
+														<INPUT onClick=" event.returnValue=false; aw_select('{$group.id_group|intval}',{$id_attribute|intval}, {$aw_currency.id_currency|intval}); event.returnValue=false; return false;" id="multiple_aw_group_div_{$id_attribute|intval}" class="aw_multiple_color aw_group_image" style="float: left; {if isset($group.group_width) && $group.group_width}width:{$width|floatval}px;height:{$height|floatval}px;{/if}" type="image" src="{$img_col_dir|escape:'htmlall':'UTF-8'}{$id_attribute|intval}.jpg" value="">
+
+
+													{else}
+														<button onClick=" event.returnValue=false;  aw_select('{$group.id_group|intval}',{$id_attribute|intval}, {$aw_currency.id_currency|intval});return false;" id="multiple_aw_group_div_{$id_attribute|intval}" class="aw_multiple_color aw_group_color" style="float: left;{if isset($group.group_width)}width:{$group.group_width|intval}px;height:{$group.group_height|intval}px;{/if}background-color:{$aw_group_attribute.2|escape:'htmlall':'UTF-8'};">
+															{if $aw_group_attribute.2 != ""}
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+															{/if}
+														</button>
+													{/if}
+												{/foreach}
+											</div>
+										</td>
+									</tr>
+							{/if}
+						{/if}
 						</table>
 					{elseif $group.group_type == "radio"}
 						<table cellpadding="6">
@@ -381,7 +379,6 @@ var reduction_percent = {$reduction_percent|floatval};
 					{/if}						
                     {if !isset($group.checkbox) || $group.checkbox == ""}
 					</div>
-					<b class="xbottom"><b class="xb4 xbbot"></b><b class="xb3 xbbot"></b><b class="xb2 xbbot"></b><b class="xb1"></b></b>
 				</div>
 			</td>
 		</tr>
@@ -509,8 +506,7 @@ var reduction_percent = {$reduction_percent|floatval};
 </table>
 </form>
 					</div>
-					<b class="xbottom"><b class="xb4 xbbot"></b><b class="xb3 xbbot"></b><b class="xb2 xbbot"></b><b class="xb1"></b></b>
-				</div>
+									</div>
 
 </div>
 

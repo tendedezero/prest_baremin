@@ -1,5 +1,4 @@
 <div id="js-product-list">
-
     {block name='pagination'}
         {include file='_partials/pagination.tpl' pagination=$listing.pagination}
     {/block}
@@ -12,6 +11,8 @@
         {/foreach}
     </div>
 
+
+
     {* AngarThemes *}
     <div class="hidden-md-up text-xs-right up">
         <a href="#header" class="btn btn-secondary back_to_top">
@@ -19,7 +20,15 @@
             <i class="material-icons">&#xE316;</i>
         </a>
     </div>
+
+    {block name='pagination'}
+        {include file='_partials/pagination.tpl' pagination=$listing.pagination}
+    {/block}
+
+
 </div>
+
+
 
 
 

@@ -1,5 +1,5 @@
 {**
- * 2007-2018 PrestaShop.
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -15,24 +15,22 @@
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
  * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * needs please refer to https://www.prestashop.com for more information.
  *
  * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2018 PrestaShop SA
+ * @copyright 2007-2019 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *}
-{* AngarTheme *}
-
-<div id="js-product-list-header">
+ 
+<div id="js-product-list-header" >
     {if $listing.pagination.items_shown_from == 1}
-
-		<div class="mobile_cat_name text-sm-center text-xs-center hidden-md-up">
+        <div class="block-category card card-block hidden-sm-down" {if $activeFilters|count} style="display:none;"{/if}>
+            <div class="mobile_cat_name text-sm-center text-xs-center hidden-md-up">
 		  <div class="h1">{$category.name}</div>
-		</div>
+		</div>            <div class="block-category-inner">
+           		<div id="category_desc" class="hidden-sm-down">
 
-		<div id="category_desc" class="hidden-sm-down">
-            {if $activeFilters|count}{else}
 		  {if $category.image.large.url}
 			<div class="category-image col-xs-12 col-sm-2">
 			  <img class="img-responsive" src="{$category.image.large.url}" alt="{if !empty($category.image.legend)}{$category.image.legend}{else}{$category.name}{/if}">
@@ -48,12 +46,12 @@
 
 		  <div class="clearfix"></div>
 
-		</div>
-
-		{if (isset($display_subcategories) && $display_subcategories eq 1) || !isset($display_subcategories) }
+		</div>            </div>
+        </div>
+{if (isset($display_subcategories) && $display_subcategories eq 1) || !isset($display_subcategories) }
 			{if $subcategories|count}
 				<!-- Subcategories -->
-				<div id="subcategories" class="hidden-sm-down">
+				<div id="subcategories" class="hidden-sm-down2" {if $activeFilters|count}style="display:none;"{/if}>
 					<p class="subcategory-heading">{l s='Subcategories' d='Shop.Theme.Mytheme'}</p>
 					<ul class="clearfix">
 						{foreach from=$subcategories item=subcategory}
@@ -79,6 +77,5 @@
 				</div>
 			{/if}
 		{/if}
-            {/if}
     {/if}
 </div>

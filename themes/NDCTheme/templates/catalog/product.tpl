@@ -296,17 +296,6 @@
         {/block}
 
 
-
-
-
-
-
-
-
-
-
-
-
         {block name='product_accessories'}
             {if $accessories}
                 <section class="page-product-box clearfix">

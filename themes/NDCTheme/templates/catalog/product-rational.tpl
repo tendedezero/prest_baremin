@@ -318,6 +318,19 @@
             {/if}
         {/block}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
         {block name='product_footer'}
             {hook h='displayFooterProduct' product=$product category=$category}
         {/block}

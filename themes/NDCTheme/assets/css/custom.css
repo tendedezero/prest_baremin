@@ -4,10 +4,11 @@
  */
 .ets_mm_block input {
     font-size: 14px;
-    border: none;
     padding-left: 10px;
 }
-
+#pagenotfound .page-not-found, #products .page-not-found {
+    min-height: 190px;
+}
 .ets_item_img {
     overflow: initial!important;
 }
@@ -18,7 +19,6 @@
 a.product-flags span.product-flag.new, #home_cat_product a.product-flags span.product-flag.new, #product #content .product-flags li, #product #content .product-flags .product-flag.new {
     background: #ff0000;
 }
-
 .product-price-and-shipping span.rrp-price{font-size: 14px;}
 a.product-flags span {
     position: absolute;
@@ -33,6 +33,10 @@ a.product-flags span {
     z-index: 1;
     padding: 5px 6px;
     margin-bottom: 4px;
+}
+.btn-secondary:hover {
+    color: #fff;
+    background: #ff0000; 
 }
 div.rrp_block {text-decoration:line-through;min-height: 30px;}
 div#_desktop_search_widget {
@@ -120,9 +124,10 @@ p.mmenu_vertical {text-align:center;}
 }
 
 #homepage-slider .angarslider-description, #angarbanners_top div.item-html {
-    top: 70px;
+    font-size: 1.5em;
     color: white;
     position: relative;
+    font-weight: 900;
 }
 a.stalwart.button {
     border: 3px solid;
@@ -631,79 +636,3 @@ div#angarinfo_block a:hover{
     background: #282828;
     text-decoration: none;
 }
-/*Bx Wrapper */
-
-/* DIRECTION CONTROLS (NEXT / PREV) */
-
-/*
-.product-thumbinals {
-display: none;
-}
-
-.bx-wrapper .product-thumbinals {
-display: block;
-}
-
-ul.product-thumbinals li {
-float: left;
-padding: 0 10px;
-}
-
-ul.product-thumbinals li img {
-max-width: 100%;
-border: 1px solid #ccc;
-}
-
-.bx-wrapper {
-position: relative;
-margin: 0 auto;
-}
-
-.bx-wrapper .bx-controls-direction a {
-margin-top: 38px;
-height: 20px;
-width: 20px;
-line-height: 0;
-position: absolute;
-top: 45%;
-margin-top: -10px;
-font-size: 0;
-overflow: hidden;
-outline: none;
-text-decoration: none;
-background: #000;
-}
-
-.bx-wrapper .bx-controls-direction a:before {
-padding-left: 2px;
-color: #fff;
-font-family: "FontAwesome";
-font-size: 20px;
-line-height: 22px;
-}
-
-.bx-wrapper .bx-controls-direction a:hover:before {
-color: #333;
-}
-
-.bx-next {
-right: -20px;
-}
-
-.bx-next:before {
-content: ">";
-}
-
-.bx-prev {
-left: -20px;
-}
-
-.bx-prev:before {
-content: "<";
-}
-
-.bx-wrapper .bx-controls-direction a.disabled {
-display: none;
-}
-
-*/

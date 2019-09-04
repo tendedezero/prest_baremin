@@ -1,0 +1,20 @@
+// Make 'dni' field required only for Italy - add this Custom CSS
+
+tc_confirmOrderValidations['dni_required_for_italy'] = function () {
+      var italyCountryId = 2;
+      var errorMsg = 'Required field';
+      $('#thecheckout-address-invoice input[name=dni]').removeClass('-error');
+      removeError('#thecheckout-address-invoice .error-msg');
+      if (
+        italyCountryId == $('#thecheckout-address-invoice select[name=id_country]').val() && 
+        $('#thecheckout-address-invoice input[name=dni]').is(':visible') &&
+        '' == jQuery.trim($('#thecheckout-address-invoice input[name=dni]').val())
+      ) {
+        $('#thecheckout-address-invoice input[name=dni]').addClass('-error');
+        $('#thecheckout-address-invoice input[name=dni]').after('<div class="field error-msg">' + errorMsg + '</div>');
+        scrollToError();
+        return false;
+      } else {
+        return true;
+      }
+}; 

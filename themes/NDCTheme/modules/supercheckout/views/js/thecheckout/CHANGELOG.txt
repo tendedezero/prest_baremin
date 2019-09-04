@@ -1,0 +1,61 @@
+v3.1.7 - 20190412
+[feature] Force email overlay - show checkout form only to customers that entered email address
+[feature] Checkout blocks update loader - animation on Ajax requests
+[feature] Email can be also made optional (auto-creating email for registration)
+[feature] Compact cart option (better suited for cart summary in small width column)
+[feature] Faster BO loading, with on-demand tinyMCE loading
+[feature] Improved styles for narrow columns (especially login block and social buttons)
+[fix] Logged in customers do not need to agree with GDPR and policy again on checkout form
+
+v3.1.6 - 20190402
+[feature] Improved virtual carts, with many fields in business fields section
+[feature] Sticky position for cart block
+[fix-payment] codpro live fee display
+[fix] Better support for third party additionalCustomerFormFields (privacy checkboxes, etc.)
+[fix] Country and state combobox labels shall be marked required
+[fix] When 'Choose a password' is ticked, password shall be required field, regardless of guest checkout option
+[fix] Virtual cart support (hiding of shipping address and methods)
+
+v3.1.5 - 20190318
+[fix] Carrier prices do not update on cart product quantity change
+[fix-payment] Paypal with fee (fee parsing and display in cart summary)
+[fix-payment] Paypal's Braintree card payment
+[fix-shipping] Zasilkovna (packetery)
+[feature] Show country name in shipping methods selection
+[feature] New config option - force_customer_to_choose_country
+
+v3.1.4 - 20190210
+[fix] Postcode show/hide on country selection based on needZipCode config
+[fix] Business fields undefined issue when changing address directly on checkout
+[feature] Separate invoice and delivery addresses selection
+
+v3.1.3 - 20190201
+[fix-payment] codwfeeplus live fee display
+[fix-payment] codfee live fee display
+[fix-payment] Mollie multiple payment methods
+[feature] Different order of checkout blocks on mobile
+[feature] Business fields configurable, e.g. possibility to use 'other' field as Italian 'PEC'
+
+v3.1.2 - 20190126
+[fix-payment] Payline
+[fix-payment] Presto-Changeo Sagepay
+[fix-shipping] Omnivalt
+[fix] Endless loading of shipping and payment with some themes (early selectors init)
+
+v3.1.1 - 20181216
+[fix] Implemented reorder functionality from default PS
+
+v3.1.0 - 20181211
+[feature] CSS/JS cache version control
+[feature] Native Facebook and Google social logins
+[feature] 'Add new address' added as a clickable link instead of dropdown
+[feature] Copy invoice address vat_number and company into customer siret and company
+[fix-payment] Atos
+[fix] Quantity buttons background not visible in FF
+[fix] Unescape characters in order_message box (bug from PS core)
+
+v3.0.9 - 20181117
+[feature] Social login integration (Oneall social login module)
+
+v3.0.8 - 20181105
+First stable release, TheCheckout for PS1.7

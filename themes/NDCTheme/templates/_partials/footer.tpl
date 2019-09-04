@@ -55,7 +55,17 @@
         {l s='%copyright% Copyright %year% %shop_name%. All Rights Reserved.' sprintf=['%shop_name%' => $shop.name|escape:'html':'UTF-8', '%year%' => 'Y'|date, '%copyright%' => '©'] d='Shop.Theme.Global'}
       {/block}
   </div>
-
+    {block name="analyticsstuff"}
+      <script type="text/javascript">
+          var of_ssid = '315-1';
+      </script>
+      <script type="text/javascript" src="https://tracking.onefeed.co.uk/c.js"></script>
+      <noscript>
+        <div style="display:inline;">
+          <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/1053430914/?guid=ON&amp;script=0"/>
+        </div>
+      </noscript>
+    {/block}
 </div>
 
 

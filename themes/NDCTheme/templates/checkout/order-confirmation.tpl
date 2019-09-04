@@ -44,16 +44,6 @@
     <div class="card-block">
       <div class="row">
 
-        {block name='order_confirmation_table'}
-          {include
-            file='checkout/_partials/order-confirmation-table.tpl'
-            products=$order.products
-            subtotals=$order.subtotals
-            totals=$order.totals
-            labels=$order.labels
-            add_product_link=false
-          }
-        {/block}
 
         {block name='order_details'}
           <div id="order-details" class="col-md-4">

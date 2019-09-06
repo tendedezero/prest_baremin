@@ -18,7 +18,7 @@ class NDCVatDisplay extends Module
     {
         $this->name = 'NDCVatDisplay';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.7';
+        $this->version = '1.0.6';
         $this->author = 'RPaterson';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -35,35 +35,12 @@ class NDCVatDisplay extends Module
         || ! $this->registerHook('displayAdminProductsExtra')
         || ! $this->registerHook('displayNav2')
         || ! $this->registerHook('displayProductPriceBlock')
-        || ! $this->registerHook('displayHeader')
-	|| ! $this->registerHook('hookDisplayOrderConfirmation')
     ) {
         return false;
     }
 
     return true;
 }
-
-    public function hookDisplayHeader($params)
-    {
-	$templateFile = 'module:NDCVatDisplay/views/templates/hook/Front/Header.tpl';
-      
-	return $this->fetch($templateFile);
-    }
-
- private function getConfigFieldsValues()
-    {
-        $fields_values = array(
-            'adwords_id' => Configuration::get($this->_prefix_st.'ADWORDS_ID'),
-            'adwords_label' => Configuration::get($this->_prefix_st.'ADWORDS_LABEL'),
-            'tax_inc' => Configuration::get($this->_prefix_st.'TAX_INC'),
-            'total_products' => Configuration::get($this->_prefix_st.'TOTAL_PRODUCTS'),
-            'analytics_id' => Configuration::get($this->_prefix_st.'ANALYTICS_ID'),
-            'gtag' => Configuration::get($this->_prefix_st.'GTAG'),
-        );
-        $fields_values['id_tab_index'] = Tools::getValue('id_tab_index', 0);
-        return $fields_values;
-    }
 
 public function uninstall()
 {
@@ -90,18 +67,7 @@ public function uninstall()
         return $returnSql;
     }
 
-         public function hookDisplayOrderConfirmation($params){
-        $total =  $order->total_paid_tax_incl;
-        $product_list = "";        
-	$prawlist ="";
-        $this->context->smarty->assign(array(
-                'total' => $total,
-                'orderno' => $orderno,
-                'products' => $prawlist ,)
-        );
-
-        return $this->fetch('module:NDCVatDisplay/views/templates/hook/Front/Payment.tpl');
-    }public function getContent()
+public function getContent()
 {
     $output = null;
     return $output.$this->displayForm();
@@ -129,7 +95,7 @@ public function uninstall()
             'vatmode' => $vatmode,
         ));
 
-        return $this->fetch('module:NDCVatDisplay/views/templates/hook/Front/VAT_DisplayMod.tpl');
+        return $this->display(__FILE__, 'views/templates/hook/Front/VAT_DisplayMod.tpl');
     }
 
     public function hookDisplayProductPriceBlock($params)
